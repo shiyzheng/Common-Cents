@@ -35,9 +35,34 @@ app.get('/login', (req, res) => {
 
 // retrieves a lesson
 app.get('/lessons', (req, res) => {
-    const lessons = [];
-    res.json(lessons);
-});
+    const lessons = dataStorage.getLessons();
+    res.json({ lessons: lessons });
+    const recursiveTest = {
+        test1 : "level1A",
+        test2 : "level1B",
+        r1 : {
+            test1 : "level2A",
+            test2: "level2B",
+            r1 : {
+                test1: "level3A",
+                test2: "level3B"
+            }
+        }
+    }
+    recursiveTraversal(recursiveTest) 
+})
+
+function recursiveTraversal(arg) {
+    for (const property in arg) {
+        if (typeof (arg[property]) == 'string') {
+            console.log("is string type: " + arg[property])
+        } else {
+            recursiveTraversal(arg[property])
+        }
+    }
+}
+
+
 
 // adds a lesson
 app.post('/lessons', (req, res) => {
