@@ -7,6 +7,18 @@ app.get('/', (req, res) => {
     res.send('Root path')
 })
 
+app.get('/login', (req, res) => { 
+    res.send('Login page here')
+})
+
+app.get('/lessons', (req, res) => { 
+    res.send('lessons')
+})
+
+app.get('/questions-index', (req, res) => { 
+    res.send('questions index')
+})
+
 app.listen(port, () => {
     console.log("Application listening on port ${ 8080}")
 })
