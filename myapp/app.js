@@ -9,6 +9,7 @@ app.get('/', (req, res) => {
 
 app.get('/login', (req, res) => { 
     res.send('Login page here')
+    res.sendFile()
 })
 
 app.get('/lessons', (req, res) => { 
@@ -20,5 +21,5 @@ app.get('/questions-index', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log("Application listening on port ${ 8080}")
+    console.log(`Application listening on port ${port}`)
 })
