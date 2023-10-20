@@ -5,6 +5,8 @@ To run the program, from the root directory, run the following commands:
 
 `cd myapp`
 
+`npm install`
+
 `npm install express`
 
 `npm install -g nodemon`
