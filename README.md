@@ -4,7 +4,7 @@ nodemon enables the program to restart automatically after saving.
 
 To initially run the program, run the following commands starting from the root directory:
 
-`cd myapp`
+`cd server`
 
 `npm install`
 
