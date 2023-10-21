@@ -12,4 +12,4 @@ To initially run the program, run the following commands starting from the root 
 
 `npm install -g nodemon`
 
-`nodemon app.js`
+`nodemon`
