@@ -1,7 +1,7 @@
-module.exports = {
-  testExport,
-  getLessons,
-};
+export {
+  testExport, 
+  getLessons
+}
 
 function testExport() {
   console.log('function exported');

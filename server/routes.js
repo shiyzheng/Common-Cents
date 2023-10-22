@@ -1,17 +1,18 @@
-const express = require('express')
+import express from 'express'
 const app = express()
 const port = 8080
-const path = require('path')
 
-const bodyParser = require('body-parser')
-app.use(bodyParser.json())
+import pkg from 'body-parser';
+const { json } = pkg; 
 
-const dataStorage = require('./data-storage')
+app.use(json())
+
+import { testExport, getLessons } from './data-storage.js'
 
 app.get('/', (req, res) => {
     res.contentType('application/json')
     res.send('Home page')
-    dataStorage.testExport()
+    testExport()
     res.status(200)
 });
 
@@ -22,18 +23,18 @@ app.post('/', (req, res) => {
 
 
 app.get('/login', (req, res) => {
-    var options = {
-        root: path.join(__dirname, 'html-docs'),
-        dotfiles: 'deny'
-    }
-    var fileName = "login.html"
+     var options = {
+         root: ".",
+         dotfiles: 'deny'
+     }
+    var fileName = "./html-docs/login.html"
     res.sendFile(fileName, options)
 });
 
 
 // retrieves a lesson
 app.get('/lessons', (req, res) => {
-    const lessons = dataStorage.getLessons();
+    const lessons = getLessons();
     res.json({ lessons: lessons });
     const recursiveTest = {
         test1 : "level1A",
