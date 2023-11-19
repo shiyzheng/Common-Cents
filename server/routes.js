@@ -4,6 +4,9 @@ const app = express()
 import pkg from 'body-parser';
 const { json } = pkg; 
 
+import {getAllStoredTopics} from './data-storage.js'
+
+
 export {
     home,
     getAdminConsoleTopics,
@@ -19,7 +22,7 @@ function home(req, res) {
 }
 
 function getAdminConsoleTopics(req, res) {
-    console.log("admin topics console reached");
+    getAllStoredTopics();
     res.contentType('application/json');
     res.status(200);
     res.send("Admin-Console-Topics");
