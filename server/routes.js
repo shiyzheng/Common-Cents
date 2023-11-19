@@ -4,8 +4,7 @@ const app = express()
 import pkg from 'body-parser';
 const { json } = pkg; 
 
-import {getAllStoredTopics} from './data-storage.js'
-
+import { getAllStoredTopics } from './data-storage.js'
 
 export {
     home,
@@ -14,15 +13,16 @@ export {
 
 app.use(json())
 
-function home(req, res) {
+async function home(req, res) {
     console.log("home function called");
     res.contentType('application/json');
     res.status(200);
     res.send('Home Page');
 }
 
-function getAdminConsoleTopics(req, res) {
-    getAllStoredTopics();
+async function getAdminConsoleTopics(req, res) {
+    let allStoredTopics = await getAllStoredTopics();
+    console.log("within routes.js:::", allStoredTopics);
     res.contentType('application/json');
     res.status(200);
     res.send("Admin-Console-Topics");

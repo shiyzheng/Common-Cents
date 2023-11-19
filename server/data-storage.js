@@ -2,7 +2,7 @@
 // This may modify the storage system or may get data from storage system after
 // receiving function calls from server.js
 
-import fs from 'fs'
+import fs from 'fs/promises'
 
 export {
   testExport, 
@@ -10,21 +10,29 @@ export {
   getAllStoredTopics,
 }
 
+// define const variables such as file paths here
+const PATH_TO_TOPICS = 'storage/content/topics';
 
-function getAllStoredTopics() {
-  console.log("getAllStoredTopics invoked");
-  fs.readdir('storage/content/topics', (err, files) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("\nCurrent directory file names:");
-      files.forEach(file => {
-        console.log(file);
-      })
-    }
-  });
-  console.log("get all stored topics reached");
-  return [];
+
+async function getAllStoredTopics() {
+  try {
+    let storedTopics = await fs.readdir(PATH_TO_TOPICS);
+    console.log("withing data-storage:::", storedTopics)
+    return storedTopics;
+  } catch (err) {
+    console.error('error:::', err);
+  }
+  // fs.readdir('storage/content/topics', (err, files) => {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     files.forEach(fileName => {
+  //       storedTopics.push(fileName);
+  //     })
+  //     console.log("within function:" + storedTopics)
+  //     return storedTopics;
+  //   }
+  // });
 }
 
 function testExport() {
