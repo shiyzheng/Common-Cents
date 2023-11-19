@@ -1,6 +1,16 @@
+// This file interacts with any storage-system
+// This may modify the storage system after receiving function calls
+// from server.js
+// or may 
+
 export {
   testExport, 
-  getLessons
+  getLessons,
+  getAllStoredTopics,
+}
+
+function getAllStoredTopics() {
+  return [];
 }
 
 function testExport() {

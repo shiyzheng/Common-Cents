@@ -1,12 +1,12 @@
 import express from 'express'
 const app = express()
-// const port = 3000
 
 import pkg from 'body-parser';
 const { json } = pkg; 
 
 export {
     home,
+    getAdminConsoleTopics,
 }
 
 app.use(json())
@@ -14,8 +14,15 @@ app.use(json())
 function home(req, res) {
     console.log("home function called");
     res.contentType('application/json');
-    res.send('Home page');
     res.status(200);
+    res.send('Home Page');
+}
+
+function getAdminConsoleTopics(req, res) {
+    console.log("admin topics console reached");
+    res.contentType('application/json');
+    res.status(200);
+    res.send("Admin-Console-Topics");
 }
 
 // import { testExport, getLessons } from './data-storage.js'
