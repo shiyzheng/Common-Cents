@@ -11,7 +11,6 @@ export {
 }
 
 
-
 function getAllStoredTopics() {
   console.log("getAllStoredTopics invoked");
   fs.readdir('storage/content/topics', (err, files) => {
