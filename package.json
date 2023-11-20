@@ -1,0 +1,17 @@
+{
+    "name": "financial-literacy-web-app",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "parcel": "^2.10.3",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-scripts": "^5.0.1"
+    },
+    "scripts": {
+        "build": "parcel client/src/index.html"
+    },
+    "devDependencies": {
+        "process": "^0.11.10"
+    }
+}
