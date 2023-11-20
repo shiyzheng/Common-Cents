@@ -51,10 +51,8 @@ try {
 // returns a list of objects, where each object is a question for the given topic
 async function getAllQuestionsForTopic(topic) {
   try {
-    const questionFileNames = await fsp.readdir(PATH_TO_TOPICS
-        + FORWARD_SLASH
-        + topic
-      + QUESTIONS_RELATIVE_PATH_FROM_TOPIC);
+    const questionFileNames = await fsp.readdir(PATH_TO_TOPICS + FORWARD_SLASH
+        + topic + QUESTIONS_RELATIVE_PATH_FROM_TOPIC);
     return questionFileNames;
   } catch (error) {
     console.log('error when getting all questions of a topic', error);
@@ -63,8 +61,7 @@ async function getAllQuestionsForTopic(topic) {
 
 async function getQuestionGivenTopic(topic, question) {
   try { 
-    const questionPath = PATH_TO_TOPICS + FORWARD_SLASH + topic
-      + QUESTIONS_RELATIVE_PATH_FROM_TOPIC + FORWARD_SLASH + question;
+    const questionPath = await buildQuestionPath(topic, question); 
     const questionString = await fsp.readFile(questionPath, 'utf8');
     const questionJson = JSON.parse(questionString);
     return questionJson;
@@ -80,8 +77,6 @@ async function buildQuestionPath(topic, questionFileName) {
 
 async function storeQuestionGivenTopic(topic, questionFileName, questionJson) {
   try {
-    // const questionPath = PATH_TO_TOPICS + FORWARD_SLASH + topic
-    //   + QUESTIONS_RELATIVE_PATH_FROM_TOPIC + FORWARD_SLASH + questionFileName; 
     const questionPath = await buildQuestionPath(topic, questionFileName);
     fsp.writeFile(questionPath, JSON.stringify(questionJson, null, 4), 'utf-8');
   } catch (err) {
@@ -92,7 +87,6 @@ async function storeQuestionGivenTopic(topic, questionFileName, questionJson) {
 async function deleteQuestionGivenTopic(topic, questionFileName) {
   try {
     const questionPath = await buildQuestionPath(topic, questionFileName);
-    console.log("DELETED QUESTION PATH:::", questionPath);
     await fsp.unlink(questionPath);
   } catch (err) {
     console.log('error when deleting file of given topic', err);
