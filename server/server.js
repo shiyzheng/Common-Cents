@@ -4,6 +4,10 @@ const port = 3000
 
 import * as routes from './routes.js'
 
+export {
+    app,
+};
+
 app.get('/', routes.home);
 
 // returns a list of admin console topics
