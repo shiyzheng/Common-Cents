@@ -2,7 +2,7 @@
 // This may modify the storage system or may get data from storage system after
 // receiving function calls from server.js
 
-import fs from 'fs/promises'
+import fsp from 'fs/promises'
 
 export {
   getAllStoredTopics,
@@ -17,7 +17,7 @@ const FORWARD_SLASH = '/';
 
 async function getAllStoredTopics() {
   try {
-    let storedTopics = await fs.readdir(PATH_TO_TOPICS);
+    let storedTopics = await fsp.readdir(PATH_TO_TOPICS);
     return storedTopics;
   } catch (err) {
     console.error('error:::', err);
@@ -25,9 +25,17 @@ async function getAllStoredTopics() {
 }
 
 async function storeTopic(topic) {
-  console.log(PATH_TO_TOPICS + FORWARD_SLASH + topic)
+  try {
+    fsp.mkdir(PATH_TO_TOPICS + FORWARD_SLASH + topic);
+  } catch (err) {
+    console.log('error when making directory for storing topic', err);
+  }
 }
 
 async function deleteTopic(topic) {
-  console.log("DELETE:::", PATH_TO_TOPICS + FORWARD_SLASH + topic);
+try {
+    fsp.rmdir(PATH_TO_TOPICS + FORWARD_SLASH + topic);
+  } catch (err) {
+    console.log('error when deleting directory of stored topic', err);
+  }
 }
