@@ -1,0 +1,2 @@
+Run the below command to use jest testing:
+`node --experimental-vm-modules node_modules/jest/bin/jest.js`
