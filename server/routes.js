@@ -46,6 +46,7 @@ async function deleteAdminConsoleTopic(req, res) {
     console.log(topicName);
     deleteTopic(topicName);
     res.status(200);
+    res.json([topicName])
 }
 
 // import { testExport, getLessons } from './data-storage.js'
