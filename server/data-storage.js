@@ -5,13 +5,14 @@
 import fs from 'fs/promises'
 
 export {
-  testExport, 
   getLessons,
   getAllStoredTopics,
+  storeTopic,
 }
 
 // define const variables such as file paths here
 const PATH_TO_TOPICS = 'storage/content/topics';
+const FORWARD_SLASH = '/';
 
 
 async function getAllStoredTopics() {
@@ -22,21 +23,10 @@ async function getAllStoredTopics() {
   } catch (err) {
     console.error('error:::', err);
   }
-  // fs.readdir('storage/content/topics', (err, files) => {
-  //   if (err) {
-  //     console.log(err);
-  //   } else {
-  //     files.forEach(fileName => {
-  //       storedTopics.push(fileName);
-  //     })
-  //     console.log("within function:" + storedTopics)
-  //     return storedTopics;
-  //   }
-  // });
 }
 
-function testExport() {
-  console.log('function exported');
+async function storeTopic(topic) {
+  console.log(PATH_TO_TOPICS + FORWARD_SLASH + topic)
 }
 
 function getLessons() {

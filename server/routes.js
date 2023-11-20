@@ -9,6 +9,7 @@ import { getAllStoredTopics } from './data-storage.js'
 export {
     home,
     getAdminConsoleTopics,
+    putAdminConsoleTopic,
 }
 
 app.use(json())
@@ -22,10 +23,16 @@ async function home(req, res) {
 
 async function getAdminConsoleTopics(req, res) {
     let allStoredTopics = await getAllStoredTopics();
-    console.log("within routes.js:::", allStoredTopics);
     res.contentType('application/json');
     res.status(200);
-    res.send("Admin-Console-Topics");
+    res.json(allStoredTopics);
+}
+
+async function putAdminConsoleTopic(req, res) {
+    const topicName = req.params['topic'];
+    console.log(topicName);
+    res.send([]);
+    return null;
 }
 
 // import { testExport, getLessons } from './data-storage.js'
