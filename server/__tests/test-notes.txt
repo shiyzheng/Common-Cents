@@ -1,2 +1,6 @@
-Run the below command to use jest testing:
-`node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose --runInBand`
+// Run the below command to use jest testing:
+`node --experimental-vm-modules node_modules/jest/bin/jest.js --verbose --runInBand --detectOpenHandles`
+
+// Notes:
+// await keyword helps ensure sequential execution
+// --runInBand enables sequential execution of tests

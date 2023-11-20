@@ -4,15 +4,21 @@
 
 import fsp from 'fs/promises'
 
+import lockFile from 'lockfile'
+
 export {
   getAllStoredTopics,
   storeTopic,
   deleteTopic,
+  getAllQuestionsForTopic,
+  getQuestionGivenTopic,
 }
 
 // define const variables such as file paths here
 const PATH_TO_TOPICS = 'storage/content/topics';
+const QUESTIONS_RELATIVE_PATH_FROM_TOPIC = '/questions';
 const FORWARD_SLASH = '/';
+const dotJson = '.json';
 
 
 async function getAllStoredTopics() {
@@ -37,5 +43,30 @@ try {
     fsp.rmdir(PATH_TO_TOPICS + FORWARD_SLASH + topic);
   } catch (err) {
     console.log('error when deleting directory of stored topic', err);
+  }
+}
+
+// returns a list of objects, where each object is a question for the given topic
+async function getAllQuestionsForTopic(topic) {
+  try {
+    const questionFileNames = await fsp.readdir(PATH_TO_TOPICS
+        + FORWARD_SLASH
+        + topic
+      + QUESTIONS_RELATIVE_PATH_FROM_TOPIC);
+    return questionFileNames;
+  } catch (error) {
+    console.log('error when getting all questions of a topic', error);
+  }
+}
+
+async function getQuestionGivenTopic(topic, question) {
+  try { 
+    const questionPath = PATH_TO_TOPICS + FORWARD_SLASH + topic
+      + QUESTIONS_RELATIVE_PATH_FROM_TOPIC + FORWARD_SLASH + question + dotJson;
+    const questionString = await fsp.readFile(questionPath, 'utf8');
+    const questionJson = JSON.parse(questionString);
+    return questionJson;
+  } catch (err) {
+    console.log('error when getting one question of a topic', err);
   }
 }
