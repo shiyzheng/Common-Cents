@@ -30,8 +30,6 @@ describe("GET /admin/console/topics", () => {
         TEST_ALL_TOPICS1.forEach((element) => {
             expect(response.body).toContain(element);
         });
-        console.log("response data:::", response.body);
-        console.log("response type:::", typeof(response.body));
     });
 });
 
@@ -42,8 +40,6 @@ describe("GET /admin/console/topics/:topic", () => {
         TEST_ALL_TOPICS1.forEach((element) => {
             expect(response.body).toContain(element);
         });
-        console.log("response data:::", response.body);
-        console.log("response type:::", typeof(response.body));
     });
 });
 
