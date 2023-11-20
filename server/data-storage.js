@@ -4,7 +4,7 @@
 
 import fsp from 'fs/promises'
 
-import lockFile from 'lockfile'
+// import lockFile from 'lockfile'
 
 export {
   getAllStoredTopics,
@@ -20,7 +20,6 @@ export {
 const PATH_TO_TOPICS = 'storage/content/topics';
 const QUESTIONS_RELATIVE_PATH_FROM_TOPIC = '/questions';
 const FORWARD_SLASH = '/';
-const dotJson = '.json';
 
 
 async function getAllStoredTopics() {
