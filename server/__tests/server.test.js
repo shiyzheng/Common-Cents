@@ -1,9 +1,8 @@
-import { putAdminConsoleTopic } from '../routes.js';
 import { app } from '../server.js'
 import request from 'supertest'
 
 const TEST_ALL_TOPICS1 = ["topic1", "topic2"];
-const TEST_TOPIC1 = "topic1";
+// const TEST_TOPIC1 = "topic1";
 
 const TEST_STORED_TOPIC1 = "stored-topic1";
 const TEST_ALL_TOPICS_AFTER_PUT1 = ["topic1", "topic2", TEST_STORED_TOPIC1]
