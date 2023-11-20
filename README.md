@@ -1,4 +1,10 @@
-Install Node 18.18.2 from https://nodejs.org/en
+To start client, run the following commands starting from the root directory:
+
+`npm install`
+
+`npm run build`
+
+
 
 nodemon enables the program to restart automatically after saving.
 
