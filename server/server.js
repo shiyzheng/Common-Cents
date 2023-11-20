@@ -13,7 +13,8 @@ app.get('/', routes.home);
 // returns a list of admin console topics
 app.get('/admin/console/topics', routes.getAdminConsoleTopics);
 
-// app.put('/admin/console/topics/:topic', undefined);
+// places topic from admin console
+app.put('/admin/console/topics/:topic', routes.putAdminConsoleTopic);
 
 app.listen(port, () => {
     console.log(`Server Application listening on port ${port}`)

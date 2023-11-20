@@ -4,3 +4,4 @@
 // Notes:
 // await keyword helps ensure sequential execution
 // --runInBand enables sequential execution of tests
+// --detectOpenHandles

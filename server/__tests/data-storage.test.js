@@ -27,7 +27,6 @@ const TEST_STORED_JSON_QUESTION1_TOPIC1 = {
     "answer": ["a11", "a12", "a13", "a14"]
 };
 
-
 await test('test-all-topics1', async () => {
     const allTopics = await getAllStoredTopics();
     TEST_ALL_TOPICS1.forEach((element) => {
