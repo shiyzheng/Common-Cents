@@ -33,7 +33,7 @@ describe("GET /admin/console/topics", () => {
 });
 
 describe("GET /admin/console/topics/:topic", () => {
-    test("response contains", async () => {
+    test("getting each topic individually", async () => {
         const response = await request(app).get('/admin/console/topics');
         expect(response.statusCode).toBe(200);
         TEST_ALL_TOPICS1.forEach((element) => {
