@@ -6,6 +6,8 @@ import {
     getQuestionGivenTopic,
     storeQuestionGivenTopic,
     deleteQuestionGivenTopic,
+
+    testMongoDb,
 } from '../data-storage.js'
  
 const TEST_ALL_TOPICS1 = ["topic1", "topic2"];
@@ -85,4 +87,10 @@ await test('test-deleted-stored-topic1', async () => {
     await deleteQuestionGivenTopic(TEST_TOPIC1, TEST_STORED_QUESTION1_TOPIC1);
     const allQuestionsAfter = await getAllQuestionsForTopic(TEST_TOPIC1);
     await expect(allQuestionsAfter).not.toContain(TEST_STORED_TOPIC1);
+});
+
+await test('test-mongodb', async () => {
+    const test = await testMongoDb();
+    console.log("test:::", test);
+    await expect(1).toBe(2);
 });

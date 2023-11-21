@@ -35,7 +35,6 @@ async function getAdminConsoleTopics(req, res) {
 
 async function putAdminConsoleTopic(req, res) {
     const topicName = req.params['topic'];
-    console.log(topicName);
     storeTopic(topicName);
     res.status(200);
     res.json([topicName]);
@@ -43,7 +42,6 @@ async function putAdminConsoleTopic(req, res) {
 
 async function deleteAdminConsoleTopic(req, res) {
     const topicName = req.params['topic'];
-    console.log(topicName);
     deleteTopic(topicName);
     res.status(200);
     res.json([topicName])
