@@ -6,18 +6,21 @@ const AccountRouter = require('./routes/account');
 const CategoryRouter = require('./routes/category');
 
 const app = express();
-const MONGO_URI = process.env.MONGODB_URI || 'mongodb+srv://xianhanc:Bhz8QFdkNagqhgMm@cluster0.3uugri4.mongodb.net/?retryWrites=true&w=majority';
+const MONGO_URI = process.env.MONGODB_URI || 'mongodb+srv://xianhanchen:xianhan@cluster0.3uugri4.mongodb.net/?retryWrites=true&w=majority';
 
-mongoose.connect(MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+mongoose.connect(MONGO_URI);
 
 app.use(express.json());
 app.use(express.static('dist'));
 
-app.use('api/account', AccountRouter);
-app.use('api/category', CategoryRouter);
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    next();
+});
+
+app.use('/account', AccountRouter);
+app.use('/category', CategoryRouter);
 
 // app.get('*', (req, res) => {
 //     res.sendFile(path.join(__dirname, '../dist/index.html'));

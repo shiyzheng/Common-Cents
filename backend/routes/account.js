@@ -48,12 +48,13 @@ router.get('/isLogged', (req, res) => {
 
 router.get('/profile', async (req, res) => {
     const { username } = req.query;
+    console.log(username);
     try {
       const user = await User.findOne({ username: username });
       res.json(user.points);
     } catch (e) {
       res.send('error occurred');
     }
-  });
+});
 
 module.exports = router;

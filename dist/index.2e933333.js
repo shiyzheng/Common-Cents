@@ -39284,9 +39284,22 @@ var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _reactRouterDom = require("react-router-dom");
 var _users = require("../api/users");
+// import axios from 'axios';
 var _navbar = require("./Navbar");
 var _navbarDefault = parcelHelpers.interopDefault(_navbar);
 var _s = $RefreshSig$();
+function PointPreview(props) {
+    const { text } = props;
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+        className: "list-group-item",
+        children: text
+    }, void 0, false, {
+        fileName: "client/src/components/Profile.js",
+        lineNumber: 10,
+        columnNumber: 9
+    }, this);
+}
+_c = PointPreview;
 function Profile(props) {
     _s();
     const { login } = props;
@@ -39295,17 +39308,37 @@ function Profile(props) {
     (0, _react.useEffect)(()=>{
         async function getProfileWrapper() {
             const response = await (0, _users.getProfileById)(id);
-            setProfile(response);
+            const nums = [];
+            Object.entries(response).forEach((key, value)=>{
+                console.log(key);
+                // console.log(value);
+                nums.push(`${key[0]}: (${key[1]} points)`);
+            });
+            setProfile(nums);
         }
         getProfileWrapper();
     }, [
         profile.length
     ]);
+    const displayPoints = ()=>{
+        const displayedPoints = [];
+        profile.forEach((element)=>{
+            displayedPoints.push(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(PointPreview, {
+                text: element
+            }, void 0, false, {
+                fileName: "client/src/components/Profile.js",
+                lineNumber: 37,
+                columnNumber: 17
+            }, this));
+        });
+        return displayedPoints;
+    };
+    const displayedPoints = displayPoints();
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navbarDefault.default), {}, void 0, false, {
                 fileName: "client/src/components/Profile.js",
-                lineNumber: 21,
+                lineNumber: 49,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
@@ -39316,7 +39349,7 @@ function Profile(props) {
                 ]
             }, void 0, true, {
                 fileName: "client/src/components/Profile.js",
-                lineNumber: 22,
+                lineNumber: 50,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -39324,55 +39357,39 @@ function Profile(props) {
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                         className: "btn btn-primary float-right",
                         "data-testid": "button",
-                        onClick: (e)=>{
-                            e.preventDefault();
-                            createUser({
-                                username,
-                                password
-                            });
-                            const form = document.getElementById("add");
-                            form.reset();
-                        },
+                        onClick: (e)=>{},
                         type: "submit",
                         children: "Message"
                     }, void 0, false, {
                         fileName: "client/src/components/Profile.js",
-                        lineNumber: 25,
+                        lineNumber: 53,
                         columnNumber: 21
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                         className: "btn btn-primary float-right",
                         "data-testid": "button",
-                        onClick: (e)=>{
-                            e.preventDefault();
-                            createUser({
-                                username,
-                                password
-                            });
-                            const form = document.getElementById("add");
-                            form.reset();
-                        },
+                        onClick: (e)=>{},
                         type: "submit",
                         children: "Add Friend"
                     }, void 0, false, {
                         fileName: "client/src/components/Profile.js",
-                        lineNumber: 38,
+                        lineNumber: 63,
                         columnNumber: 21
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "client/src/components/Profile.js",
-                lineNumber: 24,
+                lineNumber: 52,
                 columnNumber: 17
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                 fileName: "client/src/components/Profile.js",
-                lineNumber: 53,
+                lineNumber: 75,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                 fileName: "client/src/components/Profile.js",
-                lineNumber: 54,
+                lineNumber: 76,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -39388,7 +39405,7 @@ function Profile(props) {
                             children: "Level: 52"
                         }, void 0, false, {
                             fileName: "client/src/components/Profile.js",
-                            lineNumber: 57,
+                            lineNumber: 79,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
@@ -39396,23 +39413,23 @@ function Profile(props) {
                             children: "Longest streak: 14d"
                         }, void 0, false, {
                             fileName: "client/src/components/Profile.js",
-                            lineNumber: 58,
+                            lineNumber: 80,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "client/src/components/Profile.js",
-                    lineNumber: 56,
+                    lineNumber: 78,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "client/src/components/Profile.js",
-                lineNumber: 55,
+                lineNumber: 77,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                 fileName: "client/src/components/Profile.js",
-                lineNumber: 61,
+                lineNumber: 83,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -39422,76 +39439,27 @@ function Profile(props) {
                 },
                 children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("ul", {
                     className: "list-group list-group-flush",
-                    children: [
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
-                            className: "list-group-item",
-                            children: "Investing: Waystage (1000 points)"
-                        }, void 0, false, {
-                            fileName: "client/src/components/Profile.js",
-                            lineNumber: 64,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
-                            className: "list-group-item",
-                            children: "Saving: Waystage (1500 points)"
-                        }, void 0, false, {
-                            fileName: "client/src/components/Profile.js",
-                            lineNumber: 65,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
-                            className: "list-group-item",
-                            children: "Spending: Proficient (5500 points)"
-                        }, void 0, false, {
-                            fileName: "client/src/components/Profile.js",
-                            lineNumber: 66,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
-                            className: "list-group-item",
-                            children: "Earning Income: Beginner (0 points)"
-                        }, void 0, false, {
-                            fileName: "client/src/components/Profile.js",
-                            lineNumber: 67,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
-                            className: "list-group-item",
-                            children: "Managing Credit: Beginner (950 points)"
-                        }, void 0, false, {
-                            fileName: "client/src/components/Profile.js",
-                            lineNumber: 68,
-                            columnNumber: 21
-                        }, this),
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
-                            className: "list-group-item",
-                            children: "Managing Risk: Proficient (7000 points)"
-                        }, void 0, false, {
-                            fileName: "client/src/components/Profile.js",
-                            lineNumber: 69,
-                            columnNumber: 21
-                        }, this)
-                    ]
-                }, void 0, true, {
+                    children: displayedPoints
+                }, void 0, false, {
                     fileName: "client/src/components/Profile.js",
-                    lineNumber: 63,
+                    lineNumber: 85,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "client/src/components/Profile.js",
-                lineNumber: 62,
+                lineNumber: 84,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                 fileName: "client/src/components/Profile.js",
-                lineNumber: 73,
+                lineNumber: 95,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
                 children: "Achievements"
             }, void 0, false, {
                 fileName: "client/src/components/Profile.js",
-                lineNumber: 74,
+                lineNumber: 96,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -39503,18 +39471,19 @@ function Profile(props) {
                     className: "list-group list-group-flush"
                 }, void 0, false, {
                     fileName: "client/src/components/Profile.js",
-                    lineNumber: 76,
+                    lineNumber: 98,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "client/src/components/Profile.js",
-                lineNumber: 75,
+                lineNumber: 97,
                 columnNumber: 13
-            }, this)
+            }, this),
+            profile
         ]
     }, void 0, true, {
         fileName: "client/src/components/Profile.js",
-        lineNumber: 20,
+        lineNumber: 48,
         columnNumber: 9
     }, this);
 }
@@ -39523,10 +39492,11 @@ _s(Profile, "usdU8SSpsSJM1g/Qppxna+f5Thg=", false, function() {
         (0, _reactRouterDom.useParams)
     ];
 });
-_c = Profile;
+_c1 = Profile;
 exports.default = Profile;
-var _c;
-$RefreshReg$(_c, "Profile");
+var _c, _c1;
+$RefreshReg$(_c, "PointPreview");
+$RefreshReg$(_c1, "Profile");
 
   $parcel$ReactRefreshHelpers$924b.postlude(module);
 } finally {
@@ -39541,6 +39511,7 @@ parcelHelpers.export(exports, "getCurrentUser", ()=>getCurrentUser);
 parcelHelpers.export(exports, "getProfileById", ()=>getProfileById);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
+const baseURL = "http://localhost:3000";
 const createUser = async (userObject)=>{
     // console.log('atapi');
     try {
@@ -39564,7 +39535,8 @@ const getCurrentUser = async ()=>{
 };
 const getProfileById = async (username)=>{
     try {
-        const response = await (0, _axiosDefault.default).get("api/account/profile", {
+        console.log(username);
+        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/profile`, {
             params: {
                 username
             }

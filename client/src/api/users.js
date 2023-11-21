@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const baseURL = 'http://localhost:3000';
+
 export const createUser = async (userObject) => {
     // console.log('atapi');
     try {
@@ -27,7 +29,8 @@ export const getCurrentUser = async () => {
 
 export const getProfileById = async (username) => {
     try {
-        const response = await axios.get('api/account/profile', {
+        console.log(username);
+        const response = await axios.get(`${baseURL}/account/profile`, {
             params: { username },
         });
         return response.data;
