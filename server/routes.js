@@ -4,12 +4,17 @@ const app = express()
 import pkg from 'body-parser';
 const { json } = pkg; 
 
-import { getAllStoredTopics } from './data-storage.js'
+import {
+    getAllStoredTopics,
+    storeTopic,
+    deleteTopic,
+} from './data-storage.js'
 
 export {
     home,
     getAdminConsoleTopics,
     putAdminConsoleTopic,
+    deleteAdminConsoleTopic,
 }
 
 app.use(json())
@@ -31,8 +36,17 @@ async function getAdminConsoleTopics(req, res) {
 async function putAdminConsoleTopic(req, res) {
     const topicName = req.params['topic'];
     console.log(topicName);
-    res.send([]);
-    return null;
+    storeTopic(topicName);
+    res.status(200);
+    res.json([topicName]);
+}
+
+async function deleteAdminConsoleTopic(req, res) {
+    const topicName = req.params['topic'];
+    console.log(topicName);
+    deleteTopic(topicName);
+    res.status(200);
+    res.json([topicName])
 }
 
 // import { testExport, getLessons } from './data-storage.js'
