@@ -17,11 +17,11 @@ const username = 'user1';
   };
 
   const clickedSignup = () => {
-    // navigate('/signup');
+    navigate('/signup');
   };
 
   const clickedLogin = () => {
-    // navigate('/login');
+    navigate('/login');
   };
 
   const clickedLeaderboards = () => {
