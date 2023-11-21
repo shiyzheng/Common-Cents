@@ -1,0 +1,47 @@
+.leaderboards-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    gap: 10px; 
+  }
+  
+  .leaderboards-box {
+    background-color: #ADD8E6;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .pagination {
+    display: flex;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    padding: 8px 12px;
+    margin: 0 4px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  
+  .pagination button.active {
+    background-color: #000000;
+  }
+  
+  .pagination button:not(.active):hover {
+    text-decoration: underline;
+  }
