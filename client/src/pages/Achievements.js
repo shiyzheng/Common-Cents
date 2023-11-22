@@ -1,7 +1,10 @@
+import React from 'react';
 import Navbar from '../components/Navbar';
 import '../styles/Achievements.css';
 
-function Achievements() {
+function Achievements(props) {
+    // const { login, username } = props;
+    login = false;
     const achievements = [
         { name: "Complete Introduction to a Topic", completed: true },
         { name: "Master a Topic", completed: false },
@@ -17,7 +20,8 @@ function Achievements() {
       return (
         <>
         <Navbar />
-      <div className="container">
+      
+      {login ? <div className="container">
         <h2>Completed Achievements</h2>
         <ul className="achievement-list">
           {completedAchievements.map((achievement, index) => (
@@ -30,8 +34,7 @@ function Achievements() {
           {notCompletedAchievements.map((achievement, index) => (
             <li key={index} className="achievement-box-incomplete">{achievement.name}</li>
           ))}
-        </ul>
-      </div>
+        </ul></div> : <div className="container"> <h2>Login to see your Achievements!</h2></div>}
         </>
       )
 }
