@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '../components/Navbar';
 import '../styles/Achievements.css';
+import { getAchievementsById, getAllAchievements } from '../api/users';
 
 function Achievements(props) {
     // const { login, username } = props;
@@ -16,6 +17,26 @@ function Achievements(props) {
       ];
       const completedAchievements = achievements.filter(achievement => achievement.completed);
       const notCompletedAchievements = achievements.filter(achievement => !achievement.completed);
+
+    //   const [completedAchievements, setCompletedAchievements] = useState([]);
+    //   const [notCompletedAchievements, setNotCompleteAchievements] = useState([]);
+
+    // useEffect(() => {
+    //   async function getAchievementsByIdWrapper() {
+    //     const response = await getAchievementsById(id);
+    //     setCompletedAchievements(response);
+    //   }
+    //   getAchievementsByIdWrapper();
+    // }, [completedAchievements.length]);
+
+    // useEffect(() => {
+    //   async function getAllAchievementsWrapper() {
+    //     const response = await getAllAchievements();
+    //     const nonComplete = response.filter(element => !completedAchievements.includes(element));
+    //     setNotCompleteAchievements(nonComplete);
+    //   }
+    //   getAllAchievementsWrapper();
+    // }, [completedAchievements.length]);
 
       return (
         <>
