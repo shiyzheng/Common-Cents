@@ -50,6 +50,16 @@ export const getAchievementsById = async (username) => {
     }
 };
 
+export const getAllAchievements = async () => {
+    try {
+        const response = await axios.get(`${baseURL}/account/allAchievements`);
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+};
+
+
 
 export const getLeaderboards = async () => {
     try {
