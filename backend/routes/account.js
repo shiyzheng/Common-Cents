@@ -17,6 +17,7 @@ router.post('/signup', async (req, res) => {
       res.send('username taken');
     }
   } catch (e) {
+    console.log(e);
     res.send('error occured');
   }
 });
@@ -27,6 +28,7 @@ router.post('/login', async (req, res) => {
   try {
     const user = await User.findOne({ username });
     if (user.password === password) {
+      console.log(req.session);
       req.session.username = username;
       res.send('you are logged in');
     } else {
@@ -48,7 +50,6 @@ router.get('/isLogged', (req, res) => {
 
 router.get('/profile', async (req, res) => {
     const { username } = req.query;
-    console.log(username);
     try {
       const user = await User.findOne({ username: username });
       res.json(user.points);

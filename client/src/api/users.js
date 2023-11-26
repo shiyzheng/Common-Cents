@@ -8,7 +8,7 @@ export const createUser = async (userObject) => {
         if (userObject.username === '' || userObject.password === '') {
             throw new Error('invalid username or password');
         }
-        const response = await axios.post('/account/signup', {
+        const response = await axios.post(`${baseURL}/api/account/signup`, {
             username: userObject.username,
             password: userObject.password,
         });
@@ -20,7 +20,7 @@ export const createUser = async (userObject) => {
 
 export const getCurrentUser = async () => {
     try {
-        const response = await axios.get('/account/isLogged');
+        const response = await axios.get(`api/account/isLogged`);
         return response.data;
     } catch (err) {
         return err;

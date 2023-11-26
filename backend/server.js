@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
+const cookieSession = require('cookie-session');
 const path = require('path');
 
 const AccountRouter = require('./routes/account');
@@ -13,18 +15,28 @@ mongoose.connect(MONGO_URI);
 app.use(express.json());
 app.use(express.static('dist'));
 
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next();
+app.use(cors());
+
+app.use(cookieSession({
+    name: 'session',
+    keys: ['pineapple'],
+  
+    // Cookie Options
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+}));
+
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//     next();
+// });
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
 
 app.use('/account', AccountRouter);
 app.use('/category', CategoryRouter);
-
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, '../dist/index.html'));
-// });
 
 app.listen(3000, () => {
     console.log('listening on 3000');

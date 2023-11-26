@@ -20,10 +20,11 @@ function Login(props) {
 
   const loginUser = async (userObject) => {
     try {
-      const response = await axios.post('/account/login', {
+      const response = await axios.post('http://localhost:3000/account/login', {
         username: userObject.username,
         password: userObject.password,
       });
+      console.log(response);
       if (response.data === 'wrong password' || response.data === 'error occurred') {
         alert('wrong username/password');
       } else {
@@ -38,7 +39,7 @@ function Login(props) {
   return (
     <div>
       <Navbar />
-      <div class="form-container">
+      <div className="form-container">
         <form id="add" className="mx-auto" style={{ width: '800px' }}>
           <h2>Login</h2>
           <div className="form-group">
@@ -54,7 +55,7 @@ function Login(props) {
             <br />
           </div>
           <button
-            class="button big-btn"
+            className="button big-btn"
             data-testid="button"
             onClick={(e) => {
               e.preventDefault();
