@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
     const categories = await Category.find();
     res.json(categories);
   } catch (e) {
-    res.send('error occurred');
+    res.send('error occurred: ' + e);
   }
 });
 
@@ -20,6 +20,22 @@ router.get('/getId', async (req, res) => {
     res.json(category);
   } catch (e) {
     res.send('error occurred');
+  }
+});
+
+
+// admin insert, delete, modify operations for categories 
+router.put('/putname', async (req, res) => {
+  try {
+    console.log("putname route reached");
+    const { name } = req.query;
+    const new_category = {
+      name: name,
+      questions: []
+    }
+    Category.insertMany([new_category]);
+  } catch (e) {
+    res.send('error occurred: ' + e);
   }
 });
 

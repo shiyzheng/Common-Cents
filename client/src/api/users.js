@@ -38,3 +38,34 @@ export const getProfileById = async (username) => {
         return err;
     }
 };
+
+export const getAchievementsById = async (username) => {
+    try {
+        const response = await axios.get(`${baseURL}/account/achievements`, {
+            params: { username },
+        });
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+};
+
+export const getAllAchievements = async () => {
+    try {
+        const response = await axios.get(`${baseURL}/account/allAchievements`);
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+};
+
+
+
+export const getLeaderboards = async () => {
+    try {
+        const response = await axios.get(`${baseURL}/account/leaderboards`);
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+};

@@ -1,6 +1,7 @@
 import Navbar from '../components/Navbar';
 import '../styles/Leaderboards.css';
 import { useState } from 'react';
+import { getLeaderboards } from '../api/users';
 
 function Leaderboards() {
     const usersPerPage = 10;
@@ -29,6 +30,15 @@ function Leaderboards() {
         { id: 21, name: "User 21", points: 500 },
         { id: 22, name: "User 22", points: 10 },
       ];
+      
+    // const [users, setUsers] = useState([]);
+    // useEffect(() => {
+    //   async function getLeaderboardsWrapper() {
+    //     const response = await getLeaderboards();
+    //     setUsers(response);
+    //   }
+    //   getLeaderboardsWrapper();
+    // }, [users.length]);
 
     
     const sortedUsers = [...users].sort((a, b) => b.points - a.points);
@@ -37,6 +47,8 @@ function Leaderboards() {
     const endIndex = startIndex + usersPerPage;
     const usersOnCurrentPage = sortedUsers.slice(startIndex, endIndex);
     const totalPages = Math.ceil(sortedUsers.length / usersPerPage);
+
+    
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
