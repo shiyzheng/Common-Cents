@@ -7,6 +7,7 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   points: { type: Object },
   achievements: [{ type: String }],
+  admin: { type: Boolean, default: false}
 });
 
 const User = model('User', userSchema);
