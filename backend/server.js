@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 
 const AccountRouter = require('./routes/account');
-const CategoryRouter = require('./routes/category');
+const CategoryRouter = require('./routes/category').router;
 
 const app = express();
 const MONGO_URI = process.env.MONGODB_URI || 'mongodb+srv://xianhanchen:xianhan@cluster0.3uugri4.mongodb.net/?retryWrites=true&w=majority';

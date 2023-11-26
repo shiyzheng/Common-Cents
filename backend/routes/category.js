@@ -4,13 +4,13 @@ const Category = require('../models/category');
 
 const router = express.Router();
 
-const NON_EXISTENT_OBJECT = {};
+const NO_OBJECT = {};
 
-const STATUS_CODES = {
+const STATUS = {
   OK: 200,
-  RESOURCE_CREATED: 201,
-  RESOURCE_EXISTS: 409,
-  RESOURCE_NOT_FOUND: 404,
+  CREATED: 201,
+  EXISTS: 409,
+  NOT_FOUND: 404,
 }
 
 function cloneObject(object) {
@@ -41,22 +41,17 @@ router.get('/:name', async (req, res) => {
   try {
     const category = await Category.findOne({ name: name });
     if (category != null) {
-      res.status(STATUS_CODES.OK);
+      res.status(STATUS.OK);
       res.json(category);
     } else {
-      res.status(STATUS_CODES.RESOURCE_NOT_FOUND);
-      res.json(NON_EXISTENT_OBJECT);
+      res.status(STATUS.NOT_FOUND);
+      res.json(NO_OBJECT);
     }
   } catch (e) {
     res.send('error occurred: ' + e);
   }
 });
 
-// admin insert, delete, modify operations for categories
-
-// put requests return the new resource that is created
-// or an empty object if the resource already exists
-// 409 status indicates resource already exists
 router.put('/:name', async (req, res) => {
   try {
     const { name } = req.params;
@@ -67,10 +62,10 @@ router.put('/:name', async (req, res) => {
     const category = await Category.findOne({ name: name });
     if (category == null) {
       Category.create(new_category);
-      res.status(STATUS_CODES.RESOURCE_CREATED);
+      res.status(STATUS.CREATED);
       res.json(new_category);
     } else {
-      res.status(STATUS_CODES.RESOURCE_EXISTS);
+      res.status(STATUS.EXISTS);
       res.json({});
     }
   } catch (e) {
@@ -87,13 +82,11 @@ router.delete('/:name', async (req, res) => {
     const clone = await cloneObject(category);
     if (category != null) {
       await Category.deleteOne({ name: name });
-      console.log("category from delete:::", category);
-      console.log("category from cloning:::", clone);
-      res.status(STATUS_CODES.OK);
+      res.status(STATUS.OK);
       res.type('application/json');
       res.json(clone);
     } else {
-      res.status(STATUS_CODES.RESOURCE_NOT_FOUND);
+      res.status(STATUS.NOT_FOUND);
       res.json({});
     }
   } catch (e) {
@@ -101,4 +94,7 @@ router.delete('/:name', async (req, res) => {
   }
 });
 
-module.exports = router;
+module.exports = {
+  router,
+  STATUS: STATUS
+};
