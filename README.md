@@ -5,17 +5,7 @@ To start client, run the following commands starting from the root directory:
 `npm run build`
 
 
-
+To start server, run the following commands starting from the root directory:
 nodemon enables the program to restart automatically after saving.
-
-To initially run the program, run the following commands starting from the root directory:
-
-`cd server`
-
 `npm install`
-
-`npm install express`
-
-`npm install -g nodemon`
-
-`nodemon`
+`npm run server` 
