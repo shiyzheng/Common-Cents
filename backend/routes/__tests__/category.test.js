@@ -212,7 +212,26 @@ describe('Routes Tests', function () {
         expect(res3.statusCode).toBe(STATUS.CREATED); // resource created
         expect(res4.statusCode).toBe(STATUS.OK); // resource exists
         expect(res5.statusCode).toBe(STATUS.OK); // resource deleted
-        expect(res6.statusCode).toBe(STATUS.NOT_FOUND); // resource not found 
+        expect(res6.statusCode).toBe(STATUS.NOT_FOUND); // resource not found
+
+        expect(res1.body.questions[0].question).toEqual(_TESTS.QUESTION1.question);
+        expect(res2.body.questions[0].question).toEqual(_TESTS.QUESTION1.question)
+
+        // the created resource is a question, which will be returned
+        expect(res3.body.question).toEqual(_TESTS.QUESTION2.question);
+
+        // the resource from GET is a category containing two questions
+        expect(res4.body.questions[0].question).toEqual(_TESTS.QUESTION1.question);
+        expect(res4.body.questions[1].question).toEqual(_TESTS.QUESTION2.question);
+
+        expect(res5.body.questions[0].question).toEqual(_TESTS.QUESTION1.question);
+        expect(res5.body.questions[1].question).toEqual(_TESTS.QUESTION2.question);
+        expect(res6.body).toEqual(_TESTS.NO_OBJECT);
+
+
+
+
+
     });
 
 });
