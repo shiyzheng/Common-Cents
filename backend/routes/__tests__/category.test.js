@@ -19,11 +19,17 @@ const _TESTS = {
     NO_OBJECT: {},
 
     QUESTION_TOPIC: "Topic With Questions",
-    QUESTION: {
-        question: "Test Question Text?",
+    QUESTION1: {
+        question: "Test Question1 Text?",
         possibleAnswers: ["a1", "a2", "a3", "a4"],
         correctAnswer: "a3",
+    },
+    QUESTION2: {
+        question: "Test Question2 Text?",
+        possibleAnswers: ["b1", "b2", "b3", "b4"],
+        correctAnswer: "b1",
     }
+
 };
 
 // builds query params string given object of key value pairs
@@ -58,12 +64,12 @@ describe('Routes Tests', function () {
         });
 
     test('Tests getting topic by name', async () => {
-            const index = 0;
+        const index = 0;
         const res =
             await request(app).get(`${PATH_PREFIX}${_TESTS.BASE_NAMES[index]}`);
-            expect(res.statusCode).toEqual(200);
-            // test that correct topic is gotten 
-            expect(res.body.name).toEqual(_TESTS.BASE_NAMES[index]);
+        expect(res.statusCode).toEqual(200);
+        // test that correct topic is gotten 
+        expect(res.body.name).toEqual(_TESTS.BASE_NAMES[index]);
     });
 
     test('Tests getting non-existent topic', async () => {
@@ -116,7 +122,7 @@ describe('Routes Tests', function () {
             name: "category-name",
             questions: []
         }
-        const question = _TESTS.QUESTION;
+        const question = _TESTS.QUESTION1;
         expect(questionInCategory(category, question)).toBeFalsy();
 
         category = updateCategory(category, question);
@@ -124,11 +130,11 @@ describe('Routes Tests', function () {
     })
 
     test('Tests getting a question from a url string', async () => {
-        const path_for_question = `${PATH_PREFIX}${_TESTS.QUESTION}`;
-        const queryParamsString = qs.stringify(_TESTS.QUESTION);
+        const path_for_question = `${PATH_PREFIX}${_TESTS.QUESTION1}`;
+        const queryParamsString = qs.stringify(_TESTS.QUESTION1);
         const queryParamsPath = `${path_for_question}?${queryParamsString}`;
         const parsedQuestion = getQuestion(queryParamsPath);
-        expect(parsedQuestion).toEqual(_TESTS.QUESTION);
+        expect(parsedQuestion).toEqual(_TESTS.QUESTION1);
     });
 
     test('Tests creating a category with query parameters', async () => {
@@ -138,15 +144,16 @@ describe('Routes Tests', function () {
         // deletes topic if exist for some reason
         const res0 = await request(app).delete(path_for_question);
 
-        const queryParamsString = qs.stringify(_TESTS.QUESTION);
+        const queryParamsString = qs.stringify(_TESTS.QUESTION1);
         const queryParamsPath = `${path_for_question}?${queryParamsString}`;
-
 
         const res1 = await request(app).put(queryParamsPath);
         const res2 = await request(app).get(path_for_question);
         const res3 = await request(app).delete(path_for_question);
         const res4 = await request(app).get(path_for_question);
 
+        // tests whether first deletion deleted or did not delete anything
+        // tests that the returned status is OK or NOT FOUND
         expect([STATUS.OK, STATUS.NOT_FOUND]).toEqual(expect.arrayContaining([res0.statusCode]));
 
         expect(res1.statusCode).toBe(STATUS.CREATED); // resource created
@@ -160,11 +167,52 @@ describe('Routes Tests', function () {
         // tests that correct question-topic object is returned from
         // put, get, and delete operations by testing the question within the
         // topic and that the question topic was successfully deleted.
-        expect(res1.body.questions[0].question).toEqual(_TESTS.QUESTION.question)
-        expect(res2.body.questions[0].question).toEqual(_TESTS.QUESTION.question)
-        expect(res3.body.questions[0].question).toEqual(_TESTS.QUESTION.question)
+        expect(res1.body.questions[0].question).toEqual(_TESTS.QUESTION1.question)
+        expect(res2.body.questions[0].question).toEqual(_TESTS.QUESTION1.question)
+        expect(res3.body.questions[0].question).toEqual(_TESTS.QUESTION1.question)
         expect(res4.body).toEqual(_TESTS.NO_OBJECT)
 
+    });
+
+    test('Tests updating existing category with query parameters', async () => {
+        const path_for_question = `${PATH_PREFIX}${_TESTS.QUESTION_TOPIC}`;
+
+        const queryParamsString = qs.stringify(_TESTS.QUESTION1);
+        const queryParamsPath = `${path_for_question}?${queryParamsString}`;
+
+        // deletes category if exists
+        const res0 = await request(app).delete(path_for_question);
+
+        // creates a new question, then gets the category with the new question 
+        const res1 = await request(app).put(queryParamsPath);
+        const res2 = await request(app).get(path_for_question);
+
+        // constructs a new path to be able to insert another question
+        const queryParamsString2 = qs.stringify(_TESTS.QUESTION2);
+        const queryParamsPath2 = `${path_for_question}?${queryParamsString2}`;
+
+        // creates a new question, then gets the category with the new question 
+        const res3 = await request(app).put(queryParamsPath2)
+        const res4 = await request(app).get(path_for_question);
+
+        // deletes the created category
+        const res5 = await request(app).delete(path_for_question)
+        const res6 = await request(app).get(path_for_question);
+
+        // tests whether first deletion deleted or did not delete anything
+        // tests that the returned status is OK or NOT FOUND
+        expect([STATUS.OK, STATUS.NOT_FOUND]).toEqual(expect.arrayContaining([res0.statusCode]));
+
+        // tests that the first put worked correctly
+        expect(res1.statusCode).toBe(STATUS.CREATED); // resource created
+        expect(res2.statusCode).toBe(STATUS.OK); // resource exists
+
+        // tests that the second put correctly updates and deletes the resource
+        // using put, get, and delete operations 
+        expect(res3.statusCode).toBe(STATUS.CREATED); // resource created
+        expect(res4.statusCode).toBe(STATUS.OK); // resource exists
+        expect(res5.statusCode).toBe(STATUS.OK); // resource deleted
+        expect(res6.statusCode).toBe(STATUS.NOT_FOUND); // resource not found 
     });
 
 });

@@ -127,8 +127,9 @@ router.put('/:name', async (req, res) => {
         res.json({});
       } else {
         const updated_category = updateCategory(existing_category, question);
-        await Category.deleteOne({ name: req.params.name });
-        await Category.create(updated_category);
+        console.log("updated category:::", updated_category);
+        await Category.findOneAndUpdate({ name: req.params.name },
+          { questions: updated_category.questions })
         res.status(STATUS.CREATED);
         res.json(question);
       }
