@@ -52,6 +52,7 @@ export default function AdminConsole() {
     // maps ids of buttons to the operation that button is responsible for
     const ID_TO_OPERATION = {
         '0': addCategoryNameForm,
+        '1': addCategoryNameForm,
     }
 
     // invokes a function in this file that returns a list of objects
