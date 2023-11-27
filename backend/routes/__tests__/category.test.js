@@ -276,7 +276,52 @@ describe('Routes Tests', function () {
 
         // the category question should be preserved after the second put
         expect(res4.body.questions[0].question).toEqual(_TESTS.QUESTION1.question);
-
     });
 
+
+    test("Tests deleting a question", async () => {
+        const category_path = `${PATH_PREFIX}${_TESTS.QUESTION_TOPIC}`;
+
+        const queryParamsString = qs.stringify(_TESTS.QUESTION1);
+        const final_question_path = `${category_path}?${queryParamsString}`;
+
+        const queryParamsString2 = qs.stringify(_TESTS.QUESTION2);
+        const final_question_path2 = `${category_path}?${queryParamsString2}`;
+
+        // deletes category if exists
+        const res0 = await request(app).delete(category_path);
+
+        // two questions should be placed
+        const res1 = await request(app).put(final_question_path);
+        const res2 = await request(app).get(category_path);
+        const res3 = await request(app).put(final_question_path2);
+        const res4 = await request(app).get(category_path);
+
+        // delete the first question that was added
+        const res5 = await request(app).delete(final_question_path);      
+        const res6 = await request(app).get(final_question_path);
+
+        // tests whether first deletion deleted or did not delete anything
+        // tests that the returned status is OK or NOT FOUND
+        expect([STATUS.OK, STATUS.NOT_FOUND]).toEqual(expect.arrayContaining([res0.statusCode]));
+
+        // tests that the two puts worked correctly
+        expect(res1.statusCode).toBe(STATUS.CREATED); // resource created
+        expect(res3.statusCode).toBe(STATUS.CREATED); // resource created
+
+        // tests delete returns correct status code 
+        expect(res5.statusCode).toBe(STATUS.OK); // resource deleted
+        expect(res6.statusCode).toBe(STATUS.OK); // category still exists
+
+        // tests correct lengths before and after delete
+        expect(res2.body.questions.length).toBe(1);
+        expect(res4.body.questions.length).toBe(2);
+        expect(res6.body.questions.length).toBe(1);
+
+        // tests that the deleted question is correct
+        expect(res5.body.question).toEqual(_TESTS.QUESTION1.question);
+
+        // tests that remaining question is preserved
+        expect(res6.body.questions[0].question).toEqual(_TESTS.QUESTION2.question);
+    });
 });

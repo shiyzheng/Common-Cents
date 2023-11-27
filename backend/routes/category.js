@@ -16,10 +16,6 @@ const STATUS = {
   NOT_FOUND: 404,
 }
 
-// specifies prefix of the query parameter name for questions
-const QUESTION_QUERY_PREFIX = "question";
-const QUESTION_NUMBERS = [1, 2, 3, 4, 5];
-
 function cloneObject(object) {
   return JSON.parse(JSON.stringify(object));
 }
@@ -142,29 +138,72 @@ router.put('/:name', async (req, res) => {
   }
 });
 
-// delete requests return the new resource that is created 
+// delete requests return the new resource that is created
 // or an empty object if the resource does not exist
-router.delete('/:name', async (req, res) => {
+// if the url contains a question, then you must delete
+// just the question and not the category
+
+async function routerDeleteCategory(req, res) {
   try {
-    const { name } = req.params;
-    const category = await Category.findOne({ name: name });
-    const clone = await cloneObject(category);
+    const category = await Category.findOne({ name: req.params.name });
     if (category != null) {
-      await Category.deleteOne({ name: name });
+      await Category.deleteOne({ name: req.params.name });
       res.status(STATUS.OK);
-      res.type('application/json');
-      res.json(clone);
+      res.json(category);
     } else {
       res.status(STATUS.NOT_FOUND);
       res.json({});
     }
   } catch (e) {
+    console.error('error occurred:' + e);
     res.send('error occurred: ' + e);
+  }
+}
+
+async function routerDeleteQuestion(req, res, question) {
+  try {
+    const category = await Category.findOne({ name: req.params.name });
+    if (category != null) {
+      if (questionInCategory(category, question)) {
+        // console.log("question schema:::", question);
+        // console.log("question.question:::", question.question);
+        // console.log("req.params.name:::", req.params.name);
+        await Category.updateOne(
+          { name: req.params.name }, // specifies category name
+          {
+            $pull: {
+              questions: { question: question.question }
+            }
+          },
+        );
+        res.status(STATUS.OK);
+        res.json(question);
+      } else {
+        res.status(STATUS.NOT_FOUND);
+        res.json({});
+      }
+    } else {
+      res.status(STATUS.NOT_FOUND);
+      res.json({});
+    }
+  } catch (e) {
+    console.error('error occurred:' + e);
+    res.send('error occurred: ' + e);
+  }
+}
+
+router.delete('/:name', async (req, res) => {
+  const question = getQuestion(req.originalUrl);
+  if (question === null) {
+    routerDeleteCategory(req, res); 
+  } else {
+    routerDeleteQuestion(req, res, question);
   }
 });
 
 module.exports = {
   router,
+
   STATUS: STATUS,
 
   questionInCategory,  
