@@ -98,7 +98,7 @@ function Profile(props) {
                 <ul className="list-group list-group-flush">
                 </ul>
             </div>
-            { profile }
+            {/* { profile } */}
         </div>
     )
 }

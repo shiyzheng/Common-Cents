@@ -50,6 +50,50 @@ code {
   font-weight: bold;
 }
 
+.form-container {
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  display: flex;
+}
+
+form {
+  text-align: center;
+  width: 50%;
+}
+
+.button.big-btn {
+  cursor: pointer;
+  text-align: center;
+  background-color: #04aa6d;
+  border: none;
+  width: 40%;
+  padding: 6px 28px;
+  font-size: 16px;
+}
+
+.form-container {
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  display: flex;
+}
+
+form {
+  text-align: center;
+  width: 50%;
+}
+
+.button.big-btn {
+  cursor: pointer;
+  text-align: center;
+  background-color: #04aa6d;
+  border: none;
+  width: 40%;
+  padding: 6px 28px;
+  font-size: 16px;
+}
+
 .achievement-list {
   flex-direction: column;
   align-items: center;

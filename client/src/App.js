@@ -18,24 +18,25 @@ function App() {
   const [password, setPassword] = useState('');
   const [categories, setCategories] = useState([]);
 
-//   useEffect(() => {
-//     const intervalID = setInterval(() => {
-//       const check = async () => {
-//         const user = await axios.get('/account/isLogged');
-//         if (user.data == null || user.data === '') {
-//           setLogin(false);
-//         } else {
-//           setUsername(user.data);
-//           setLogin(true);
-//         }
-//       };
-//       check();
-//     }, 2000);
-//     return () => clearInterval(intervalID);
-//   }, []);
+  useEffect(() => {
+    const intervalID = setInterval(() => {
+      const check = async () => {
+        const user = await axios.get('http://localhost:3000/account/isLogged');
+        console.log(user);
+        if (user.data == null || user.data === '') {
+          setLogin(false);
+        } else {
+          setUsername(user.data);
+          setLogin(true);
+        }
+      };
+      check();
+    }, 2000);
+    return () => clearInterval(intervalID);
+  }, []);
 
   const logout = async () => {
-    await axios.post('/account/logout');
+    await axios.post('http://localhost:3000/account/logout');
     setUsername('');
     setLogin(false);
   };

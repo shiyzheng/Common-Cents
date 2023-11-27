@@ -20,11 +20,11 @@ function Signup(props) {
 
   const createUser = async (userObject) => {
     try {
-      const response = await axios.post('/account/signup', {
+      const response = await axios.post("http://localhost:3000/account/signup", {
         username: userObject.username,
         password: userObject.password,
       });
-      // console.log(response);
+      console.log(response);
       if (response.data === 'username taken' || response.data === 'error occured') {
         alert(`${response.data}`);
         setLogin(false);
@@ -33,6 +33,7 @@ function Signup(props) {
         navigate('/');
       }
     } catch (err) {
+      console.log(err);
       alert('user signup failed');
     }
   };
@@ -40,7 +41,7 @@ function Signup(props) {
   return (
     <div>
       <Navbar />
-      <div class="form-container">
+      <div className="form-container">
         <form id="add" className="mx-auto" style={{ width: '800px' }}>
           <h2>Create your profile</h2>
           <div className="form-group">

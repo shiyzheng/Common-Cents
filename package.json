@@ -19,10 +19,17 @@
     "scripts": {
         "build": "parcel client/src/index.html",
         "server": "node backend/server.js",
-        "json-server": "json-server --watch client/src/json-server/db.json"
+        "json-server": "json-server --watch client/src/json-server/db.json",
+        "test": "jest"
     },
     "devDependencies": {
         "buffer": "^6.0.3",
-        "process": "^0.11.10"
+        "process": "^0.11.10",
+        "supertest": "^6.3.3"
+    },
+    "jest": {
+        "moduleNameMapper": {
+            "axios": "axios/dist/node/axios.cjs"
+        }
     }
 }
