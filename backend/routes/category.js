@@ -41,7 +41,6 @@ function cloneObject(object) {
 function questionInCategory(category, question) {
   let ret = false;
   category.questions.forEach(element => {
-    console.log("element, question", element, question);
     console.log(_.isEqual(element, question));
     if (_.isEqual(element, question)) {
       ret = true;
@@ -60,7 +59,7 @@ function updateCategory(category, question) {
 function getQuestion(url) {
   const tokens = url.split("?");
   if (tokens.length < 2) {
-    return {};
+    return null;
   } else {
     return qs.parse(tokens[1]);
   }
@@ -94,9 +93,8 @@ router.get('/getId', async (req, res) => {
 });
 
 router.get('/:name', async (req, res) => {
-  const { name } = req.params;
   try {
-    const category = await Category.findOne({ name: name });
+    const category = await Category.findOne({ name: req.params.name});
     if (category != null) {
       res.status(STATUS.OK);
       res.json(category);
@@ -110,17 +108,30 @@ router.get('/:name', async (req, res) => {
 });
 
 // used to create a new category if one does not exist yet
+// also used to add a question in an existing category if the question
+// is not already in the category
 router.put('/:name', async (req, res) => {
   try {
     const existing_category = await Category.findOne({ name: req.params.name});
+    const question = getQuestion(req.originalUrl);
     if (existing_category == null) {
-      const new_category = buildEmptyCategory(req.params.name); 
+      let new_category = buildEmptyCategory(req.params.name); 
+      new_category = updateCategory(new_category, question);
       Category.create(new_category);
       res.status(STATUS.CREATED);
       res.json(new_category);
     } else {
-      res.status(STATUS.EXISTS);
-      res.json({});
+      console.log("parsed question and url:::", question, req.originalUrl);
+      if (questionInCategory(existing_category, question) || question == null) {
+        res.status(STATUS.EXISTS);
+        res.json({});
+      } else {
+        const updated_category = updateCategory(existing_category, question);
+        await Category.deleteOne(req.params.name);
+        Category.create(updated_category);
+        res.status(STATUS.CREATED);
+        res.json(question);
+      }
     }
   } catch (e) {
     res.send('error occurred: ' + e);

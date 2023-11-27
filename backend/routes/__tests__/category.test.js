@@ -131,39 +131,39 @@ describe('Routes Tests', function () {
         expect(parsedQuestion).toEqual(_TESTS.QUESTION);
     });
 
-    // test('Tests creating a category with query parameters', async () => {
+    test('Tests creating a category with query parameters', async () => {
 
-    //     const path_for_question = `${PATH_PREFIX}${_TESTS.QUESTION_TOPIC}`;
+        const path_for_question = `${PATH_PREFIX}${_TESTS.QUESTION_TOPIC}`;
 
-    //     // deletes topic if exist for some reason
-    //     const res0 = await request(app).delete(path_for_question);
+        // deletes topic if exist for some reason
+        const res0 = await request(app).delete(path_for_question);
 
-    //     const queryParamsString = qs.stringify(_TESTS.QUESTION);
-    //     const queryParamsPath = `${path_for_question}?${queryParamsString}`;
+        const queryParamsString = qs.stringify(_TESTS.QUESTION);
+        const queryParamsPath = `${path_for_question}?${queryParamsString}`;
 
-    //     const res1 = await request(app).put(queryParamsPath);
-    //     const res2 = await request(app).get(path_for_question);
-    //     const res3 = await request(app).delete(path_for_question);
-    //     const res4 = await request(app).get(path_for_question);
+        const res1 = await request(app).put(queryParamsPath);
+        const res2 = await request(app).get(path_for_question);
+        const res3 = await request(app).delete(path_for_question);
+        const res4 = await request(app).get(path_for_question);
 
-    //     expect([204, 404]).toEqual(expect.arrayContaining([res0.statusCode]));
+        expect([204, 404]).toEqual(expect.arrayContaining([res0.statusCode]));
 
-    //     expect(res1.statusCode).toBe(STATUS.CREATED); // resource created
-    //     expect(res2.statusCode).toBe(STATUS.OK); // resource exists
-    //     expect(res3.statusCode).toBe(STATUS.OK); // resource deleted
-    //     expect(res4.statusCode).toBe(STATUS.NOT_FOUND); // resource not found 
+        expect(res1.statusCode).toBe(STATUS.CREATED); // resource created
+        expect(res2.statusCode).toBe(STATUS.OK); // resource exists
+        expect(res3.statusCode).toBe(STATUS.OK); // resource deleted
+        expect(res4.statusCode).toBe(STATUS.NOT_FOUND); // resource not found 
 
-    //     // questions array was given one question, therefore should be size 1
-    //     expect(res1.body.questions.length).toBe(1);
+        // questions array was given one question, therefore should be size 1
+        expect(res1.body.questions.length).toBe(1);
 
-    //     // tests that correct question-topic object is returned from
-    //     // put, get, and delete operations by testing the question within the
-    //     // topic and that the question topic was successfully deleted.
-    //     expect(res1.body.questions[0]).toEqual(`${_TESTS.QUESTION}`)
-    //     expect(res2.body.questions[0]).toEqual(`${_TESTS.QUESTION}`)
-    //     expect(res3.body.questions[0]).toEqual(`${_TESTS.QUESTION}`)
-    //     expect(res4.body).toEqual(_TESTS.NO_OBJECT)
+        // tests that correct question-topic object is returned from
+        // put, get, and delete operations by testing the question within the
+        // topic and that the question topic was successfully deleted.
+        expect(res1.body.questions[0]).toEqual(`${_TESTS.QUESTION}`)
+        expect(res2.body.questions[0]).toEqual(`${_TESTS.QUESTION}`)
+        expect(res3.body.questions[0]).toEqual(`${_TESTS.QUESTION}`)
+        expect(res4.body).toEqual(_TESTS.NO_OBJECT)
 
-    // });
+    });
 
 });
