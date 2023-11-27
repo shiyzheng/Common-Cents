@@ -165,11 +165,8 @@ async function routerDeleteQuestion(req, res, question) {
     const category = await Category.findOne({ name: req.params.name });
     if (category != null) {
       if (questionInCategory(category, question)) {
-        // console.log("question schema:::", question);
-        // console.log("question.question:::", question.question);
-        // console.log("req.params.name:::", req.params.name);
         await Category.updateOne(
-          { name: req.params.name }, // specifies category name
+          { name: req.params.name },
           {
             $pull: {
               questions: { question: question.question }

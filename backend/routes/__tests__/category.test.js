@@ -301,6 +301,11 @@ describe('Routes Tests', function () {
         const res5 = await request(app).delete(final_question_path);      
         const res6 = await request(app).get(final_question_path);
 
+        // deletes category 
+        const res7 = await request(app).delete(category_path);
+        const res8 = await request(app).get(category_path);
+
+
         // tests whether first deletion deleted or did not delete anything
         // tests that the returned status is OK or NOT FOUND
         expect([STATUS.OK, STATUS.NOT_FOUND]).toEqual(expect.arrayContaining([res0.statusCode]));
@@ -323,5 +328,43 @@ describe('Routes Tests', function () {
 
         // tests that remaining question is preserved
         expect(res6.body.questions[0].question).toEqual(_TESTS.QUESTION2.question);
+
+        // tests category is deleted  
+        expect(res7.body.name).toEqual(_TESTS.QUESTION_TOPIC);
+        expect(res8.body).toEqual(_TESTS.NO_OBJECT);
+    });
+
+    test('Tests deleting a question that does not exist', async () => {
+        const category_path = `${PATH_PREFIX}${_TESTS.QUESTION_TOPIC}`;
+
+        const queryParamsString = qs.stringify(_TESTS.QUESTION1);
+        const final_question_path = `${category_path}?${queryParamsString}`;
+
+        const queryParamsString2 = qs.stringify(_TESTS.QUESTION2);
+        const final_question_path2 = `${category_path}?${queryParamsString2}`;
+
+        // deletes category if exists
+        const res0 = await request(app).delete(category_path);
+
+        // puts question in the database
+        const res1 = await request(app).put(final_question_path);
+
+        // deletes question that does not exist
+        const res2 = await request(app).delete(final_question_path2);
+
+        expect([STATUS.OK, STATUS.NOT_FOUND]).toEqual(expect.arrayContaining([res0.statusCode]));
+
+        // tests that put worked
+        expect(res1.statusCode).toBe(STATUS.CREATED);
+
+        // tests that delete does not find an object
+        expect(res2.statusCode).toBe(STATUS.NOT_FOUND);
+
+        // tests that category resource is returned from put
+        expect(res1.body.name).toEqual(_TESTS.QUESTION_TOPIC);
+
+        // tests that no object is returned from deleting 
+        expect(res2.body).toEqual(_TESTS.NO_OBJECT);
+
     });
 });
