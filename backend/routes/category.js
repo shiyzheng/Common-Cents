@@ -40,8 +40,11 @@ function cloneObject(object) {
 // returns true if the question is already in the category, else returns false
 function questionInCategory(category, question) {
   let ret = false;
+  if (question === null) {
+    return ret;
+  }
   category.questions.forEach(element => {
-    if (_.isEqual(element, question)) {
+    if (_.isEqual(element.question, question.question)) {
       ret = true;
     }
   })
@@ -127,7 +130,6 @@ router.put('/:name', async (req, res) => {
         res.json({});
       } else {
         const updated_category = updateCategory(existing_category, question);
-        console.log("updated category:::", updated_category);
         await Category.findOneAndUpdate({ name: req.params.name },
           { questions: updated_category.questions })
         res.status(STATUS.CREATED);

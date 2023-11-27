@@ -224,13 +224,58 @@ describe('Routes Tests', function () {
         expect(res4.body.questions[0].question).toEqual(_TESTS.QUESTION1.question);
         expect(res4.body.questions[1].question).toEqual(_TESTS.QUESTION2.question);
 
+        // the deleted resource should be a category containing two questions
         expect(res5.body.questions[0].question).toEqual(_TESTS.QUESTION1.question);
         expect(res5.body.questions[1].question).toEqual(_TESTS.QUESTION2.question);
+
+        // after deletion, an empty object should be returned after GET 
         expect(res6.body).toEqual(_TESTS.NO_OBJECT);
 
+    });
+
+    test("Tests putting the same resource twice", async () => {
+        const category_path = `${PATH_PREFIX}${_TESTS.QUESTION_TOPIC}`;
+
+        const queryParamsString = qs.stringify(_TESTS.QUESTION1);
+        const final_question_path = `${category_path}?${queryParamsString}`;
+
+        // deletes category if exists
+        const res0 = await request(app).delete(category_path);
+
+        // creates a new question, then gets the category with the new question 
+        const res1 = await request(app).put(final_question_path);
+        const res2 = await request(app).get(category_path);
+
+        // uses same put request a second time, then gets the category 
+        const res3 = await request(app).put(final_question_path);
+        const res4 = await request(app).get(category_path);
+
+        // tests whether first deletion deleted or did not delete anything
+        // tests that the returned status is OK or NOT FOUND
+        expect([STATUS.OK, STATUS.NOT_FOUND]).toEqual(expect.arrayContaining([res0.statusCode]));
+
+        // tests that the first put worked correctly
+        expect(res1.statusCode).toBe(STATUS.CREATED); // resource created
+        expect(res2.statusCode).toBe(STATUS.OK); // resource exists
+
+        // the second put should return that the resource already exists
+        expect(res3.statusCode).toBe(STATUS.EXISTS);
+        expect(res4.statusCode).toBe(STATUS.OK);
+
+        // the length should be the same value of 1 after the same put operation
+        expect(res2.body.questions.length).toBe(1);
+        expect(res4.body.questions.length).toBe(1);
 
 
+        // first put should work correctly
+        expect(res1.body.questions[0].question).toEqual(_TESTS.QUESTION1.question);
+        expect(res2.body.questions[0].question).toEqual(_TESTS.QUESTION1.question)
 
+        // the second put should return an empty object since there is no change 
+        expect(res3.body).toEqual(_TESTS.NO_OBJECT)
+
+        // the category question should be preserved after the second put
+        expect(res4.body.questions[0].question).toEqual(_TESTS.QUESTION1.question);
 
     });
 
