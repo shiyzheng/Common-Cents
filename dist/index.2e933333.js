@@ -33539,6 +33539,10 @@ var _achievements = require("./pages/achievements");
 var _achievementsDefault = parcelHelpers.interopDefault(_achievements);
 var _leaderboards = require("./pages/leaderboards");
 var _leaderboardsDefault = parcelHelpers.interopDefault(_leaderboards);
+var _categoryView = require("./components/CategoryView");
+var _categoryViewDefault = parcelHelpers.interopDefault(_categoryView);
+var _categoryPage = require("./components/CategoryPage");
+var _categoryPageDefault = parcelHelpers.interopDefault(_categoryPage);
 var _s = $RefreshSig$();
 function App() {
     _s();
@@ -33546,21 +33550,24 @@ function App() {
     const [username, setUsername] = (0, _react.useState)("");
     const [password, setPassword] = (0, _react.useState)("");
     const [categories, setCategories] = (0, _react.useState)([]);
-    (0, _react.useEffect)(()=>{
-        const intervalID = setInterval(()=>{
-            const check = async ()=>{
-                const user = await (0, _axiosDefault.default).get("http://localhost:3000/account/isLogged");
-                console.log(user);
-                if (user.data == null || user.data === "") setLogin(false);
-                else {
-                    setUsername(user.data);
-                    setLogin(true);
-                }
-            };
-            check();
-        }, 2000);
-        return ()=>clearInterval(intervalID);
-    }, []);
+    // useEffect(() => {
+    //   const intervalID = setInterval(() => {
+    //     const check = async () => {
+    //       const user = await axios.get('http://localhost:3000/account/isLogged');
+    //       if (user.data.username == null || user.data.username === '') {
+    //         setLogin(false);
+    //         // console.log(false);
+    //         console.log(user.data.username);
+    //       } else {
+    //         setUsername(user.data.username);
+    //         console.log(user.data.username);
+    //         setLogin(true);
+    //       }
+    //     };
+    //     check();
+    //   }, 2000);
+    //   return () => clearInterval(intervalID);
+    // }, []);
     const logout = async ()=>{
         await (0, _axiosDefault.default).post("http://localhost:3000/account/logout");
         setUsername("");
@@ -33572,10 +33579,12 @@ function App() {
             element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(Home, {
                 login: login,
                 username: username,
-                logout: logout
+                logout: logout,
+                categories: categories,
+                setCategories: setCategories
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 44,
+                lineNumber: 48,
                 columnNumber: 52
             }, this)
         },
@@ -33590,7 +33599,7 @@ function App() {
                 password: password
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 45,
+                lineNumber: 49,
                 columnNumber: 32
             }, this)
         },
@@ -33605,7 +33614,7 @@ function App() {
                 password: password
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 46,
+                lineNumber: 50,
                 columnNumber: 33
             }, this)
         },
@@ -33615,30 +33624,48 @@ function App() {
                 login: login
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 47,
+                lineNumber: 51,
                 columnNumber: 38
             }, this)
         },
         {
             path: "/achievements",
-            element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _achievementsDefault.default), {}, void 0, false, {
+            element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _achievementsDefault.default), {
+                login: login,
+                username: username
+            }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 48,
+                lineNumber: 52,
                 columnNumber: 39
             }, this)
         },
         {
             path: "/leaderboards",
-            element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _leaderboardsDefault.default), {}, void 0, false, {
+            element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _leaderboardsDefault.default), {
+                login: login,
+                username: username
+            }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 49,
+                lineNumber: 53,
                 columnNumber: 39
+            }, this)
+        },
+        // { path: '/Home', element: <Categories login={login} categories={categories} setCategories={setCategories} username={username} /> },
+        {
+            path: "/Category/:name",
+            element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _categoryPageDefault.default), {
+                login: login,
+                username: username
+            }, void 0, false, {
+                fileName: "client/src/App.js",
+                lineNumber: 55,
+                columnNumber: 41
             }, this)
         }
     ]);
     return element;
 }
-_s(App, "epGRucsC49Y5SbbCt0D0U3yqsNM=", false, function() {
+_s(App, "RCxvf6PcRWg2EKAUsV1XYaD48cg=", false, function() {
     return [
         (0, _reactRouterDom.useRoutes)
     ];
@@ -33646,12 +33673,12 @@ _s(App, "epGRucsC49Y5SbbCt0D0U3yqsNM=", false, function() {
 _c = App;
 function Home(props) {
     // console.log('homepage');
-    const { login, username, logout } = props;
+    const { login, username, logout, categories, setCategories } = props;
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navbarDefault.default), {}, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 61,
+                lineNumber: 65,
                 columnNumber: 9
             }, this),
             !login && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -33661,7 +33688,7 @@ function Home(props) {
                 ]
             }, void 0, true, {
                 fileName: "client/src/App.js",
-                lineNumber: 63,
+                lineNumber: 67,
                 columnNumber: 9
             }, this),
             login && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -33674,7 +33701,7 @@ function Home(props) {
                         ]
                     }, void 0, true, {
                         fileName: "client/src/App.js",
-                        lineNumber: 70,
+                        lineNumber: 74,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -33684,27 +33711,27 @@ function Home(props) {
                         children: "Logout"
                     }, void 0, false, {
                         fileName: "client/src/App.js",
-                        lineNumber: 75,
+                        lineNumber: 79,
                         columnNumber: 11
                     }, this),
-                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
-                        to: "/home",
-                        children: "Categories"
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _categoryViewDefault.default), {
+                        categories: categories,
+                        setCategories: setCategories
                     }, void 0, false, {
                         fileName: "client/src/App.js",
-                        lineNumber: 76,
+                        lineNumber: 80,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "client/src/App.js",
-                lineNumber: 69,
+                lineNumber: 73,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "client/src/App.js",
-        lineNumber: 60,
+        lineNumber: 64,
         columnNumber: 5
     }, this);
 }
@@ -33719,7 +33746,7 @@ $RefreshReg$(_c1, "Home");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"9xmpe","axios":"jo6P5","./components/Login":"eiYYT","./components/Signup":"cgjCG","./components/Profile":"elIyQ","./components/Navbar":"euCXA","./pages/achievements":"bfFHJ","./pages/leaderboards":"2KFMo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"jo6P5":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"9xmpe","axios":"jo6P5","./components/Login":"eiYYT","./components/Signup":"cgjCG","./components/Profile":"elIyQ","./components/Navbar":"euCXA","./pages/achievements":"bfFHJ","./pages/leaderboards":"2KFMo","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./components/CategoryView":"c17qZ","./components/CategoryPage":"aPzBw"}],"jo6P5":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>(0, _axiosJsDefault.default));
@@ -38111,14 +38138,13 @@ function Login(props) {
             const response = await (0, _axiosDefault.default).post("http://localhost:3000/account/login", {
                 username: userObject.username,
                 password: userObject.password
+            }, {
+                withCredentials: true
             });
-            console.log(response);
             if (response.data === "wrong password" || response.data === "error occurred") alert("wrong username/password");
-            else {
-                setLogin(true);
-                navigate("/");
-            }
+            else setLogin(true);
         } catch (err) {
+            console.log(err);
             alert("user authentication failed");
         }
     };
@@ -38126,7 +38152,7 @@ function Login(props) {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navbarDefault.default), {}, void 0, false, {
                 fileName: "client/src/components/Login.js",
-                lineNumber: 41,
+                lineNumber: 43,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -38142,7 +38168,7 @@ function Login(props) {
                             children: "Login"
                         }, void 0, false, {
                             fileName: "client/src/components/Login.js",
-                            lineNumber: 44,
+                            lineNumber: 46,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -38159,23 +38185,23 @@ function Login(props) {
                                         onChange: (e)=>setUsername(e.target.value)
                                     }, void 0, false, {
                                         fileName: "client/src/components/Login.js",
-                                        lineNumber: 47,
+                                        lineNumber: 49,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "client/src/components/Login.js",
-                                    lineNumber: 46,
+                                    lineNumber: 48,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                                     fileName: "client/src/components/Login.js",
-                                    lineNumber: 49,
+                                    lineNumber: 51,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "client/src/components/Login.js",
-                            lineNumber: 45,
+                            lineNumber: 47,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -38192,23 +38218,23 @@ function Login(props) {
                                         onChange: (e)=>setPassword(e.target.value)
                                     }, void 0, false, {
                                         fileName: "client/src/components/Login.js",
-                                        lineNumber: 53,
+                                        lineNumber: 55,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "client/src/components/Login.js",
-                                    lineNumber: 52,
+                                    lineNumber: 54,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                                     fileName: "client/src/components/Login.js",
-                                    lineNumber: 55,
+                                    lineNumber: 57,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "client/src/components/Login.js",
-                            lineNumber: 51,
+                            lineNumber: 53,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -38227,12 +38253,12 @@ function Login(props) {
                             children: "LOG IN"
                         }, void 0, false, {
                             fileName: "client/src/components/Login.js",
-                            lineNumber: 57,
+                            lineNumber: 59,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                             fileName: "client/src/components/Login.js",
-                            lineNumber: 70,
+                            lineNumber: 72,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -38243,30 +38269,30 @@ function Login(props) {
                                     children: "Signup here!"
                                 }, void 0, false, {
                                     fileName: "client/src/components/Login.js",
-                                    lineNumber: 73,
+                                    lineNumber: 75,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "client/src/components/Login.js",
-                            lineNumber: 71,
+                            lineNumber: 73,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "client/src/components/Login.js",
-                    lineNumber: 43,
+                    lineNumber: 45,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "client/src/components/Login.js",
-                lineNumber: 42,
+                lineNumber: 44,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "client/src/components/Login.js",
-        lineNumber: 40,
+        lineNumber: 42,
         columnNumber: 5
     }, this);
 }
@@ -38306,7 +38332,7 @@ function Navbar() {
     const loggedIn = false;
     const streak = 2;
     const points = 300;
-    const username = "user1";
+    const username = "testing";
     const clickedHome = ()=>{
         navigate("/");
     };
@@ -38322,6 +38348,9 @@ function Navbar() {
     const clickedAchievements = ()=>{
         navigate("/achievements");
     };
+    const clickedProfile = ()=>{
+        navigate(`/profile/${username}`);
+    };
     const clickedLogout = async ()=>{
     // await logoutUser();
     // clearUser();
@@ -38334,7 +38363,7 @@ function Navbar() {
                     className: "feature"
                 }, void 0, false, {
                     fileName: "client/src/components/Navbar.js",
-                    lineNumber: 42,
+                    lineNumber: 46,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -38344,7 +38373,7 @@ function Navbar() {
                     children: "Common Cents"
                 }, void 0, false, {
                     fileName: "client/src/components/Navbar.js",
-                    lineNumber: 43,
+                    lineNumber: 47,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -38354,7 +38383,7 @@ function Navbar() {
                     children: "Leaderboards"
                 }, void 0, false, {
                     fileName: "client/src/components/Navbar.js",
-                    lineNumber: 46,
+                    lineNumber: 50,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -38364,7 +38393,17 @@ function Navbar() {
                     children: "Achievements"
                 }, void 0, false, {
                     fileName: "client/src/components/Navbar.js",
-                    lineNumber: 49,
+                    lineNumber: 53,
+                    columnNumber: 11
+                }, this),
+                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                    className: "textbutton",
+                    type: "button",
+                    onClick: clickedProfile,
+                    children: "Profile"
+                }, void 0, false, {
+                    fileName: "client/src/components/Navbar.js",
+                    lineNumber: 56,
                     columnNumber: 11
                 }, this),
                 loggedIn ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -38380,7 +38419,7 @@ function Navbar() {
                                     ]
                                 }, void 0, true, {
                                     fileName: "client/src/components/Navbar.js",
-                                    lineNumber: 54,
+                                    lineNumber: 61,
                                     columnNumber: 21
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
@@ -38391,7 +38430,7 @@ function Navbar() {
                                     ]
                                 }, void 0, true, {
                                     fileName: "client/src/components/Navbar.js",
-                                    lineNumber: 55,
+                                    lineNumber: 62,
                                     columnNumber: 21
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("span", {
@@ -38399,13 +38438,13 @@ function Navbar() {
                                     children: username
                                 }, void 0, false, {
                                     fileName: "client/src/components/Navbar.js",
-                                    lineNumber: 56,
+                                    lineNumber: 63,
                                     columnNumber: 21
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "client/src/components/Navbar.js",
-                            lineNumber: 53,
+                            lineNumber: 60,
                             columnNumber: 17
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -38415,13 +38454,13 @@ function Navbar() {
                             children: "Logout"
                         }, void 0, false, {
                             fileName: "client/src/components/Navbar.js",
-                            lineNumber: 58,
+                            lineNumber: 65,
                             columnNumber: 17
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "client/src/components/Navbar.js",
-                    lineNumber: 52,
+                    lineNumber: 59,
                     columnNumber: 23
                 }, this) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                     className: "profile",
@@ -38433,7 +38472,7 @@ function Navbar() {
                             children: "Signup"
                         }, void 0, false, {
                             fileName: "client/src/components/Navbar.js",
-                            lineNumber: 63,
+                            lineNumber: 70,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -38443,19 +38482,19 @@ function Navbar() {
                             children: "Login"
                         }, void 0, false, {
                             fileName: "client/src/components/Navbar.js",
-                            lineNumber: 66,
+                            lineNumber: 73,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "client/src/components/Navbar.js",
-                    lineNumber: 62,
+                    lineNumber: 69,
                     columnNumber: 19
                 }, this)
             ]
         }, void 0, true, {
             fileName: "client/src/components/Navbar.js",
-            lineNumber: 41,
+            lineNumber: 45,
             columnNumber: 7
         }, this)
     }, void 0, false);
@@ -39316,7 +39355,7 @@ function PointPreview(props) {
 _c = PointPreview;
 function Profile(props) {
     _s();
-    const { login } = props;
+    const { login, username } = props;
     const [profile, setProfile] = (0, _react.useState)([]);
     const { id } = (0, _reactRouterDom.useParams)();
     (0, _react.useEffect)(()=>{
@@ -39522,6 +39561,9 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "createUser", ()=>createUser);
 parcelHelpers.export(exports, "getCurrentUser", ()=>getCurrentUser);
 parcelHelpers.export(exports, "getProfileById", ()=>getProfileById);
+parcelHelpers.export(exports, "getAchievementsById", ()=>getAchievementsById);
+parcelHelpers.export(exports, "getAllAchievements", ()=>getAllAchievements);
+parcelHelpers.export(exports, "getLeaderboards", ()=>getLeaderboards);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 const baseURL = "http://localhost:3000";
@@ -39529,7 +39571,7 @@ const createUser = async (userObject)=>{
     // console.log('atapi');
     try {
         if (userObject.username === "" || userObject.password === "") throw new Error("invalid username or password");
-        const response = await (0, _axiosDefault.default).post(`${baseURL}/api/account/signup`, {
+        const response = await (0, _axiosDefault.default).post(`${baseURL}/account/signup`, {
             username: userObject.username,
             password: userObject.password
         });
@@ -39540,7 +39582,7 @@ const createUser = async (userObject)=>{
 };
 const getCurrentUser = async ()=>{
     try {
-        const response = await (0, _axiosDefault.default).get(`api/account/isLogged`);
+        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/isLogged`);
         return response.data;
     } catch (err) {
         return err;
@@ -39559,6 +39601,34 @@ const getProfileById = async (username)=>{
         return err;
     }
 };
+const getAchievementsById = async (username)=>{
+    try {
+        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/achievements`, {
+            params: {
+                username
+            }
+        });
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+};
+const getAllAchievements = async ()=>{
+    try {
+        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/allAchievements`);
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+};
+const getLeaderboards = async ()=>{
+    try {
+        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/leaderboards`);
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+};
 
 },{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bfFHJ":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$955e = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
@@ -39570,10 +39640,15 @@ try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
 var _navbar = require("../components/Navbar");
 var _navbarDefault = parcelHelpers.interopDefault(_navbar);
 var _achievementsCss = require("../styles/Achievements.css");
-function Achievements() {
+var _users = require("../api/users");
+function Achievements(props) {
+    // const { login, username } = props;
+    const login = false;
     const achievements = [
         {
             name: "Complete Introduction to a Topic",
@@ -39606,21 +39681,38 @@ function Achievements() {
     ];
     const completedAchievements = achievements.filter((achievement)=>achievement.completed);
     const notCompletedAchievements = achievements.filter((achievement)=>!achievement.completed);
+    //   const [completedAchievements, setCompletedAchievements] = useState([]);
+    //   const [notCompletedAchievements, setNotCompleteAchievements] = useState([]);
+    // useEffect(() => {
+    //   async function getAchievementsByIdWrapper() {
+    //     const response = await getAchievementsById(id);
+    //     setCompletedAchievements(response);
+    //   }
+    //   getAchievementsByIdWrapper();
+    // }, [completedAchievements.length]);
+    // useEffect(() => {
+    //   async function getAllAchievementsWrapper() {
+    //     const response = await getAllAchievements();
+    //     const nonComplete = response.filter(element => !completedAchievements.includes(element));
+    //     setNotCompleteAchievements(nonComplete);
+    //   }
+    //   getAllAchievementsWrapper();
+    // }, [completedAchievements.length]);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navbarDefault.default), {}, void 0, false, {
                 fileName: "client/src/pages/achievements.js",
-                lineNumber: 19,
+                lineNumber: 43,
                 columnNumber: 9
             }, this),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+            login ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                 className: "container",
                 children: [
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
                         children: "Completed Achievements"
                     }, void 0, false, {
                         fileName: "client/src/pages/achievements.js",
-                        lineNumber: 21,
+                        lineNumber: 46,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("ul", {
@@ -39630,19 +39722,19 @@ function Achievements() {
                                 children: achievement.name
                             }, index, false, {
                                 fileName: "client/src/pages/achievements.js",
-                                lineNumber: 24,
+                                lineNumber: 49,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "client/src/pages/achievements.js",
-                        lineNumber: 22,
+                        lineNumber: 47,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
                         children: "Incomplete Achievements"
                     }, void 0, false, {
                         fileName: "client/src/pages/achievements.js",
-                        lineNumber: 28,
+                        lineNumber: 53,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("ul", {
@@ -39652,19 +39744,35 @@ function Achievements() {
                                 children: achievement.name
                             }, index, false, {
                                 fileName: "client/src/pages/achievements.js",
-                                lineNumber: 31,
+                                lineNumber: 56,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "client/src/pages/achievements.js",
-                        lineNumber: 29,
+                        lineNumber: 54,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "client/src/pages/achievements.js",
-                lineNumber: 20,
-                columnNumber: 7
+                lineNumber: 45,
+                columnNumber: 16
+            }, this) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "container",
+                children: [
+                    " ",
+                    /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
+                        children: "Login to see your Achievements!"
+                    }, void 0, false, {
+                        fileName: "client/src/pages/achievements.js",
+                        lineNumber: 58,
+                        columnNumber: 51
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "client/src/pages/achievements.js",
+                lineNumber: 58,
+                columnNumber: 23
             }, this)
         ]
     }, void 0, true);
@@ -39679,7 +39787,7 @@ $RefreshReg$(_c, "Achievements");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","../components/Navbar":"euCXA","../styles/Achievements.css":"kv5z4","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"kv5z4":[function() {},{}],"2KFMo":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","../components/Navbar":"euCXA","../styles/Achievements.css":"kv5z4","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react":"21dqq","../api/users":"k7f8x"}],"kv5z4":[function() {},{}],"2KFMo":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$1f92 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -39693,6 +39801,7 @@ var _navbar = require("../components/Navbar");
 var _navbarDefault = parcelHelpers.interopDefault(_navbar);
 var _leaderboardsCss = require("../styles/Leaderboards.css");
 var _react = require("react");
+var _users = require("../api/users");
 var _s = $RefreshSig$();
 function Leaderboards() {
     _s();
@@ -39810,6 +39919,14 @@ function Leaderboards() {
             points: 10
         }
     ];
+    // const [users, setUsers] = useState([]);
+    // useEffect(() => {
+    //   async function getLeaderboardsWrapper() {
+    //     const response = await getLeaderboards();
+    //     setUsers(response);
+    //   }
+    //   getLeaderboardsWrapper();
+    // }, [users.length]);
     const sortedUsers = [
         ...users
     ].sort((a, b)=>b.points - a.points);
@@ -39830,7 +39947,7 @@ function Leaderboards() {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navbarDefault.default), {}, void 0, false, {
                 fileName: "client/src/pages/leaderboards.js",
-                lineNumber: 60,
+                lineNumber: 72,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -39840,7 +39957,7 @@ function Leaderboards() {
                         children: "Leaderboards"
                     }, void 0, false, {
                         fileName: "client/src/pages/leaderboards.js",
-                        lineNumber: 62,
+                        lineNumber: 74,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("ul", {
@@ -39855,12 +39972,12 @@ function Leaderboards() {
                                 ]
                             }, user.id, true, {
                                 fileName: "client/src/pages/leaderboards.js",
-                                lineNumber: 65,
+                                lineNumber: 77,
                                 columnNumber: 15
                             }, this))
                     }, void 0, false, {
                         fileName: "client/src/pages/leaderboards.js",
-                        lineNumber: 63,
+                        lineNumber: 75,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -39871,7 +39988,7 @@ function Leaderboards() {
                                 children: "< Prev"
                             }, void 0, false, {
                                 fileName: "client/src/pages/leaderboards.js",
-                                lineNumber: 72,
+                                lineNumber: 84,
                                 columnNumber: 13
                             }, this),
                             Array.from({
@@ -39882,7 +39999,7 @@ function Leaderboards() {
                                     children: index + 1
                                 }, index + 1, false, {
                                     fileName: "client/src/pages/leaderboards.js",
-                                    lineNumber: 74,
+                                    lineNumber: 86,
                                     columnNumber: 15
                                 }, this)),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -39890,19 +40007,19 @@ function Leaderboards() {
                                 children: "Next >"
                             }, void 0, false, {
                                 fileName: "client/src/pages/leaderboards.js",
-                                lineNumber: 82,
+                                lineNumber: 94,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "client/src/pages/leaderboards.js",
-                        lineNumber: 71,
+                        lineNumber: 83,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "client/src/pages/leaderboards.js",
-                lineNumber: 61,
+                lineNumber: 73,
                 columnNumber: 9
             }, this)
         ]
@@ -39919,6 +40036,220 @@ $RefreshReg$(_c, "Leaderboards");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","../components/Navbar":"euCXA","../styles/Leaderboards.css":"fnAQL","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"fnAQL":[function() {},{}]},["iHULc","1xC6H","iXgNX"], "iXgNX", "parcelRequire81a1")
+},{"react/jsx-dev-runtime":"iTorj","../components/Navbar":"euCXA","../styles/Leaderboards.css":"fnAQL","react":"21dqq","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","../api/users":"k7f8x"}],"fnAQL":[function() {},{}],"c17qZ":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$082f = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$082f.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _reactRouterDom = require("react-router-dom");
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _navbar = require("./Navbar");
+var _navbarDefault = parcelHelpers.interopDefault(_navbar);
+var _category = require("../api/category");
+var _s = $RefreshSig$();
+function CategoryView(props) {
+    _s();
+    const { categories, setCategories } = props;
+    const navigate = (0, _reactRouterDom.useNavigate)();
+    (0, _react.useEffect)(()=>{
+        async function getCategoryWrapper() {
+            const response = await (0, _category.getAllCategories)();
+            const topics = [];
+            Object.entries(response).forEach((value)=>{
+                topics.push(value[1].name);
+            });
+            // setProfile(nums);
+            // setCategories(response.data);
+            // console.log(response);
+            setCategories(topics);
+        }
+        getCategoryWrapper();
+    }, [
+        categories.length
+    ]);
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        children: categories.map((name, index)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
+                    to: `/Category/${name}`,
+                    children: name
+                }, void 0, false, {
+                    fileName: "client/src/components/CategoryView.js",
+                    lineNumber: 34,
+                    columnNumber: 29
+                }, this)
+            }, index, false, {
+                fileName: "client/src/components/CategoryView.js",
+                lineNumber: 34,
+                columnNumber: 13
+            }, this))
+    }, void 0, false, {
+        fileName: "client/src/components/CategoryView.js",
+        lineNumber: 32,
+        columnNumber: 5
+    }, this);
+}
+_s(CategoryView, "0pNeyzXk/ByIxyERsdaIrG6js9s=", false, function() {
+    return [
+        (0, _reactRouterDom.useNavigate)
+    ];
+});
+_c = CategoryView;
+exports.default = CategoryView;
+var _c;
+$RefreshReg$(_c, "CategoryView");
+
+  $parcel$ReactRefreshHelpers$082f.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"9xmpe","axios":"jo6P5","./Navbar":"euCXA","../api/category":"fprQb","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"fprQb":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getAllCategories", ()=>getAllCategories);
+parcelHelpers.export(exports, "getCategoryByName", ()=>getCategoryByName);
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+const baseURL = "http://localhost:3000";
+const getAllCategories = async ()=>{
+    try {
+        // frontend calls getAllCategories, know that you woudl have all the categories 
+        // iterate through like an array, and then render a card separately to see all the categories 
+        const response = await (0, _axiosDefault.default).get(`${baseURL}/category/`);
+        console.log(response);
+        //        const response = await axios.get(`${baseURL}/account/profile`, {
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+};
+const getCategoryByName = async (name)=>{
+    try {
+        const response = await (0, _axiosDefault.default).get(`${baseURL}/category/getName`, {
+            params: {
+                name
+            }
+        });
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+} // export const getCategoryById
+ // params to get id
+ // id: 
+ //  
+ // /category/investing
+ // admin
+ // export const deleteCategory for admin user
+ // export const addCategory 
+ // modifyCategory
+;
+
+},{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"aPzBw":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$a88e = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$a88e.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _reactRouterDom = require("react-router-dom");
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _navbar = require("./Navbar");
+var _navbarDefault = parcelHelpers.interopDefault(_navbar);
+var _category = require("../api/category");
+var _s = $RefreshSig$();
+function CategoryPage(props) {
+    _s();
+    const { login, username } = props;
+    const { name } = (0, _reactRouterDom.useParams)();
+    const navigate = (0, _reactRouterDom.useNavigate)();
+    const [questions, setQuestions] = (0, _react.useState)([]);
+    (0, _react.useEffect)(()=>{
+        async function getCategoryWrapper() {
+            const response = await (0, _category.getCategoryByName)(name);
+            const topics = [];
+            console.log(response.questions);
+            Object.entries(response.questions).forEach((value)=>{
+                // console.log(value);
+                topics.push([
+                    value[1].question,
+                    value[1].possibleAnswers,
+                    value[1].correctAnswer
+                ]);
+            });
+            // setProfile(nums);
+            // setCategories(response.data);
+            // console.log(response);
+            setQuestions(topics);
+        }
+        getCategoryWrapper();
+    }, [
+        questions.length
+    ]);
+    const clickedButton = ()=>{};
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navbarDefault.default), {}, void 0, false, {
+                fileName: "client/src/components/CategoryPage.js",
+                lineNumber: 41,
+                columnNumber: 9
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
+                children: name
+            }, void 0, false, {
+                fileName: "client/src/components/CategoryPage.js",
+                lineNumber: 42,
+                columnNumber: 9
+            }, this),
+            questions.map((value, index)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("li", {
+                    children: [
+                        "Question: ",
+                        value[0],
+                        ", Possible Answers: ",
+                        value[1]
+                    ]
+                }, index, true, {
+                    fileName: "client/src/components/CategoryPage.js",
+                    lineNumber: 44,
+                    columnNumber: 13
+                }, this))
+        ]
+    }, void 0, true, {
+        fileName: "client/src/components/CategoryPage.js",
+        lineNumber: 40,
+        columnNumber: 5
+    }, this);
+}
+_s(CategoryPage, "E7/JEw/I9EI66bUoPZqJpy9gTR0=", false, function() {
+    return [
+        (0, _reactRouterDom.useParams),
+        (0, _reactRouterDom.useNavigate)
+    ];
+});
+_c = CategoryPage;
+exports.default = CategoryPage;
+var _c;
+$RefreshReg$(_c, "CategoryPage");
+
+  $parcel$ReactRefreshHelpers$a88e.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"9xmpe","axios":"jo6P5","./Navbar":"euCXA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","../api/category":"fprQb"}]},["iHULc","1xC6H","iXgNX"], "iXgNX", "parcelRequire81a1")
 
 //# sourceMappingURL=index.2e933333.js.map

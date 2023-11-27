@@ -23,15 +23,17 @@ function Login(props) {
       const response = await axios.post('http://localhost:3000/account/login', {
         username: userObject.username,
         password: userObject.password,
+      }, { withCredentials: true 
       });
-      console.log(response);
       if (response.data === 'wrong password' || response.data === 'error occurred') {
         alert('wrong username/password');
       } else {
         setLogin(true);
-        navigate('/');
+        // console.log(login);
+        // navigate('/');
       }
     } catch (err) {
+      console.log(err);
       alert('user authentication failed');
     }
   };

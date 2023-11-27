@@ -7,6 +7,7 @@ export const getAllCategories = async () => {
         // frontend calls getAllCategories, know that you woudl have all the categories 
         // iterate through like an array, and then render a card separately to see all the categories 
         const response = await axios.get(`${baseURL}/category/`);
+        console.log(response);
 //        const response = await axios.get(`${baseURL}/account/profile`, {
         return response.data;
     } catch (err) {
@@ -14,6 +15,16 @@ export const getAllCategories = async () => {
     }
 };
 
+export const getCategoryByName = async (name) => {
+    try {
+        const response = await axios.get(`${baseURL}/category/getName`, {
+            params: { name },
+        });
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+}
 // export const getCategoryById
 // params to get id
 // id: 

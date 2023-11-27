@@ -1,7 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const cookieSession = require('cookie-session');
+// const cookieSession = require('cookie-session');
+const session = require('express-session');
+// const MongoDBStore = require('connect-mongodb-session')(session)
 const path = require('path');
 
 const AccountRouter = require('./routes/account');
@@ -12,18 +14,39 @@ const MONGO_URI = process.env.MONGODB_URI || 'mongodb+srv://xianhanchen:xianhan@
 
 mongoose.connect(MONGO_URI);
 
+// const mongoDBstore = new MongoDBStore({
+//     uri: MONGO_URI,
+//     collection: 'mySessions',
+// })
+
+app.use(session({ 
+    secret: 'keyboard cat', 
+    name: 'session-id',
+    // store: mongoDBstore,
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24, // 1 day
+        secure: false, // Set to true in production with HTTPS
+        sameSite: 'None', // Required for cross-site cookies
+    },
+}));
+
+app.use(cors({
+    origin: 'http://localhost:1234', // Replace with your client's origin
+    credentials: true,
+  }));
+
 app.use(express.json());
 app.use(express.static('dist'));
 
-app.use(cors());
-
-app.use(cookieSession({
-    name: 'session',
-    keys: ['pineapple'],
+// app.use(cookieSession({
+//     name: 'session',
+//     keys: ['pineapple'],
   
-    // Cookie Options
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-}));
+//     // Cookie Options
+//     maxAge: 24 * 60 * 60 * 1000, // 24 hours
+// }));
 
 // app.use(function(req, res, next) {
 //     res.header("Access-Control-Allow-Origin", "*");

@@ -10,7 +10,7 @@ function Navbar() {
 const loggedIn = false;
 const streak = 2;
 const points = 300;
-const username = 'user1';
+const username = 'testing';
 
   const clickedHome = () => {
     navigate('/');
@@ -32,6 +32,10 @@ const username = 'user1';
     navigate('/achievements');
   };
 
+  const clickedProfile = () => {
+    navigate(`/profile/${username}`);
+  };
+
   const clickedLogout = async () => {
     // await logoutUser();
     // clearUser();
@@ -48,6 +52,9 @@ const username = 'user1';
           </button>
           <button className="textbutton" type="button" onClick={clickedAchievements}>
               {'Achievements'}
+          </button>
+          <button className="textbutton" type="button" onClick={clickedProfile}>
+              {'Profile'}
           </button>
           {loggedIn ? <div className="profile">
                 <div>

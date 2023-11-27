@@ -12,7 +12,7 @@ function PointPreview(props) {
   }
 
 function Profile(props) {
-    const { login } = props;
+    const { login, username } = props;
     const [profile, setProfile] = useState([]);
     const { id } = useParams();
 
