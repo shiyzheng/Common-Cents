@@ -41,7 +41,6 @@ function cloneObject(object) {
 function questionInCategory(category, question) {
   let ret = false;
   category.questions.forEach(element => {
-    console.log(_.isEqual(element, question));
     if (_.isEqual(element, question)) {
       ret = true;
     }
@@ -94,7 +93,9 @@ router.get('/getId', async (req, res) => {
 
 router.get('/:name', async (req, res) => {
   try {
-    const category = await Category.findOne({ name: req.params.name});
+    const category = await Category.findOne({
+      name: req.params.name
+    });
     if (category != null) {
       res.status(STATUS.OK);
       res.json(category);
@@ -114,26 +115,26 @@ router.put('/:name', async (req, res) => {
   try {
     const existing_category = await Category.findOne({ name: req.params.name});
     const question = getQuestion(req.originalUrl);
-    if (existing_category == null) {
+    if (existing_category === null) {
       let new_category = buildEmptyCategory(req.params.name); 
-      new_category = updateCategory(new_category, question);
-      Category.create(new_category);
+      updateCategory(new_category, question);
+      await Category.create(new_category);
       res.status(STATUS.CREATED);
       res.json(new_category);
     } else {
-      console.log("parsed question and url:::", question, req.originalUrl);
-      if (questionInCategory(existing_category, question) || question == null) {
+      if (questionInCategory(existing_category, question) || question === null) {
         res.status(STATUS.EXISTS);
         res.json({});
       } else {
         const updated_category = updateCategory(existing_category, question);
-        await Category.deleteOne(req.params.name);
-        Category.create(updated_category);
+        await Category.deleteOne({ name: req.params.name });
+        await Category.create(updated_category);
         res.status(STATUS.CREATED);
         res.json(question);
       }
     }
   } catch (e) {
+    console.error("error:::", e)
     res.send('error occurred: ' + e);
   }
 });

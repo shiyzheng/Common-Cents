@@ -22,7 +22,7 @@ const _TESTS = {
     QUESTION: {
         question: "Test Question Text?",
         possibleAnswers: ["a1", "a2", "a3", "a4"],
-        correctAnswer: ["a3"],
+        correctAnswer: "a3",
     }
 };
 
@@ -68,7 +68,7 @@ describe('Routes Tests', function () {
 
     test('Tests getting non-existent topic', async () => {
         const res = await request(app).get(`${PATH_PREFIX}${NON_PATH}`);
-        expect(res.statusCode).toEqual(404);
+        expect(res.statusCode).toEqual(STATUS.NOT_FOUND);
         expect(res.body).toEqual(_TESTS.NO_OBJECT);
     });
 
@@ -98,7 +98,7 @@ describe('Routes Tests', function () {
 
         // tests situation in which res0 deletes existing resource 
         // or the resource already does not exist
-        expect([204, 404]).toEqual(expect.arrayContaining([res0.statusCode]));
+        expect([STATUS.OK, STATUS.NOT_FOUND]).toEqual(expect.arrayContaining([res0.statusCode]));
 
         expect(res1.statusCode).toBe(STATUS.CREATED); // resource created
         expect(res2.statusCode).toBe(STATUS.OK); // resource exists
@@ -141,12 +141,13 @@ describe('Routes Tests', function () {
         const queryParamsString = qs.stringify(_TESTS.QUESTION);
         const queryParamsPath = `${path_for_question}?${queryParamsString}`;
 
+
         const res1 = await request(app).put(queryParamsPath);
         const res2 = await request(app).get(path_for_question);
         const res3 = await request(app).delete(path_for_question);
         const res4 = await request(app).get(path_for_question);
 
-        expect([204, 404]).toEqual(expect.arrayContaining([res0.statusCode]));
+        expect([STATUS.OK, STATUS.NOT_FOUND]).toEqual(expect.arrayContaining([res0.statusCode]));
 
         expect(res1.statusCode).toBe(STATUS.CREATED); // resource created
         expect(res2.statusCode).toBe(STATUS.OK); // resource exists
@@ -159,9 +160,9 @@ describe('Routes Tests', function () {
         // tests that correct question-topic object is returned from
         // put, get, and delete operations by testing the question within the
         // topic and that the question topic was successfully deleted.
-        expect(res1.body.questions[0]).toEqual(`${_TESTS.QUESTION}`)
-        expect(res2.body.questions[0]).toEqual(`${_TESTS.QUESTION}`)
-        expect(res3.body.questions[0]).toEqual(`${_TESTS.QUESTION}`)
+        expect(res1.body.questions[0].question).toEqual(_TESTS.QUESTION.question)
+        expect(res2.body.questions[0].question).toEqual(_TESTS.QUESTION.question)
+        expect(res3.body.questions[0].question).toEqual(_TESTS.QUESTION.question)
         expect(res4.body).toEqual(_TESTS.NO_OBJECT)
 
     });
