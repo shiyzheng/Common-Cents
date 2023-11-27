@@ -112,7 +112,6 @@ router.get('/:name', async (req, res) => {
 // is not already in the category
 router.put('/:name', async (req, res) => {
   try {
-    res.header('Access-Control-Allow-Origin', 'PUT, POST, GET, DELETE, OPTIONS');
     const existing_category = await Category.findOne({ name: req.params.name});
     const question = getQuestion(req.originalUrl);
     if (existing_category === null) {
