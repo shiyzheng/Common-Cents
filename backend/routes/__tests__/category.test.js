@@ -365,6 +365,5 @@ describe('Routes Tests', function () {
 
         // tests that no object is returned from deleting 
         expect(res2.body).toEqual(_TESTS.NO_OBJECT);
-
     });
 });

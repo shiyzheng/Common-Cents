@@ -12,6 +12,8 @@ import Navbar from './components/Navbar';
 import Achievements from './pages/achievements';
 import Leaderboards from './pages/leaderboards';
 
+import AdminConsole from './pages/AdminConsole';
+
 function App() {
   const [login, setLogin] = useState(false);
   const [username, setUsername] = useState('');
@@ -46,6 +48,8 @@ function App() {
     { path: '/profile/:id', element: <Profile login={login} /> },
     { path: '/achievements', element: <Achievements login={login} username={username}  /> },
     { path: '/leaderboards', element: <Leaderboards login={login} username={username} /> },
+    { path: '/admin-console', element: <AdminConsole login={login} username={username} /> },
+
     // { path: '/Home', element: <Categories login={login} categories={categories} setCategories={setCategories} username={username} /> },
     // { path: '/Category/:id', element: <CategoryView login={login} username={username} /> },
   ]);
