@@ -18,7 +18,7 @@ export default function AdminConsole() {
 
     // useState() arg sets the default state
     
-    const [categoryName, setCategoryName] = useState(''); // the text being typed
+    const [categoryName, setSubmitCategory] = useState(''); // the text being typed
     const [error, setError] = useState(null);
     const [status, setStatus] = useState(false); // 'typing', 'submitting', or 'success'
     const [text, setText] = useState('original-text');
@@ -63,13 +63,14 @@ export default function AdminConsole() {
         }
     }
 
-    function handleTextareaChange(e) {
-        setCategoryName(e.target.value);
+    function handleSubmitCategoryTextArea(e) {
+        setSubmitCategory(e.target.value);
     }
 
     return (
         <>
             <Navbar />
+
             <h2>Submit Category</h2>
             <p>Create an educational category that can hold data such
                 as questions.
@@ -77,7 +78,29 @@ export default function AdminConsole() {
             <form onSubmit={handleCategoryNameSubmit}>
                 <textarea
                     value={categoryName}
-                    onChange={handleTextareaChange}
+                    onChange={handleSubmitCategoryTextArea}
+                    disabled={status === 'submitting'}
+                />
+                <br />
+                <button disabled={
+                    categoryName.length === 0 ||
+                    status === 'submitting'
+                }>
+                    Submit
+                </button>
+                {error != null &&
+                    <p> className="Error"
+                        {error.message}
+                    </p>}
+            </form>
+
+            <h2>Delete Category</h2>
+            <p>Delete an educational category
+            </p>
+            <form onSubmit={handleCategoryNameSubmit}>
+                <textarea
+                    value={categoryName}
+                    onChange={handleSubmitCategoryTextArea}
                     disabled={status === 'submitting'}
                 />
                 <br />
