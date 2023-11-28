@@ -3,7 +3,10 @@ import '../styles/Leaderboards.css';
 import { useState } from 'react';
 import { getLeaderboards } from '../api/users';
 
-function Leaderboards() {
+function Leaderboards(props) {
+  const {
+    login, username, setUsername, setLogin
+  } = props;
     const usersPerPage = 10;
     const [currentPage, setCurrentPage] = useState(1);
     const users = [
@@ -79,7 +82,7 @@ function Leaderboards() {
       
     return (
       <>
-        <Navbar />
+        <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username}/>
         <div className="container">
           <h2>Leaderboards</h2>
           <ul className="leaderboards-list">

@@ -1,18 +1,19 @@
 // import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Navbar.css';
+import axios from 'axios';
 
 function Navbar(props) {
   const navigate = useNavigate();
 
 //   const username = useContext(UserContext);
 const {
-  login
+  login, username, setUsername, setLogin
 } = props;
 const loggedIn = login;
 const streak = 2;
 const points = 300;
-const username = 'testing';
+// const username = 'testing';
 
   const clickedHome = () => {
     navigate('/');
@@ -39,8 +40,9 @@ const username = 'testing';
   };
 
   const clickedLogout = async () => {
-    // await logoutUser();
-    // clearUser();
+    await axios.post('http://localhost:3000/account/logout');
+    setUsername('');
+    setLogin(false);
   };
 
   return (
