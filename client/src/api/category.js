@@ -13,6 +13,7 @@ export const getAllCategories = async () => {
         // frontend calls getAllCategories, know that you would have all the categories 
         // iterate through like an array, and then render a card separately to see all the categories 
         const response = await axios.get(`${baseURL}${PATH_PREFIX}`);
+
         return response.data;
     } catch (err) {
         console.error("axios file error:", err)
@@ -27,6 +28,22 @@ export const putCategoryFromName = async (categoryName) => {
         console.log("axios function call error:", error);
     }
 }
+
+export const getCategoryByName = async (name) => {
+    try {
+        const response = await axios.get(`${baseURL}/category/getName`, {
+            params: { name },
+        });
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+}
+// export const getCategoryById
+// params to get id
+// id: 
+//  
+// /category/investing
 
 export const deleteCategoryFromName = async (categoryName) => {
     try {

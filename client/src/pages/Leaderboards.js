@@ -3,7 +3,10 @@ import '../styles/Leaderboards.css';
 import { useState } from 'react';
 import { getLeaderboards } from '../api/users';
 
-function Leaderboards() {
+function Leaderboards(props) {
+  const {
+    login, username, setUsername, setLogin
+  } = props;
     const usersPerPage = 10;
     const [currentPage, setCurrentPage] = useState(1);
     const users = [
@@ -66,29 +69,39 @@ function Leaderboards() {
       }
     };
 
+    const pageRange = Array.from({ length: Math.min(5, totalPages) }, (_, index) => {
+      if (currentPage <= 3) {
+        return index + 1;
+      } else if (currentPage >= totalPages - 2) {
+        return totalPages - 4 + index;
+      } else {
+        return currentPage - 2 + index;
+      }
+    });
+
       
     return (
       <>
-        <Navbar />
+        <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username}/>
         <div className="container">
           <h2>Leaderboards</h2>
           <ul className="leaderboards-list">
-            {usersOnCurrentPage.map((user) => (
-              <li key={user.id} className="leaderboards-box">
-                {user.name} - {user.points} points
-              </li>
-            ))}
+          {usersOnCurrentPage.map((user) => (
+            <li key={user.id} className="leaderboards-box">
+              {user.name} - {user.points} points
+            </li>
+          ))}
           </ul>
   
           <div className="pagination">
             <button onClick={handlePrevPage}>&lt; Prev</button>
-            {Array.from({ length: totalPages }).map((_, index) => (
+            {pageRange.map((page) => (
               <button
-                key={index + 1}
-                onClick={() => handlePageChange(index + 1)}
-                className={currentPage === index + 1 ? 'active' : ''}
+                key={page}
+                onClick={() => handlePageChange(page)}
+                className={currentPage === page ? 'active' : ''}
               >
-                {index + 1}
+                {page}
               </button>
             ))}
             <button onClick={handleNextPage}>Next &gt;</button>

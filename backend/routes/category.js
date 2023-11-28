@@ -91,7 +91,20 @@ router.get('/getId', async (req, res) => {
   }
 });
 
-router.get('/:name', async (req, res) => {
+router.get('/getName', async (req, res) => {
+  const { name } = req.query;
+  try {
+    const category = await Category.findOne({ name: name });
+    res.json(category);
+  } catch (e) {
+    res.send('error occurred');
+  }
+});
+
+
+// admin insert, delete, modify operations for categories 
+
+  router.get('/:name', async (req, res) => {
   try {
     const category = await Category.findOne({
       name: req.params.name

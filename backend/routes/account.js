@@ -18,6 +18,7 @@ router.post('/signup', async (req, res) => {
       res.send('username taken');
     }
   } catch (e) {
+    console.log(e);
     res.send('error occured');
   }
 });
@@ -26,21 +27,29 @@ router.post('/login', async (req, res) => {
   const { body } = req;
   const { username, password } = body;
   try {
+    // console.log(req.session.username);
     const user = await User.findOne({ username });
     if (user.password === password) {
-      req.session.username = username;
-      res.send('you are logged in');
+      const userSession = { username: user.username };
+      req.session.username = userSession;
+      console.log(req.session);
+      res.json({ 'msg': 'you are logged in', userSession });
     } else {
-      res.send('wrong password');
+      res.json({ 'msg': 'wrong password' });
     }
   } catch (e) {
+    console.log(e);
     res.send('error occurred');
   }
 });
 
 router.post('/logout', (req, res) => {
-  req.session.username = null;
-  res.send('you logged out');
+  req.session.destroy((error) => {
+    if (error) throw error
+
+    res.clearCookie('session-id') // cleaning the cookies from the user session
+    res.status(200).send('Logout Success')
+  })
 });
 
 router.get('/isLogged', (req, res) => {
@@ -49,7 +58,6 @@ router.get('/isLogged', (req, res) => {
 
 router.get('/profile', async (req, res) => {
     const { username } = req.query;
-    console.log(username);
     try {
       const user = await User.findOne({ username: username });
       res.json(user.points);

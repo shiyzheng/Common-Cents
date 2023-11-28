@@ -1,16 +1,19 @@
 // import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Navbar.css';
+import axios from 'axios';
 
-function Navbar() {
+function Navbar(props) {
   const navigate = useNavigate();
 
 //   const username = useContext(UserContext);
-
-const loggedIn = false;
+const {
+  login, username, setUsername, setLogin
+} = props;
+const loggedIn = login;
 const streak = 2;
 const points = 300;
-const username = 'user1';
+// const username = 'testing';
 
   const clickedHome = () => {
     navigate('/');
@@ -32,15 +35,23 @@ const username = 'user1';
     navigate('/achievements');
   };
 
+<<<<<<< HEAD
   const clickedAdminConsole = () => {
     navigate('/admin-console');
   };
 
 
 
+=======
+  const clickedProfile = () => {
+    navigate(`/profile/${username}`);
+  };
+
+>>>>>>> main
   const clickedLogout = async () => {
-    // await logoutUser();
-    // clearUser();
+    await axios.post('http://localhost:3000/account/logout');
+    setUsername('');
+    setLogin(false);
   };
 
   return (
@@ -56,7 +67,10 @@ const username = 'user1';
               {'Achievements'}
           </button>
           <button className="textbutton" type="button" onClick={clickedAdminConsole}>
-              {'Admin Console'}
+            {'Admin Console'}
+          </button>
+          <button className="textbutton" type="button" onClick={clickedProfile}>
+              {'Profile'}
           </button>
           {loggedIn ? <div className="profile">
                 <div>
