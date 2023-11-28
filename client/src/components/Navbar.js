@@ -8,12 +8,12 @@ function Navbar(props) {
 
 //   const username = useContext(UserContext);
 const {
-  login, username, setUsername, setLogin
+  login, setUsername, setLogin
 } = props;
 const loggedIn = login;
 const streak = 2;
 const points = 300;
-// const username = 'testing';
+const username = 'testing';
 
   const clickedHome = () => {
     navigate('/');
