@@ -35,19 +35,16 @@ const points = 300;
     navigate('/achievements');
   };
 
-<<<<<<< HEAD
   const clickedAdminConsole = () => {
     navigate('/admin-console');
   };
 
 
 
-=======
   const clickedProfile = () => {
     navigate(`/profile/${username}`);
   };
 
->>>>>>> main
   const clickedLogout = async () => {
     await axios.post('http://localhost:3000/account/logout');
     setUsername('');
