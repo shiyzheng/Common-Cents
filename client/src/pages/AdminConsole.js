@@ -9,16 +9,11 @@ import {
     respondToCategoryAdd as respondToCategoryAdd,
     respondToCategoryDelete,
     respondToCategoryGet,
-    putCategoryQuestion,
-    deleteCategoryQuestion,
+    putCategoryPath,
+    deleteCategoryPath,
 } from '../api/category';
 
 
-function testConst() {
-    return "Test Const";
-}
-
-// original: AdminConsole(props)
 export default function AdminConsole() {
 
     // useState() arg sets the default state
@@ -67,7 +62,6 @@ export default function AdminConsole() {
 
     function setListToAllCategories(allCategories) {
         const res = []
-        console.log("allCategories:::", allCategories);
         allCategories.forEach((element) => {
             res.push(element.name)
         })
@@ -96,7 +90,6 @@ export default function AdminConsole() {
             name: submitCategoryName,
             questions: new_questions,
         }
-        console.log("category is created in adminconsole:::", new_category);
         return new_category;
     }
 
@@ -127,11 +120,9 @@ export default function AdminConsole() {
         if (category === null) {
             setText("category view failure");
         } else {
-            console.log("category:::", category);
             setCategoryToView(JSON.stringify(category));
             setText("Category View");
         }
-
     }
 
     function handleSubmitCategoryTextArea(e) {
@@ -263,16 +254,15 @@ export default function AdminConsole() {
 // in order to add a category
 // this function returns a list of all the categories in JSON objects
 async function putCategoryItem(category) {
-    await putCategoryQuestion(category); 
+    await putCategoryPath(category); 
 }
 
 async function deleteCategoryItem(category) {
-    await deleteCategoryQuestion(category);
+    await deleteCategoryPath(category);
 }
 
 async function getCategoryForRender(categoryName) {
     const category = await respondToCategoryGet(categoryName);
-    console.log("get category result:::", category);
     return category;
 }
 

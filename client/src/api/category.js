@@ -43,25 +43,25 @@ export const deleteCategoryFromName = async (categoryName) => {
     }
 }
 
-export const putCategoryQuestion = async (category) => {
+export const putCategoryPath = async (category) => {
     let query_params = "";
     if (category.questions.length > 0) {
-        query_params = qs.stringify(category.questions[0]);
+        query_params = "?" + qs.stringify(category.questions[0]);
     }
     try {
-        await axios.put(`${baseURL}${PATH_PREFIX}${category.name}?${query_params}`) 
+        await axios.put(`${baseURL}${PATH_PREFIX}${category.name}${query_params}`) 
     } catch (error) {
         console.error("axios function call error:", error);
     }
 }
 
-export const deleteCategoryQuestion = async (category) => {
+export const deleteCategoryPath = async (category) => {
     let query_params = "";
     if (category.questions.length > 0) {
-        query_params = qs.stringify(category.questions[0]);
+        query_params = "?" + qs.stringify(category.questions[0]);
     }
     try {
-        await axios.delete(`${baseURL}${PATH_PREFIX}${category.name}?${query_params}`) 
+        await axios.delete(`${baseURL}${PATH_PREFIX}${category.name}${query_params}`) 
     } catch (error) {
         console.error("axios function call error:", error);
     }
@@ -70,25 +70,10 @@ export const deleteCategoryQuestion = async (category) => {
 export const getCategory = async (categoryName) => {
     try {
         const res = await axios.get(`${baseURL}${PATH_PREFIX}${categoryName}`);
-        console.log("category api res:::", res);
-        console.log("category api res.body:::", res.body);
         return res.data;
     } catch (error) {
-        console.log("axios function call error:", error);
+        console.error("axios function call error:", error);
     }
-}
-
-export async function respondToCategoryAdd(categoryName) {
-    await putCategoryFromName(categoryName);
-    const res = await getAllCategories();
-    return res;
-}
-
-export async function respondToCategoryDelete(categoryName) {
-    console.log("delete category:::", categoryName);
-    await deleteCategoryFromName(categoryName);
-    const res = await getAllCategories();
-    return res;
 }
 
 export async function respondToCategoryGet(categoryName) {
