@@ -1,19 +1,14 @@
 import axios from 'axios';
 
-import * as qs from 'qs';
+import qs from 'qs';
 
 const baseURL = 'http://localhost:3000';
 
 const PATH_PREFIX = '/category/';
 
-
-
 export const getAllCategories = async () => {
     try {
-        // frontend calls getAllCategories, know that you would have all the categories 
-        // iterate through like an array, and then render a card separately to see all the categories 
         const response = await axios.get(`${baseURL}${PATH_PREFIX}`);
-
         return response.data;
     } catch (err) {
         console.error("axios file error:", err)
@@ -25,7 +20,7 @@ export const putCategoryFromName = async (categoryName) => {
     try {
         await axios.put(`${baseURL}${PATH_PREFIX}${categoryName}`) 
     } catch (error) {
-        console.log("axios function call error:", error);
+        console.error("axios function call error:", error);
     }
 }
 
@@ -39,17 +34,12 @@ export const getCategoryByName = async (name) => {
         return err;
     }
 }
-// export const getCategoryById
-// params to get id
-// id: 
-//  
-// /category/investing
 
 export const deleteCategoryFromName = async (categoryName) => {
     try {
         await axios.delete(`${baseURL}${PATH_PREFIX}${categoryName}`) 
     } catch (error) {
-        console.log("axios function call error:", error);
+        console.error("axios function call error:", error);
     }
 }
 
@@ -61,7 +51,7 @@ export const putCategoryQuestion = async (category) => {
     try {
         await axios.put(`${baseURL}${PATH_PREFIX}${category.name}?${query_params}`) 
     } catch (error) {
-        console.log("axios function call error:", error);
+        console.error("axios function call error:", error);
     }
 }
 
@@ -73,7 +63,7 @@ export const deleteCategoryQuestion = async (category) => {
     try {
         await axios.delete(`${baseURL}${PATH_PREFIX}${category.name}?${query_params}`) 
     } catch (error) {
-        console.log("axios function call error:", error);
+        console.error("axios function call error:", error);
     }
 }
 

@@ -67,6 +67,7 @@ export default function AdminConsole() {
 
     function setListToAllCategories(allCategories) {
         const res = []
+        console.log("allCategories:::", allCategories);
         allCategories.forEach((element) => {
             res.push(element.name)
         })
