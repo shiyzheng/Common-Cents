@@ -5,7 +5,10 @@ import { getAchievementsById, getAllAchievements } from '../api/users';
 
 function Achievements(props) {
     // const { login, username } = props;
-    const login = false;
+    const {
+      login
+    } = props;
+    const loggedIn = login;
     const achievements = [
         { name: "Complete Introduction to a Topic", completed: true },
         { name: "Master a Topic", completed: false },
@@ -40,7 +43,7 @@ function Achievements(props) {
 
       return (
         <>
-        <Navbar />
+        <Navbar login={login}/>
       
       {login ? <div className="container">
         <h2>Completed Achievements</h2>

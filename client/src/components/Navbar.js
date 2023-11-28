@@ -2,12 +2,14 @@
 import { useNavigate } from 'react-router-dom';
 import '../styles/Navbar.css';
 
-function Navbar() {
+function Navbar(props) {
   const navigate = useNavigate();
 
 //   const username = useContext(UserContext);
-
-const loggedIn = false;
+const {
+  login
+} = props;
+const loggedIn = login;
 const streak = 2;
 const points = 300;
 const username = 'testing';
