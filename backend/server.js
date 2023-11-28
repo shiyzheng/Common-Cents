@@ -40,13 +40,13 @@ app.use(cors({
 app.use(express.json());
 app.use(express.static('dist'));
 
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+// app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
 
-    next();
-});
+//     next();
+// });
 // app.use(cookieSession({
 //     name: 'session',
 //     keys: ['pineapple'],
