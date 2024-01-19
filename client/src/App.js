@@ -13,7 +13,7 @@ import Achievements from './pages/achievements';
 import Leaderboards from './pages/leaderboards';
 import CategoryView from './components/CategoryView';
 import CategoryPage from './components/CategoryPage';
-
+import MultipleChoiceQuestion from './components/MCQ';
 import AdminConsole from './pages/AdminConsole';
 
 function App() {
@@ -56,7 +56,7 @@ function App() {
 
     { path: '/achievements', element: <Achievements setLogin={setLogin} login={login} setUsername={setUsername} username={username}  /> },
     { path: '/leaderboards', element: <Leaderboards setLogin={setLogin} login={login} setUsername={setUsername} username={username} /> },
-
+    { path: '/MCQ', element: <MultipleChoiceQuestion setLogin={setLogin} login={login} setUsername={setUsername} username={username}  /> },
     // { path: '/Home', element: <Categories login={login} categories={categories} setCategories={setCategories} username={username} /> },
     { path: '/Category/:name', element: <CategoryPage login={login} username={username} /> },
   ]);
