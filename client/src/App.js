@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   useRoutes,
-  Link,
+  useNavigate,
 } from 'react-router-dom';
 import axios from 'axios';
 import Login from './components/Login';
@@ -10,11 +10,12 @@ import Signup from './components/Signup';
 import Profile from './components/Profile';
 import Navbar from './components/Navbar';
 import Achievements from './pages/achievements';
-import Leaderboards from './pages/leaderboards';
+import Leaderboards from './pages/Leaderboards';
 import CategoryView from './components/CategoryView';
 import CategoryPage from './components/CategoryPage';
 import MultipleChoiceQuestion from './components/MCQ';
 import AdminConsole from './pages/AdminConsole';
+import Lessons from './components/Lessons';
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -57,6 +58,7 @@ function App() {
     { path: '/achievements', element: <Achievements setLogin={setLogin} login={login} setUsername={setUsername} username={username}  /> },
     { path: '/leaderboards', element: <Leaderboards setLogin={setLogin} login={login} setUsername={setUsername} username={username} /> },
     { path: '/MCQ', element: <MultipleChoiceQuestion setLogin={setLogin} login={login} setUsername={setUsername} username={username}  /> },
+    { path: '/lessons/:topic', element: <Lessons setLogin={setLogin} login={login} setUsername={setUsername} username={username}  /> },
     // { path: '/Home', element: <Categories login={login} categories={categories} setCategories={setCategories} username={username} /> },
     { path: '/Category/:name', element: <CategoryPage login={login} username={username} /> },
   ]);
@@ -66,6 +68,22 @@ function App() {
 function Home(props) {
   // console.log('homepage');
   const { login, username, logout, categories, setCategories } = props;
+  const navigate = useNavigate();
+
+  const topics = [
+    "Earning Income",
+    "Saving",
+    "Spending",
+    "Investing",
+    "Managing Credit",
+    "Managing Risk",
+  ];
+
+  const navigateToTopic = (topic) => {
+    const formattedTopic = topic.toLowerCase().replace(/\s+/g, '-');
+    navigate(`/lessons/${encodeURIComponent(formattedTopic)}`);
+  };
+
   return (
     <div>
         <Navbar />
@@ -76,7 +94,7 @@ function Home(props) {
         </div>
       )}
       {login && (
-        <div>
+        <><div>
           <div>
             Welcome
             {' '}
@@ -84,7 +102,22 @@ function Home(props) {
           </div>
           <button className="btn btn-outline-danger float-right" type="button" onClick={() => logout()}>Logout</button>
           <CategoryView categories={categories} setCategories={setCategories} />
-        </div>
+        </div><div style={{ textAlign: 'center', marginTop: '50px' }}>
+      <h2>I would like to learn about...</h2>
+      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+        {topics.map((topic, index) => (
+          <button
+            key={index}
+            className="btn btn-primary float-right"
+            type="button"
+            onClick={() => navigateToTopic(topic)}
+            style={{ margin: '0 10px' }}
+          >
+            {topic}
+          </button>
+        ))}
+      </div>
+    </div></>
       )}
     </div>
   );
