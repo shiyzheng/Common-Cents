@@ -18,6 +18,7 @@ export const getAllCategories = async () => {
 
 export const putCategoryFromName = async (categoryName) => {
     try {
+        // TODO:  can place JSON object in data argument
         await axios.put(`${baseURL}${PATH_PREFIX}${categoryName}`) 
     } catch (error) {
         console.error("axios function call error:", error);

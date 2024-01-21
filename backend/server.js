@@ -69,6 +69,9 @@ app.get('/', (req, res) => {
 app.use('/account', AccountRouter);
 app.use('/category', CategoryRouter);
 
+// TODO: move app.listen to separate file
+// package.json import app from server.js and then in package.json,
+// start command should be node index.js to avoid open handles
 app.listen(3000, () => {
     console.log('listening on 3000');
     console.log('mongoDB is connected');
