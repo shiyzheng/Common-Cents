@@ -3,14 +3,17 @@ const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
 const questionSchema = new Schema({
-    question: { type: String, required: true },
-    possibleAnswers: { type: [String], required: true },
-    correctAnswer: {type: String, required: true },
+    Question: { type: String, required: true },
+    Answers: { type: [String], required: true },
+    Correct: {type: String, required: true },
 })
 
 const categorySchema = new Schema({
-  name: { type: String, required: true },
-  questions: [questionSchema],
+  Name: { type: String, required: true },
+  Beginner: [questionSchema],
+  Waystage: [questionSchema],
+  Advanced: [questionSchema]
+  // questions: [questionSchema],
 });
 
 const Category = model('Category', categorySchema);

@@ -121,27 +121,103 @@ router.get('/getName', async (req, res) => {
   }
 });
 
+
 // used to create a new category if one does not exist yet
 // also used to add a question in an existing category if the question
 // is not already in the category
-router.put('/:name', async (req, res) => {
+// router.put('/:name', async (req, res) => {
+//   try {
+//     const existing_category = await Category.findOne({ name: req.params.name});
+//     const question = getQuestion(req.originalUrl);
+//     if (existing_category === null) {
+//       let new_category = buildEmptyCategory(req.params.name); 
+//       updateCategory(new_category, question);
+//       await Category.create(new_category);
+//       res.status(STATUS.CREATED);
+//       res.json(new_category);
+//     } else {
+//       if (questionInCategory(existing_category, question) || question === null) {
+//         res.status(STATUS.EXISTS);
+//         res.json({});
+//       } else {
+//         const updated_category = updateCategory(existing_category, question);
+//         await Category.findOneAndUpdate({ name: req.params.name },
+//           { questions: updated_category.questions })
+//         res.status(STATUS.CREATED);
+//         res.json(question);
+//       }
+//     }
+//   } catch (e) {
+//     console.error("error:::", e)
+//     res.send('error occurred: ' + e);
+//   }
+// });
+
+///
+router.put('/add', async (req, res) => {
   try {
-    const existing_category = await Category.findOne({ name: req.params.name});
-    const question = getQuestion(req.originalUrl);
+    console.log(req.body)
+    const existing_category = await Category.findOne({ Name: req.body.category });
+    const question = req.body.name;
     if (existing_category === null) {
-      let new_category = buildEmptyCategory(req.params.name); 
-      updateCategory(new_category, question);
+      let new_category = {
+        Name: req.body.category,
+        Beginner: [],
+        Waystage: [],
+        Advanced: []
+      }
+      if (req.body.difficulty == "Beginner") {
+        new_category.Beginner.push({
+          Question: question,
+          Answers: req.body.answers,
+          Correct: req.body.correct
+        })
+      } else if (req.body.difficulty == "Waystage") {
+        new_category.Waystage.push({
+          Question: question,
+          Answers: req.body.answers,
+          Correct: req.body.correct
+        })
+      } else if (req.body.difficulty == "Advanced") {
+        new_category.Advanced.push({
+          Question: question,
+          Answers: req.body.answers,
+          Correct: req.body.correct
+        })
+      }
       await Category.create(new_category);
       res.status(STATUS.CREATED);
       res.json(new_category);
     } else {
-      if (questionInCategory(existing_category, question) || question === null) {
+      if (question === null) {
         res.status(STATUS.EXISTS);
         res.json({});
       } else {
-        const updated_category = updateCategory(existing_category, question);
-        await Category.findOneAndUpdate({ name: req.params.name },
-          { questions: updated_category.questions })
+        if (req.body.difficulty == "Beginner") {
+          existing_category.Beginner.push({
+            Question: question,
+            Answers: req.body.answers,
+            Correct: req.body.correct
+          })
+          await Category.findOneAndUpdate({ Name: req.body.category },
+            { Beginner: existing_category.Beginner })
+        } else if (req.body.difficulty == "Waystage") {
+          existing_category.Waystage.push({
+            Question: question,
+            Answers: req.body.answers,
+            Correct: req.body.correct
+          })
+          await Category.findOneAndUpdate({ Name: req.body.category },
+            { Waystage: existing_category.Waystage })
+        } else if (req.body.difficulty == "Advanced") {
+          existing_category.Advanced.push({
+            Question: question,
+            Answers: req.body.answers,
+            Correct: req.body.correct
+          })
+          await Category.findOneAndUpdate({ Name: req.body.category },
+            { Advanced: existing_category.Advanced })
+        }
         res.status(STATUS.CREATED);
         res.json(question);
       }
@@ -151,6 +227,7 @@ router.put('/:name', async (req, res) => {
     res.send('error occurred: ' + e);
   }
 });
+///
 
 // delete requests return the new resource that is created
 // or an empty object if the resource does not exist

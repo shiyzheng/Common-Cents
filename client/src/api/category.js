@@ -24,6 +24,16 @@ export const putCategoryFromName = async (categoryName) => {
     }
 }
 
+///
+export const putCategory = async (category) => {
+    try {
+        await axios.put(`${baseURL}${PATH_PREFIX}`, {category}) 
+    } catch (error) {
+        console.error("axios function call error:", error);
+    }
+}
+///
+
 export const getCategoryByName = async (name) => {
     try {
         const response = await axios.get(`${baseURL}/category/getName`, {
