@@ -8,6 +8,8 @@ const path = require('path');
 
 const AccountRouter = require('./routes/account');
 const CategoryRouter = require('./routes/category').router;
+const QuestionRouter = require('./routes/question').router;
+
 
 const app = express();
 const MONGO_URI = process.env.MONGODB_URI || 'mongodb+srv://xianhanchen:xianhan@cluster0.3uugri4.mongodb.net/?retryWrites=true&w=majority';
@@ -68,14 +70,15 @@ app.get('/', (req, res) => {
 
 app.use('/account', AccountRouter);
 app.use('/category', CategoryRouter);
+app.use('/question', QuestionRouter)
 
 // TODO: move app.listen to separate file
 // package.json import app from server.js and then in package.json,
 // start command should be node index.js to avoid open handles
-app.listen(3000, () => {
-    console.log('listening on 3000');
-    console.log('mongoDB is connected');
-});
+// app.listen(3000, () => {
+//     console.log('listening on 3000');
+//     console.log('mongoDB is connected');
+// });
 
 // export for category.test.js
 module.exports = {

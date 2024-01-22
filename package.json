@@ -22,7 +22,7 @@
     },
     "scripts": {
         "build": "parcel client/src/index.html",
-        "server": "node backend/server.js",
+        "server": "node backend/index.js",
         "json-server": "json-server --watch client/src/json-server/db.json",
         "test": "jest"
     },
