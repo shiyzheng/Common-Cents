@@ -9,6 +9,7 @@ const questionSchema = new Schema({
 })
 
 const categorySchema = new Schema({
+  Lesson: { type: String, required: true },
   Name: { type: String, required: true },
   Beginner: [questionSchema],
   Waystage: [questionSchema],

@@ -157,11 +157,12 @@ router.get('/getName', async (req, res) => {
 router.put('/add', async (req, res) => {
   try {
     console.log(req.body)
-    const existing_category = await Category.findOne({ Name: req.body.category });
+    const existing_category = await Category.findOne({ Name: req.body.unit });
     const question = req.body.name;
     if (existing_category === null) {
       let new_category = {
-        Name: req.body.category,
+        Category: req.body.category,
+        Name: req.body.unit,
         Beginner: [],
         Waystage: [],
         Advanced: []
