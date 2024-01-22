@@ -34,7 +34,7 @@ const Lessons = (props) => {
       const formattedLevel = level.toLowerCase().replace(/\s+/g, '-');
       return lessonList.map((lesson, index) => (
         <li key={index}>
-          {/* <button className="button" onClick={() => navigate(`/lessons/${encodeURIComponent(topic)}/${formattedLevel}/${index + 1}`)}> */}
+          {/* <button className="button" onClick={() => navigate(`/lessons/${topic}/${formattedLevel}/${index + 1}`)}> */}
           <button className="button" onClick={() => navigate(`/mcq`)}>
             {`${lesson}`}
           </button>
@@ -47,7 +47,7 @@ const Lessons = (props) => {
       const formattedLevel = level.toLowerCase().replace(/\s+/g, '-');
       return lessonList2.map((lesson, index) => (
         <li key={index}>
-          {/* <button className="button" onClick={() => navigate(`/lessons/${encodeURIComponent(topic)}/${formattedLevel}/${index + 1}`)}> */}
+          {/* <button className="button" onClick={() => navigate(`/lessons/${topic}/${formattedLevel}/${index + 1}`)}> */}
           <button className="button" onClick={() => navigate(`/mcq`)}>
             {`${lesson}`}
           </button>

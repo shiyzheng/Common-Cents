@@ -81,7 +81,7 @@ function Home(props) {
 
   const navigateToTopic = (topic) => {
     const formattedTopic = topic.toLowerCase().replace(/\s+/g, '-');
-    navigate(`/lessons/${encodeURIComponent(formattedTopic)}`);
+    navigate(`/lessons/${formattedTopic}`);
   };
 
   return (
@@ -95,14 +95,12 @@ function Home(props) {
       )}
       {login && (
         <><div>
+          <button className="btn btn-outline-danger float-right" type="button" onClick={() => logout()}>Logout</button>
           <div>
             Welcome
             {' '}
             {username}
           </div>
-          <button className="btn btn-outline-danger float-right" type="button" onClick={() => logout()}>Logout</button>
-          <CategoryView categories={categories} setCategories={setCategories} />
-        </div><div style={{ textAlign: 'center', marginTop: '50px' }}>
       <h2>I would like to learn about...</h2>
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
         {topics.map((topic, index) => (
@@ -111,12 +109,14 @@ function Home(props) {
             className="btn btn-primary float-right"
             type="button"
             onClick={() => navigateToTopic(topic)}
-            style={{ margin: '0 10px' }}
-          >
+            style={{ margin: '0 10px' }}>
             {topic}
           </button>
         ))}
       </div>
+      
+          <CategoryView categories={categories} setCategories={setCategories} />
+        </div><div style={{ textAlign: 'center', marginTop: '50px' }}>
     </div></>
       )}
     </div>
