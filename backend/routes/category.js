@@ -35,7 +35,6 @@ function cloneObject(object) {
 
 // returns true if the question is already in the category, else returns false
 function questionInCategory(category, question) {
-  console.log("check how null:::", category, question);
   let ret = false;
   if (question === null) {
     return ret;
