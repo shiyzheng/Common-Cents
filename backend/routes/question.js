@@ -24,6 +24,30 @@ function getAllQuestions() {
      }
  });
 
+ router.get('/:id', async (req, res) => {
+     try {
+         const question = await Question.findById(req.params["id"]);
+         console.log("question:", question);
+         res.status(CONSTANTS.STATUS.OK);
+         res.json(question);
+     } catch (err) {
+         res.status(CONSTANTS.STATUS.NOT_FOUND);
+         res.send('error occurred: ' + err);
+     }
+ });
+
+ router.post('/create', async (req, res) => {
+     try {
+         console.log("req.body: ", req.body);
+         res.status(CONSTANTS.STATUS.OK);
+     } catch (err) {
+         res.status(CONSTANTS.STATUS.INTERNAL_SERVER_ERROR);
+         res.send('error occurred: ' + err);
+     }
+ });
+
+
+
 
 function getQuestionById(id) {
     console.log(id);

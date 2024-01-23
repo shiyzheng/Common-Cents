@@ -27,8 +27,10 @@ describe('Question Routes Tests', function () {
             const answers = [];
 
             res.body.forEach((element) => {
-                names.push(element.question);
-                answers.push(element.possibleAnswers);
+                if (_TESTS.BASE_QUESTION_NAMES.includes(element.question)) {
+                    names.push(element.question);
+                    answers.push(element.possibleAnswers);
+                }
             });
 
             // Tests if received array contains all elements of expected array
@@ -37,7 +39,29 @@ describe('Question Routes Tests', function () {
             answers.forEach((element) => {
                 expect(element).toEqual(expect.arrayContaining(_TESTS.BASE_QUESTION_ANSWERS))
             })
+        }
+    );
 
-            console.log(res.body);
-        });
+    test('Tests getting a question by id',
+        async () => {
+            const res = await request(app).get(`${PATH_PREFIX}${_TESTS.BASE_QUESTION_1_ID}`);
+            expect(res.statusCode).toEqual(CONSTANTS.STATUS.OK);
+        }
+    );
+
+    test('Tests getting a non-existent question',
+        async () => {
+            const res = await request(app).get(`${PATH_PREFIX}no-exists`);
+            expect(res.statusCode).toEqual(CONSTANTS.STATUS.NOT_FOUND);
+        }
+    );
+
+    test('Tests putting a question',
+        async () => {
+            const payload = { testPayload: "testPayload1" };
+            await request(app).post(`${PATH_PREFIX}create`, (req, res) => {
+                expect(res.statusCode).toEqual(CONSTANTS.STATUS.CREATED);
+            });
+        }
+    );
 });

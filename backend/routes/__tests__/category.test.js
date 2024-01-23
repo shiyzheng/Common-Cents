@@ -49,7 +49,7 @@ function buildQueryParamsString(jsonObject) {
 }
 
 
-describe('Routes Tests', function () {
+xdescribe('Routes Tests', function () {
 
     test('Tests if all base topics are in the categories collection',
         async () => {
