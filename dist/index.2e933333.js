@@ -33549,6 +33549,7 @@ var _adminConsole = require("./pages/AdminConsole");
 var _adminConsoleDefault = parcelHelpers.interopDefault(_adminConsole);
 var _lessons = require("./components/Lessons");
 var _lessonsDefault = parcelHelpers.interopDefault(_lessons);
+var _users = require("./api/users");
 var _s = $RefreshSig$(), _s1 = $RefreshSig$();
 function App() {
     _s();
@@ -33556,24 +33557,23 @@ function App() {
     const [username, setUsername] = (0, _react.useState)("");
     const [password, setPassword] = (0, _react.useState)("");
     const [categories, setCategories] = (0, _react.useState)([]);
-    // useEffect(() => {
-    //   const intervalID = setInterval(() => {
-    //     const check = async () => {
-    //       const user = await axios.get('http://localhost:3000/account/isLogged');
-    //       if (user.data.username == null || user.data.username === '') {
-    //         setLogin(false);
-    //         // console.log(false);
-    //         console.log(user.data.username);
-    //       } else {
-    //         setUsername(user.data.username);
-    //         console.log(user.data.username);
-    //         setLogin(true);
-    //       }
-    //     };
-    //     check();
-    //   }, 2000);
-    //   return () => clearInterval(intervalID);
-    // }, []);
+    (0, _react.useEffect)(()=>{
+        const intervalID = setInterval(()=>{
+            const check = async ()=>{
+                const user = await (0, _users.getCurrentUser)();
+                if (user == null || user.data.username === "") {
+                    setLogin(false);
+                    console.log(user.data);
+                } else {
+                    setUsername(user.data);
+                    console.log(user);
+                    setLogin(true);
+                }
+            };
+            check();
+        }, 2000);
+        return ()=>clearInterval(intervalID);
+    }, []);
     const logout = async ()=>{
         await (0, _axiosDefault.default).post("http://localhost:3000/account/logout");
         setUsername("");
@@ -33590,7 +33590,7 @@ function App() {
                 setCategories: setCategories
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 51,
+                lineNumber: 52,
                 columnNumber: 52
             }, this)
         },
@@ -33605,7 +33605,7 @@ function App() {
                 password: password
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 52,
+                lineNumber: 53,
                 columnNumber: 32
             }, this)
         },
@@ -33620,7 +33620,7 @@ function App() {
                 password: password
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 53,
+                lineNumber: 54,
                 columnNumber: 33
             }, this)
         },
@@ -33630,7 +33630,7 @@ function App() {
                 login: login
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 54,
+                lineNumber: 55,
                 columnNumber: 38
             }, this)
         },
@@ -33641,7 +33641,7 @@ function App() {
                 username: username
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 56,
+                lineNumber: 57,
                 columnNumber: 40
             }, this)
         },
@@ -33654,7 +33654,7 @@ function App() {
                 username: username
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 58,
+                lineNumber: 59,
                 columnNumber: 39
             }, this)
         },
@@ -33667,7 +33667,7 @@ function App() {
                 username: username
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 59,
+                lineNumber: 60,
                 columnNumber: 39
             }, this)
         },
@@ -33680,7 +33680,7 @@ function App() {
                 username: username
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 60,
+                lineNumber: 61,
                 columnNumber: 30
             }, this)
         },
@@ -33693,7 +33693,7 @@ function App() {
                 username: username
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 61,
+                lineNumber: 62,
                 columnNumber: 41
             }, this)
         },
@@ -33705,14 +33705,14 @@ function App() {
                 username: username
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 63,
+                lineNumber: 64,
                 columnNumber: 41
             }, this)
         }
     ]);
     return element;
 }
-_s(App, "RCxvf6PcRWg2EKAUsV1XYaD48cg=", false, function() {
+_s(App, "epGRucsC49Y5SbbCt0D0U3yqsNM=", false, function() {
     return [
         (0, _reactRouterDom.useRoutes)
     ];
@@ -33739,7 +33739,7 @@ function Home(props) {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navbarDefault.default), {}, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 89,
+                lineNumber: 90,
                 columnNumber: 9
             }, this),
             !login && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -33749,7 +33749,7 @@ function Home(props) {
                 ]
             }, void 0, true, {
                 fileName: "client/src/App.js",
-                lineNumber: 91,
+                lineNumber: 92,
                 columnNumber: 9
             }, this),
             login && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
@@ -33763,7 +33763,7 @@ function Home(props) {
                                 children: "Logout"
                             }, void 0, false, {
                                 fileName: "client/src/App.js",
-                                lineNumber: 98,
+                                lineNumber: 99,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -33774,14 +33774,14 @@ function Home(props) {
                                 ]
                             }, void 0, true, {
                                 fileName: "client/src/App.js",
-                                lineNumber: 99,
+                                lineNumber: 100,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
                                 children: "I would like to learn about..."
                             }, void 0, false, {
                                 fileName: "client/src/App.js",
-                                lineNumber: 104,
+                                lineNumber: 105,
                                 columnNumber: 7
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -33800,12 +33800,12 @@ function Home(props) {
                                         children: topic
                                     }, index, false, {
                                         fileName: "client/src/App.js",
-                                        lineNumber: 107,
+                                        lineNumber: 108,
                                         columnNumber: 11
                                     }, this))
                             }, void 0, false, {
                                 fileName: "client/src/App.js",
-                                lineNumber: 105,
+                                lineNumber: 106,
                                 columnNumber: 7
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _categoryViewDefault.default), {
@@ -33813,13 +33813,13 @@ function Home(props) {
                                 setCategories: setCategories
                             }, void 0, false, {
                                 fileName: "client/src/App.js",
-                                lineNumber: 118,
+                                lineNumber: 119,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "client/src/App.js",
-                        lineNumber: 97,
+                        lineNumber: 98,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -33829,7 +33829,7 @@ function Home(props) {
                         }
                     }, void 0, false, {
                         fileName: "client/src/App.js",
-                        lineNumber: 119,
+                        lineNumber: 120,
                         columnNumber: 15
                     }, this)
                 ]
@@ -33837,7 +33837,7 @@ function Home(props) {
         ]
     }, void 0, true, {
         fileName: "client/src/App.js",
-        lineNumber: 88,
+        lineNumber: 89,
         columnNumber: 5
     }, this);
 }
@@ -33857,7 +33857,7 @@ $RefreshReg$(_c1, "Home");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"9xmpe","axios":"jo6P5","./components/Login":"eiYYT","./components/Signup":"cgjCG","./components/Profile":"elIyQ","./components/Navbar":"euCXA","./pages/achievements":"bfFHJ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./components/CategoryView":"c17qZ","./components/CategoryPage":"aPzBw","./pages/Leaderboards":"jBKYP","./components/MCQ":"4mzao","./pages/AdminConsole":"6TmIl","./components/Lessons":"lli3i"}],"jo6P5":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"9xmpe","axios":"jo6P5","./components/Login":"eiYYT","./components/Signup":"cgjCG","./components/Profile":"elIyQ","./components/Navbar":"euCXA","./pages/achievements":"bfFHJ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./components/CategoryView":"c17qZ","./components/CategoryPage":"aPzBw","./pages/Leaderboards":"jBKYP","./components/MCQ":"4mzao","./pages/AdminConsole":"6TmIl","./components/Lessons":"lli3i","./api/users":"k7f8x"}],"jo6P5":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>(0, _axiosJsDefault.default));
@@ -42956,6 +42956,6 @@ $RefreshReg$(_c, "Lessons");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"9xmpe","../components/Navbar":"euCXA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","../styles/Lessons.css":"gMsN9"}],"gMsN9":[function() {},{}]},["iHULc","1xC6H","iXgNX"], "iXgNX", "parcelRequire81a1")
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"9xmpe","../components/Navbar":"euCXA","../styles/Lessons.css":"gMsN9","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru"}],"gMsN9":[function() {},{}]},["iHULc","1xC6H","iXgNX"], "iXgNX", "parcelRequire81a1")
 
 //# sourceMappingURL=index.2e933333.js.map

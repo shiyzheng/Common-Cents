@@ -5,6 +5,7 @@ import {
 import axios from 'axios';
 import Navbar from './Navbar';
 import '../styles/Login.css';
+import { loginUser } from '../api/users';
 
 function Login(props) {
   // signup page
@@ -20,11 +21,8 @@ function Login(props) {
 
   const loginUser = async (userObject) => {
     try {
-      const response = await axios.post('http://localhost:3000/account/login', {
-        username: userObject.username,
-        password: userObject.password,
-      }, { withCredentials: true 
-      });
+      const responseToken = await loginUser(userObject);
+
       if (response.data === 'wrong password' || response.data === 'error occurred') {
         alert('wrong username/password');
       } else {

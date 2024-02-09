@@ -2,6 +2,7 @@ const express = require('express');
 
 const User = require('../models/user');
 const Achievement = require('../models/achievement');
+const { authenticateUser, verifyUser } = require('../utils/auth');
 
 const router = express.Router();
 
@@ -23,25 +24,54 @@ router.post('/signup', async (req, res) => {
   }
 });
 
+// router.post('/login', async (req, res) => {
+//   const { body } = req;
+//   const { username, password } = body;
+//   try {
+//     // console.log(req.session.username);
+//     const user = await User.findOne({ username });
+//     if (user.password === password) {
+//       const userSession = { username: user.username };
+//       req.session.username = userSession;
+//       console.log(req.session);
+//       res.json({ 'msg': 'you are logged in', userSession });
+//     } else {
+//       res.json({ 'msg': 'wrong password' });
+//     }
+//   } catch (e) {
+//     console.log(e);
+//     res.send('error occurred');
+//   }
+// });
+
 router.post('/login', async (req, res) => {
   const { body } = req;
   const { username, password } = body;
   try {
     // console.log(req.session.username);
-    const user = await User.findOne({ username });
-    if (user.password === password) {
-      const userSession = { username: user.username };
-      req.session.username = userSession;
-      console.log(req.session);
-      res.json({ 'msg': 'you are logged in', userSession });
-    } else {
-      res.json({ 'msg': 'wrong password' });
-    }
+    const token = authenticateUser(username, password);
+    // const user = await User.findOne({ username });
+    // if (user.password === password) {
+    //   const userSession = { username: user.username };
+    //   req.session.username = userSession;
+    //   console.log(req.session);
+    //   res.json({ 'msg': 'you are logged in', userSession });
+    // } else {
+    //   res.json({ 'msg': 'wrong password' });
+    // }
+    res.status(201).json({apptoken: token});
   } catch (e) {
-    console.log(e);
-    res.send('error occurred');
+    res.status(401).json({error: 'authenticate error'})
   }
 });
+
+router.post('/verify', async (req, res) => {
+  if (await verifyUser(req.headers.authorization)) {
+    res.json({message: 'Successful Authentication'})
+  } else {
+    res.json({message: 'Failed Authentication'})
+  }
+})
 
 router.post('/logout', (req, res) => {
   req.session.destroy((error) => {

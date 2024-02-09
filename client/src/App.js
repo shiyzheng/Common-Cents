@@ -16,6 +16,7 @@ import CategoryPage from './components/CategoryPage';
 import MultipleChoiceQuestion from './components/MCQ';
 import AdminConsole from './pages/AdminConsole';
 import Lessons from './components/Lessons';
+import { getCurrentUser } from './api/users';
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -26,14 +27,14 @@ function App() {
   // useEffect(() => {
   //   const intervalID = setInterval(() => {
   //     const check = async () => {
-  //       const user = await axios.get('http://localhost:3000/account/isLogged');
-  //       if (user.data.username == null || user.data.username === '') {
+  //       const user = await getCurrentUser();
+        
+  //       if (user == null || user.data.username === '') {
   //         setLogin(false);
-  //         // console.log(false);
-  //         console.log(user.data.username);
+  //         console.log(user.data);
   //       } else {
-  //         setUsername(user.data.username);
-  //         console.log(user.data.username);
+  //         setUsername(user.data);
+  //         console.log(user);
   //         setLogin(true);
   //       }
   //     };
