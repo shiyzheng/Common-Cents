@@ -33870,10 +33870,13 @@ function Login(props) {
     const loginUserOnClick = async (userObject)=>{
         try {
             const responseToken = await (0, _users.loginUser)(userObject);
+            console.log(responseToken);
             if (responseToken) {
                 sessionStorage.setItem("app-token", responseToken);
+                console.log(sessionStorage.getItem("app-token"));
                 setLogin(true);
                 name.current = userObject.username;
+                console.log(name.current);
             } else alert("wrong username/password");
         } catch (err) {
             console.log(err);
@@ -33884,7 +33887,7 @@ function Login(props) {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navbarDefault.default), {}, void 0, false, {
                 fileName: "client/src/components/Login.js",
-                lineNumber: 41,
+                lineNumber: 43,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -33900,7 +33903,7 @@ function Login(props) {
                             children: "Login"
                         }, void 0, false, {
                             fileName: "client/src/components/Login.js",
-                            lineNumber: 44,
+                            lineNumber: 46,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -33917,23 +33920,23 @@ function Login(props) {
                                         onChange: (e)=>setUsername(e.target.value)
                                     }, void 0, false, {
                                         fileName: "client/src/components/Login.js",
-                                        lineNumber: 47,
+                                        lineNumber: 49,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "client/src/components/Login.js",
-                                    lineNumber: 46,
+                                    lineNumber: 48,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                                     fileName: "client/src/components/Login.js",
-                                    lineNumber: 49,
+                                    lineNumber: 51,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "client/src/components/Login.js",
-                            lineNumber: 45,
+                            lineNumber: 47,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -33950,23 +33953,23 @@ function Login(props) {
                                         onChange: (e)=>setPassword(e.target.value)
                                     }, void 0, false, {
                                         fileName: "client/src/components/Login.js",
-                                        lineNumber: 53,
+                                        lineNumber: 55,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "client/src/components/Login.js",
-                                    lineNumber: 52,
+                                    lineNumber: 54,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                                     fileName: "client/src/components/Login.js",
-                                    lineNumber: 55,
+                                    lineNumber: 57,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "client/src/components/Login.js",
-                            lineNumber: 51,
+                            lineNumber: 53,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -33985,12 +33988,12 @@ function Login(props) {
                             children: "LOG IN"
                         }, void 0, false, {
                             fileName: "client/src/components/Login.js",
-                            lineNumber: 57,
+                            lineNumber: 59,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                             fileName: "client/src/components/Login.js",
-                            lineNumber: 70,
+                            lineNumber: 72,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -34001,30 +34004,30 @@ function Login(props) {
                                     children: "Signup here!"
                                 }, void 0, false, {
                                     fileName: "client/src/components/Login.js",
-                                    lineNumber: 73,
+                                    lineNumber: 75,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "client/src/components/Login.js",
-                            lineNumber: 71,
+                            lineNumber: 73,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "client/src/components/Login.js",
-                    lineNumber: 43,
+                    lineNumber: 45,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "client/src/components/Login.js",
-                lineNumber: 42,
+                lineNumber: 44,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "client/src/components/Login.js",
-        lineNumber: 40,
+        lineNumber: 42,
         columnNumber: 5
     }, this);
 }
@@ -39250,7 +39253,7 @@ const loginUser = async (userObject)=>{
             username: userObject.username,
             password: userObject.password
         });
-        return response;
+        return response.data.apptoken;
     } catch (err) {
         console.log("error", err.message);
     }

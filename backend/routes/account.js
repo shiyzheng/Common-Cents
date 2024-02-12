@@ -9,8 +9,6 @@ const router = express.Router();
 router.post('/signup', async (req, res) => {
   const { body } = req;
   const { username, password } = body;
-  console.log(username);
-  console.log(password);
   try {
     const user = await User.findOne({ username });
     if (!user) {
@@ -40,12 +38,11 @@ router.post('/login', async (req, res) => {
   const { body } = req;
   const { username, password } = body;
   try {
-    // console.log(req.session.username);
     const token = authenticateUser(username, password);
     if (await verifyUser(token)) {
-      res.json({ message: 'you are logged in'});
+      res.status(201).json({apptoken: token});
     } else {
-      res.json({ message: 'wrong password' })
+      res.status(401).json({error: 'wrong password'})
     }
   } catch (e) {
     res.status(401).json({error: 'authenticate error'})

@@ -24,7 +24,7 @@ export const loginUser = async (userObject) => {
             username: userObject.username,
             password: userObject.password,
         })
-        return response;
+        return response.data.apptoken;
     } catch (err) {
         console.log('error', err.message);
     }
