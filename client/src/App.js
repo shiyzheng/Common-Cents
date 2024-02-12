@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   useRoutes,
   useNavigate,
 } from 'react-router-dom';
-import axios from 'axios';
 import Login from './components/Login';
 // import Classrooms from './components/Classrooms';
 import Signup from './components/Signup';
@@ -19,39 +18,20 @@ import Lessons from './components/Lessons';
 import { getCurrentUser } from './api/users';
 
 function App() {
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(sessionStorage.getItem('app-token') != null);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const name = useRef('')
   const [categories, setCategories] = useState([]);
 
-  // useEffect(() => {
-  //   const intervalID = setInterval(() => {
-  //     const check = async () => {
-  //       const user = await getCurrentUser();
-        
-  //       if (user == null || user.data.username === '') {
-  //         setLogin(false);
-  //         console.log(user.data);
-  //       } else {
-  //         setUsername(user.data);
-  //         console.log(user);
-  //         setLogin(true);
-  //       }
-  //     };
-  //     check();
-  //   }, 2000);
-  //   return () => clearInterval(intervalID);
-  // }, []);
-
   const logout = async () => {
-    await axios.post('http://localhost:3000/account/logout');
-    setUsername('');
-    setLogin(false);
+    sessionStorage.removeItem('app-token');
+    window.location.reload(true);
   };
 
-  const element = useRoutes([{ path: '/', element: <Home login={login} username={username} logout={logout} categories={categories} setCategories={setCategories} /> },
-    { path: '/Login', element: <Login setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} /> },
-    { path: '/Signup', element: <Signup setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} /> },
+  const element = useRoutes([{ path: '/', element: <Home login={login} username={username} logout={logout} categories={categories} setCategories={setCategories} name={name} /> },
+    { path: '/Login', element: <Login setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} name={name} /> },
+    { path: '/Signup', element: <Signup setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} name={name} /> },
     { path: '/profile/:id', element: <Profile login={login} /> },
 
     { path: '/admin-console', element: <AdminConsole login={login} username={username} /> },
@@ -68,7 +48,7 @@ function App() {
 
 function Home(props) {
   // console.log('homepage');
-  const { login, username, logout, categories, setCategories } = props;
+  const { login, username, logout, categories, setCategories, name } = props;
   const navigate = useNavigate();
 
   const topics = [
@@ -100,7 +80,7 @@ function Home(props) {
           <div>
             Welcome
             {' '}
-            {username}
+            {name.current}
           </div>
       <h2>I would like to learn about...</h2>
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>

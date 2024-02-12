@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { getUserByName } = require('../../client/src/api/users');
-
+const User = require('../models/user');
 
 // import the env variables
 require('dotenv').config();
@@ -30,14 +29,14 @@ const verifyUser = async (token) =>{
     try{
         // decoded contains the payload of the token
         const decoded = jwt.verify(token, process.env.KEY);
+        const { username, password } = decoded;
         console.log('payload', decoded);
         // check that the payload contains a valid user
-        const user = await getUserByName(decoded.username, decoded.password);
-        if(!user){
-            // user is undefined
-            return false;
+        const user = await User.findOne({ username });
+        if(user.password === password) {
+            return true;
         }
-        return true;
+        return false;
     }catch(err){
         // invalid token
         console.log('error', err.message);

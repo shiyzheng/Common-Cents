@@ -33524,8 +33524,6 @@ var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _reactDefault = parcelHelpers.interopDefault(_react);
 var _reactRouterDom = require("react-router-dom");
-var _axios = require("axios");
-var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _login = require("./components/Login");
 var _loginDefault = parcelHelpers.interopDefault(_login);
 // import Classrooms from './components/Classrooms';
@@ -33553,31 +33551,14 @@ var _users = require("./api/users");
 var _s = $RefreshSig$(), _s1 = $RefreshSig$();
 function App() {
     _s();
-    const [login, setLogin] = (0, _react.useState)(false);
+    const [login, setLogin] = (0, _react.useState)(sessionStorage.getItem("app-token") != null);
     const [username, setUsername] = (0, _react.useState)("");
     const [password, setPassword] = (0, _react.useState)("");
+    const name = (0, _react.useRef)("");
     const [categories, setCategories] = (0, _react.useState)([]);
-    (0, _react.useEffect)(()=>{
-        const intervalID = setInterval(()=>{
-            const check = async ()=>{
-                const user = await (0, _users.getCurrentUser)();
-                if (user == null || user.data.username === "") {
-                    setLogin(false);
-                    console.log(user.data);
-                } else {
-                    setUsername(user.data);
-                    console.log(user);
-                    setLogin(true);
-                }
-            };
-            check();
-        }, 2000);
-        return ()=>clearInterval(intervalID);
-    }, []);
     const logout = async ()=>{
-        await (0, _axiosDefault.default).post("http://localhost:3000/account/logout");
-        setUsername("");
-        setLogin(false);
+        sessionStorage.removeItem("app-token");
+        window.location.reload(true);
     };
     const element = (0, _reactRouterDom.useRoutes)([
         {
@@ -33587,10 +33568,11 @@ function App() {
                 username: username,
                 logout: logout,
                 categories: categories,
-                setCategories: setCategories
+                setCategories: setCategories,
+                name: name
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 52,
+                lineNumber: 32,
                 columnNumber: 52
             }, this)
         },
@@ -33602,10 +33584,11 @@ function App() {
                 setUsername: setUsername,
                 setPassword: setPassword,
                 username: username,
-                password: password
+                password: password,
+                name: name
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 53,
+                lineNumber: 33,
                 columnNumber: 32
             }, this)
         },
@@ -33617,10 +33600,11 @@ function App() {
                 setUsername: setUsername,
                 setPassword: setPassword,
                 username: username,
-                password: password
+                password: password,
+                name: name
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 54,
+                lineNumber: 34,
                 columnNumber: 33
             }, this)
         },
@@ -33630,7 +33614,7 @@ function App() {
                 login: login
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 55,
+                lineNumber: 35,
                 columnNumber: 38
             }, this)
         },
@@ -33641,7 +33625,7 @@ function App() {
                 username: username
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 57,
+                lineNumber: 37,
                 columnNumber: 40
             }, this)
         },
@@ -33654,7 +33638,7 @@ function App() {
                 username: username
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 59,
+                lineNumber: 39,
                 columnNumber: 39
             }, this)
         },
@@ -33667,7 +33651,7 @@ function App() {
                 username: username
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 60,
+                lineNumber: 40,
                 columnNumber: 39
             }, this)
         },
@@ -33680,7 +33664,7 @@ function App() {
                 username: username
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 61,
+                lineNumber: 41,
                 columnNumber: 30
             }, this)
         },
@@ -33693,7 +33677,7 @@ function App() {
                 username: username
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 62,
+                lineNumber: 42,
                 columnNumber: 41
             }, this)
         },
@@ -33705,14 +33689,14 @@ function App() {
                 username: username
             }, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 64,
+                lineNumber: 44,
                 columnNumber: 41
             }, this)
         }
     ]);
     return element;
 }
-_s(App, "epGRucsC49Y5SbbCt0D0U3yqsNM=", false, function() {
+_s(App, "MjybDnnNq9fUDdv12Z823t4zgwY=", false, function() {
     return [
         (0, _reactRouterDom.useRoutes)
     ];
@@ -33721,7 +33705,7 @@ _c = App;
 function Home(props) {
     _s1();
     // console.log('homepage');
-    const { login, username, logout, categories, setCategories } = props;
+    const { login, username, logout, categories, setCategories, name } = props;
     const navigate = (0, _reactRouterDom.useNavigate)();
     const topics = [
         "Earning Income",
@@ -33739,7 +33723,7 @@ function Home(props) {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navbarDefault.default), {}, void 0, false, {
                 fileName: "client/src/App.js",
-                lineNumber: 90,
+                lineNumber: 70,
                 columnNumber: 9
             }, this),
             !login && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -33749,7 +33733,7 @@ function Home(props) {
                 ]
             }, void 0, true, {
                 fileName: "client/src/App.js",
-                lineNumber: 92,
+                lineNumber: 72,
                 columnNumber: 9
             }, this),
             login && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
@@ -33763,25 +33747,25 @@ function Home(props) {
                                 children: "Logout"
                             }, void 0, false, {
                                 fileName: "client/src/App.js",
-                                lineNumber: 99,
+                                lineNumber: 79,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
                                 children: [
                                     "Welcome",
                                     " ",
-                                    username
+                                    name.current
                                 ]
                             }, void 0, true, {
                                 fileName: "client/src/App.js",
-                                lineNumber: 100,
+                                lineNumber: 80,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
                                 children: "I would like to learn about..."
                             }, void 0, false, {
                                 fileName: "client/src/App.js",
-                                lineNumber: 105,
+                                lineNumber: 85,
                                 columnNumber: 7
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -33800,12 +33784,12 @@ function Home(props) {
                                         children: topic
                                     }, index, false, {
                                         fileName: "client/src/App.js",
-                                        lineNumber: 108,
+                                        lineNumber: 88,
                                         columnNumber: 11
                                     }, this))
                             }, void 0, false, {
                                 fileName: "client/src/App.js",
-                                lineNumber: 106,
+                                lineNumber: 86,
                                 columnNumber: 7
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _categoryViewDefault.default), {
@@ -33813,13 +33797,13 @@ function Home(props) {
                                 setCategories: setCategories
                             }, void 0, false, {
                                 fileName: "client/src/App.js",
-                                lineNumber: 119,
+                                lineNumber: 99,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "client/src/App.js",
-                        lineNumber: 98,
+                        lineNumber: 78,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -33829,7 +33813,7 @@ function Home(props) {
                         }
                     }, void 0, false, {
                         fileName: "client/src/App.js",
-                        lineNumber: 120,
+                        lineNumber: 100,
                         columnNumber: 15
                     }, this)
                 ]
@@ -33837,7 +33821,7 @@ function Home(props) {
         ]
     }, void 0, true, {
         fileName: "client/src/App.js",
-        lineNumber: 89,
+        lineNumber: 69,
         columnNumber: 5
     }, this);
 }
@@ -33857,7 +33841,209 @@ $RefreshReg$(_c1, "Home");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"9xmpe","axios":"jo6P5","./components/Login":"eiYYT","./components/Signup":"cgjCG","./components/Profile":"elIyQ","./components/Navbar":"euCXA","./pages/achievements":"bfFHJ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./components/CategoryView":"c17qZ","./components/CategoryPage":"aPzBw","./pages/Leaderboards":"jBKYP","./components/MCQ":"4mzao","./pages/AdminConsole":"6TmIl","./components/Lessons":"lli3i","./api/users":"k7f8x"}],"jo6P5":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"9xmpe","./components/Login":"eiYYT","./components/Signup":"cgjCG","./components/Profile":"elIyQ","./components/Navbar":"euCXA","./pages/achievements":"bfFHJ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./components/CategoryView":"c17qZ","./components/CategoryPage":"aPzBw","./pages/Leaderboards":"jBKYP","./components/MCQ":"4mzao","./pages/AdminConsole":"6TmIl","./components/Lessons":"lli3i","./api/users":"k7f8x"}],"eiYYT":[function(require,module,exports) {
+var $parcel$ReactRefreshHelpers$4fdc = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+$parcel$ReactRefreshHelpers$4fdc.prelude(module);
+
+try {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _react = require("react");
+var _reactDefault = parcelHelpers.interopDefault(_react);
+var _reactRouterDom = require("react-router-dom");
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _navbar = require("./Navbar");
+var _navbarDefault = parcelHelpers.interopDefault(_navbar);
+var _loginCss = require("../styles/Login.css");
+var _users = require("../api/users");
+var _s = $RefreshSig$();
+function Login(props) {
+    _s();
+    // signup page
+    const { setLogin, login, setUsername, setPassword, username, password, name } = props;
+    const navigate = (0, _reactRouterDom.useNavigate)();
+    if (login) navigate("/");
+    const loginUserOnClick = async (userObject)=>{
+        try {
+            const responseToken = await (0, _users.loginUser)(userObject);
+            if (responseToken) {
+                sessionStorage.setItem("app-token", responseToken);
+                setLogin(true);
+                name.current = userObject.username;
+            } else alert("wrong username/password");
+        } catch (err) {
+            console.log(err);
+            alert("user authentication failed");
+        }
+    };
+    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+        children: [
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navbarDefault.default), {}, void 0, false, {
+                fileName: "client/src/components/Login.js",
+                lineNumber: 41,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                className: "form-container",
+                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
+                    id: "add",
+                    className: "mx-auto",
+                    style: {
+                        width: "800px"
+                    },
+                    children: [
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
+                            children: "Login"
+                        }, void 0, false, {
+                            fileName: "client/src/components/Login.js",
+                            lineNumber: 44,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                            className: "form-group",
+                            children: [
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                                    htmlFor: "Username",
+                                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                                        size: "40",
+                                        type: "text",
+                                        placeholder: "Email or username",
+                                        className: "form-control",
+                                        id: "Username",
+                                        onChange: (e)=>setUsername(e.target.value)
+                                    }, void 0, false, {
+                                        fileName: "client/src/components/Login.js",
+                                        lineNumber: 47,
+                                        columnNumber: 15
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "client/src/components/Login.js",
+                                    lineNumber: 46,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
+                                    fileName: "client/src/components/Login.js",
+                                    lineNumber: 49,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "client/src/components/Login.js",
+                            lineNumber: 45,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
+                            className: "form-group",
+                            children: [
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
+                                    htmlFor: "Password",
+                                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
+                                        size: "40",
+                                        type: "text",
+                                        placeholder: "Password",
+                                        className: "form-control",
+                                        id: "Password",
+                                        onChange: (e)=>setPassword(e.target.value)
+                                    }, void 0, false, {
+                                        fileName: "client/src/components/Login.js",
+                                        lineNumber: 53,
+                                        columnNumber: 15
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "client/src/components/Login.js",
+                                    lineNumber: 52,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
+                                    fileName: "client/src/components/Login.js",
+                                    lineNumber: 55,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "client/src/components/Login.js",
+                            lineNumber: 51,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                            className: "button big-btn",
+                            "data-testid": "button",
+                            onClick: (e)=>{
+                                e.preventDefault();
+                                loginUserOnClick({
+                                    username,
+                                    password
+                                });
+                                const form = document.getElementById("add");
+                                form.reset();
+                            },
+                            type: "submit",
+                            children: "LOG IN"
+                        }, void 0, false, {
+                            fileName: "client/src/components/Login.js",
+                            lineNumber: 57,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
+                            fileName: "client/src/components/Login.js",
+                            lineNumber: 70,
+                            columnNumber: 11
+                        }, this),
+                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
+                            children: [
+                                "Don't have an account? ",
+                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
+                                    to: "/signup",
+                                    children: "Signup here!"
+                                }, void 0, false, {
+                                    fileName: "client/src/components/Login.js",
+                                    lineNumber: 73,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "client/src/components/Login.js",
+                            lineNumber: 71,
+                            columnNumber: 11
+                        }, this)
+                    ]
+                }, void 0, true, {
+                    fileName: "client/src/components/Login.js",
+                    lineNumber: 43,
+                    columnNumber: 9
+                }, this)
+            }, void 0, false, {
+                fileName: "client/src/components/Login.js",
+                lineNumber: 42,
+                columnNumber: 7
+            }, this)
+        ]
+    }, void 0, true, {
+        fileName: "client/src/components/Login.js",
+        lineNumber: 40,
+        columnNumber: 5
+    }, this);
+}
+_s(Login, "CzcTeTziyjMsSrAVmHuCCb6+Bfg=", false, function() {
+    return [
+        (0, _reactRouterDom.useNavigate)
+    ];
+});
+_c = Login;
+exports.default = Login;
+var _c;
+$RefreshReg$(_c, "Login");
+
+  $parcel$ReactRefreshHelpers$4fdc.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"9xmpe","axios":"jo6P5","./Navbar":"euCXA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","../styles/Login.css":"k0IVP","../api/users":"k7f8x"}],"jo6P5":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>(0, _axiosJsDefault.default));
@@ -38219,210 +38405,7 @@ Object.entries(HttpStatusCode).forEach(([key, value])=>{
 });
 exports.default = HttpStatusCode;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eiYYT":[function(require,module,exports) {
-var $parcel$ReactRefreshHelpers$4fdc = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-$parcel$ReactRefreshHelpers$4fdc.prelude(module);
-
-try {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _react = require("react");
-var _reactDefault = parcelHelpers.interopDefault(_react);
-var _reactRouterDom = require("react-router-dom");
-var _axios = require("axios");
-var _axiosDefault = parcelHelpers.interopDefault(_axios);
-var _navbar = require("./Navbar");
-var _navbarDefault = parcelHelpers.interopDefault(_navbar);
-var _loginCss = require("../styles/Login.css");
-var _s = $RefreshSig$();
-function Login(props) {
-    _s();
-    // signup page
-    const { setLogin, login, setUsername, setPassword, username, password } = props;
-    const navigate = (0, _reactRouterDom.useNavigate)();
-    if (login) navigate("/");
-    const loginUser = async (userObject)=>{
-        try {
-            const response = await (0, _axiosDefault.default).post("http://localhost:3000/account/login", {
-                username: userObject.username,
-                password: userObject.password
-            }, {
-                withCredentials: true
-            });
-            if (response.data === "wrong password" || response.data === "error occurred") alert("wrong username/password");
-            else setLogin(true);
-        } catch (err) {
-            console.log(err);
-            alert("user authentication failed");
-        }
-    };
-    return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        children: [
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navbarDefault.default), {}, void 0, false, {
-                fileName: "client/src/components/Login.js",
-                lineNumber: 43,
-                columnNumber: 7
-            }, this),
-            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                className: "form-container",
-                children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
-                    id: "add",
-                    className: "mx-auto",
-                    style: {
-                        width: "800px"
-                    },
-                    children: [
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
-                            children: "Login"
-                        }, void 0, false, {
-                            fileName: "client/src/components/Login.js",
-                            lineNumber: 46,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                            className: "form-group",
-                            children: [
-                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
-                                    htmlFor: "Username",
-                                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
-                                        size: "40",
-                                        type: "text",
-                                        placeholder: "Email or username",
-                                        className: "form-control",
-                                        id: "Username",
-                                        onChange: (e)=>setUsername(e.target.value)
-                                    }, void 0, false, {
-                                        fileName: "client/src/components/Login.js",
-                                        lineNumber: 49,
-                                        columnNumber: 15
-                                    }, this)
-                                }, void 0, false, {
-                                    fileName: "client/src/components/Login.js",
-                                    lineNumber: 48,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
-                                    fileName: "client/src/components/Login.js",
-                                    lineNumber: 51,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "client/src/components/Login.js",
-                            lineNumber: 47,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                            className: "form-group",
-                            children: [
-                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
-                                    htmlFor: "Password",
-                                    children: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
-                                        size: "40",
-                                        type: "text",
-                                        placeholder: "Password",
-                                        className: "form-control",
-                                        id: "Password",
-                                        onChange: (e)=>setPassword(e.target.value)
-                                    }, void 0, false, {
-                                        fileName: "client/src/components/Login.js",
-                                        lineNumber: 55,
-                                        columnNumber: 15
-                                    }, this)
-                                }, void 0, false, {
-                                    fileName: "client/src/components/Login.js",
-                                    lineNumber: 54,
-                                    columnNumber: 13
-                                }, this),
-                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
-                                    fileName: "client/src/components/Login.js",
-                                    lineNumber: 57,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "client/src/components/Login.js",
-                            lineNumber: 53,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
-                            className: "button big-btn",
-                            "data-testid": "button",
-                            onClick: (e)=>{
-                                e.preventDefault();
-                                loginUser({
-                                    username,
-                                    password
-                                });
-                                const form = document.getElementById("add");
-                                form.reset();
-                            },
-                            type: "submit",
-                            children: "LOG IN"
-                        }, void 0, false, {
-                            fileName: "client/src/components/Login.js",
-                            lineNumber: 59,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
-                            fileName: "client/src/components/Login.js",
-                            lineNumber: 72,
-                            columnNumber: 11
-                        }, this),
-                        /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
-                            children: [
-                                "Don't have an account? ",
-                                /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Link), {
-                                    to: "/signup",
-                                    children: "Signup here!"
-                                }, void 0, false, {
-                                    fileName: "client/src/components/Login.js",
-                                    lineNumber: 75,
-                                    columnNumber: 13
-                                }, this)
-                            ]
-                        }, void 0, true, {
-                            fileName: "client/src/components/Login.js",
-                            lineNumber: 73,
-                            columnNumber: 11
-                        }, this)
-                    ]
-                }, void 0, true, {
-                    fileName: "client/src/components/Login.js",
-                    lineNumber: 45,
-                    columnNumber: 9
-                }, this)
-            }, void 0, false, {
-                fileName: "client/src/components/Login.js",
-                lineNumber: 44,
-                columnNumber: 7
-            }, this)
-        ]
-    }, void 0, true, {
-        fileName: "client/src/components/Login.js",
-        lineNumber: 42,
-        columnNumber: 5
-    }, this);
-}
-_s(Login, "CzcTeTziyjMsSrAVmHuCCb6+Bfg=", false, function() {
-    return [
-        (0, _reactRouterDom.useNavigate)
-    ];
-});
-_c = Login;
-exports.default = Login;
-var _c;
-$RefreshReg$(_c, "Login");
-
-  $parcel$ReactRefreshHelpers$4fdc.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"9xmpe","axios":"jo6P5","./Navbar":"euCXA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","../styles/Login.css":"k0IVP"}],"euCXA":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"euCXA":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$b9bb = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -39244,7 +39227,106 @@ module.exports = require("9e039173d01172ab");
     exports.setSignature = setSignature;
 })();
 
-},{}],"k0IVP":[function() {},{}],"cgjCG":[function(require,module,exports) {
+},{}],"k0IVP":[function() {},{}],"k7f8x":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "loginUser", ()=>loginUser);
+parcelHelpers.export(exports, "signupUser", ()=>signupUser);
+parcelHelpers.export(exports, "getVerify", ()=>getVerify);
+parcelHelpers.export(exports, "getCurrentUser", ()=>getCurrentUser);
+parcelHelpers.export(exports, "getProfileById", ()=>getProfileById);
+parcelHelpers.export(exports, "getAchievementsById", ()=>getAchievementsById);
+parcelHelpers.export(exports, "getAllAchievements", ()=>getAllAchievements);
+parcelHelpers.export(exports, "getLeaderboards", ()=>getLeaderboards);
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+const baseURL = "http://localhost:3000";
+const setHeaders = ()=>{
+    (0, _axiosDefault.default).defaults.headers.common["Authorization"] = sessionStorage.getItem("app-token");
+};
+const loginUser = async (userObject)=>{
+    try {
+        const response = await (0, _axiosDefault.default).post(`${baseURL}/account/login`, {
+            username: userObject.username,
+            password: userObject.password
+        });
+        return response;
+    } catch (err) {
+        console.log("error", err.message);
+    }
+};
+const signupUser = async (userObject)=>{
+    try {
+        if (userObject.username === "" || userObject.password === "") throw new Error("invalid username or password");
+        const response = await (0, _axiosDefault.default).post(`${baseURL}/account/signup`, {
+            username: userObject.username,
+            password: userObject.password
+        });
+        return response;
+    } catch (err) {
+        console.log("error", err.message);
+    }
+};
+const getVerify = async ()=>{
+    try {
+        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/verify`);
+        if (response.message == "Successful Authentication") return True;
+        else return False;
+    } catch (err) {
+        return err;
+    }
+};
+const getCurrentUser = async ()=>{
+    try {
+        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/isLogged`);
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+};
+const getProfileById = async (username)=>{
+    try {
+        console.log(username);
+        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/profile`, {
+            params: {
+                username
+            }
+        });
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+};
+const getAchievementsById = async (username)=>{
+    try {
+        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/achievements`, {
+            params: {
+                username
+            }
+        });
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+};
+const getAllAchievements = async ()=>{
+    try {
+        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/allAchievements`);
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+};
+const getLeaderboards = async ()=>{
+    try {
+        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/leaderboards`);
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+};
+
+},{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"cgjCG":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$0cc1 = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -39262,26 +39344,27 @@ var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _navbar = require("./Navbar");
 var _navbarDefault = parcelHelpers.interopDefault(_navbar);
 var _signupCss = require("../styles/Signup.css");
+var _users = require("../api/users");
 var _s = $RefreshSig$();
 function Signup(props) {
     _s();
     // signup page
-    const { setLogin, setUsername, setPassword, username, password, login } = props;
+    const { setLogin, setUsername, setPassword, username, password, login, name } = props;
     const navigate = (0, _reactRouterDom.useNavigate)();
     if (login) navigate("/");
     const createUser = async (userObject)=>{
         try {
-            const response = await (0, _axiosDefault.default).post("http://localhost:3000/account/signup", {
-                username: userObject.username,
-                password: userObject.password
-            });
-            console.log(response);
-            if (response.data === "username taken" || response.data === "error occured") {
+            const response = await (0, _users.signupUser)(userObject);
+            if (response.data === "username taken" || response.data === "error occurred") {
                 alert(`${response.data}`);
                 setLogin(false);
             } else {
-                setLogin(true);
-                navigate("/");
+                const responseToken = await (0, _users.loginUser)(userObject);
+                if (responseToken) {
+                    sessionStorage.setItem("app-token", responseToken);
+                    setLogin(true);
+                    name.current = userObject.username;
+                }
             }
         } catch (err) {
             console.log(err);
@@ -39292,7 +39375,7 @@ function Signup(props) {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navbarDefault.default), {}, void 0, false, {
                 fileName: "client/src/components/Signup.js",
-                lineNumber: 43,
+                lineNumber: 44,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -39308,7 +39391,7 @@ function Signup(props) {
                             children: "Create your profile"
                         }, void 0, false, {
                             fileName: "client/src/components/Signup.js",
-                            lineNumber: 46,
+                            lineNumber: 47,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -39325,23 +39408,23 @@ function Signup(props) {
                                         onChange: (e)=>setUsername(e.target.value)
                                     }, void 0, false, {
                                         fileName: "client/src/components/Signup.js",
-                                        lineNumber: 49,
+                                        lineNumber: 50,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "client/src/components/Signup.js",
-                                    lineNumber: 48,
+                                    lineNumber: 49,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                                     fileName: "client/src/components/Signup.js",
-                                    lineNumber: 51,
+                                    lineNumber: 52,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "client/src/components/Signup.js",
-                            lineNumber: 47,
+                            lineNumber: 48,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -39358,23 +39441,23 @@ function Signup(props) {
                                         onChange: (e)=>setPassword(e.target.value)
                                     }, void 0, false, {
                                         fileName: "client/src/components/Signup.js",
-                                        lineNumber: 55,
+                                        lineNumber: 56,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "client/src/components/Signup.js",
-                                    lineNumber: 54,
+                                    lineNumber: 55,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                                     fileName: "client/src/components/Signup.js",
-                                    lineNumber: 57,
+                                    lineNumber: 58,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "client/src/components/Signup.js",
-                            lineNumber: 53,
+                            lineNumber: 54,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -39393,12 +39476,12 @@ function Signup(props) {
                             children: "CREATE ACCOUNT"
                         }, void 0, false, {
                             fileName: "client/src/components/Signup.js",
-                            lineNumber: 59,
+                            lineNumber: 60,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                             fileName: "client/src/components/Signup.js",
-                            lineNumber: 72,
+                            lineNumber: 73,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -39409,30 +39492,30 @@ function Signup(props) {
                                     children: "Log in here!"
                                 }, void 0, false, {
                                     fileName: "client/src/components/Signup.js",
-                                    lineNumber: 75,
+                                    lineNumber: 76,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "client/src/components/Signup.js",
-                            lineNumber: 73,
+                            lineNumber: 74,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "client/src/components/Signup.js",
-                    lineNumber: 45,
+                    lineNumber: 46,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "client/src/components/Signup.js",
-                lineNumber: 44,
+                lineNumber: 45,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "client/src/components/Signup.js",
-        lineNumber: 42,
+        lineNumber: 43,
         columnNumber: 5
     }, this);
 }
@@ -39451,7 +39534,7 @@ $RefreshReg$(_c, "Signup");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"9xmpe","axios":"jo6P5","./Navbar":"euCXA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","../styles/Signup.css":"03piC"}],"03piC":[function() {},{}],"elIyQ":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"9xmpe","axios":"jo6P5","./Navbar":"euCXA","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","../styles/Signup.css":"03piC","../api/users":"k7f8x"}],"03piC":[function() {},{}],"elIyQ":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$924b = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -39683,82 +39766,7 @@ $RefreshReg$(_c1, "Profile");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"9xmpe","../api/users":"k7f8x","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./Navbar":"euCXA"}],"k7f8x":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "createUser", ()=>createUser);
-parcelHelpers.export(exports, "getCurrentUser", ()=>getCurrentUser);
-parcelHelpers.export(exports, "getProfileById", ()=>getProfileById);
-parcelHelpers.export(exports, "getAchievementsById", ()=>getAchievementsById);
-parcelHelpers.export(exports, "getAllAchievements", ()=>getAllAchievements);
-parcelHelpers.export(exports, "getLeaderboards", ()=>getLeaderboards);
-var _axios = require("axios");
-var _axiosDefault = parcelHelpers.interopDefault(_axios);
-const baseURL = "http://localhost:3000";
-const createUser = async (userObject)=>{
-    // console.log('atapi');
-    try {
-        if (userObject.username === "" || userObject.password === "") throw new Error("invalid username or password");
-        const response = await (0, _axiosDefault.default).post(`${baseURL}/account/signup`, {
-            username: userObject.username,
-            password: userObject.password
-        });
-        return response;
-    } catch (err) {
-        return err;
-    }
-};
-const getCurrentUser = async ()=>{
-    try {
-        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/isLogged`);
-        return response.data;
-    } catch (err) {
-        return err;
-    }
-};
-const getProfileById = async (username)=>{
-    try {
-        console.log(username);
-        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/profile`, {
-            params: {
-                username
-            }
-        });
-        return response.data;
-    } catch (err) {
-        return err;
-    }
-};
-const getAchievementsById = async (username)=>{
-    try {
-        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/achievements`, {
-            params: {
-                username
-            }
-        });
-        return response.data;
-    } catch (err) {
-        return err;
-    }
-};
-const getAllAchievements = async ()=>{
-    try {
-        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/allAchievements`);
-        return response.data;
-    } catch (err) {
-        return err;
-    }
-};
-const getLeaderboards = async ()=>{
-    try {
-        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/leaderboards`);
-        return response.data;
-    } catch (err) {
-        return err;
-    }
-};
-
-},{"axios":"jo6P5","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bfFHJ":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","react-router-dom":"9xmpe","../api/users":"k7f8x","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","./Navbar":"euCXA"}],"bfFHJ":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$955e = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;

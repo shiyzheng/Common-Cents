@@ -5,11 +5,12 @@ import {
 import axios from 'axios';
 import Navbar from './Navbar';
 import '../styles/Signup.css';
+import { signupUser, loginUser } from '../api/users';
 
 function Signup(props) {
   // signup page
   const {
-    setLogin, setUsername, setPassword, username, password, login,
+    setLogin, setUsername, setPassword, username, password, login, name
   } = props;
 
   const navigate = useNavigate();
@@ -20,17 +21,17 @@ function Signup(props) {
 
   const createUser = async (userObject) => {
     try {
-      const response = await axios.post("http://localhost:3000/account/signup", {
-        username: userObject.username,
-        password: userObject.password,
-      });
-      console.log(response);
-      if (response.data === 'username taken' || response.data === 'error occured') {
+      const response = await signupUser(userObject);
+      if (response.data === 'username taken' || response.data === 'error occurred') {
         alert(`${response.data}`);
         setLogin(false);
       } else {
-        setLogin(true);
-        navigate('/');
+        const responseToken = await loginUser(userObject);
+        if (responseToken) {
+          sessionStorage.setItem('app-token', responseToken);
+          setLogin(true);
+          name.current = userObject.username;
+        }
       }
     } catch (err) {
       console.log(err);

@@ -10,7 +10,7 @@ import { loginUser } from '../api/users';
 function Login(props) {
   // signup page
   const {
-    setLogin, login, setUsername, setPassword, username, password,
+    setLogin, login, setUsername, setPassword, username, password, name
   } = props;
 
   const navigate = useNavigate();
@@ -19,16 +19,16 @@ function Login(props) {
     navigate('/');
   }
 
-  const loginUser = async (userObject) => {
+  const loginUserOnClick = async (userObject) => {
     try {
       const responseToken = await loginUser(userObject);
 
-      if (response.data === 'wrong password' || response.data === 'error occurred') {
-        alert('wrong username/password');
-      } else {
+      if (responseToken) {
+        sessionStorage.setItem('app-token', responseToken);
         setLogin(true);
-        // console.log(login);
-        // navigate('/');
+        name.current = userObject.username;
+      } else {
+        alert('wrong username/password');
       }
     } catch (err) {
       console.log(err);
@@ -59,7 +59,7 @@ function Login(props) {
             data-testid="button"
             onClick={(e) => {
               e.preventDefault();
-              loginUser({ username, password });
+              loginUserOnClick({ username, password });
               const form = document.getElementById('add');
               form.reset();
             }}

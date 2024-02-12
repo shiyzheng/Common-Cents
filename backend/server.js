@@ -33,21 +33,12 @@ mongoose.connect(MONGO_URI);
 //     },
 // }));
 
-app.use(cookieSession({
-    name: 'session',
-    keys: ['pineapple'],
-
-    // Cookie Options
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-}));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
 app.use(cors({
     origin: 'http://localhost:1234', // Replace with your client's origin
     credentials: true,
 }));
+
+app.use(express.urlencoded({extended: true}))
 
 app.use(express.json());
 app.use(express.static('dist'));
