@@ -2,7 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 // const cookieSession = require('cookie-session');
-const session = require('express-session');
+// const passport = require('passport');
+// const session = require('express-session');
 // const MongoDBStore = require('connect-mongodb-session')(session)
 const path = require('path');
 
@@ -19,23 +20,25 @@ mongoose.connect(MONGO_URI);
 //     collection: 'mySessions',
 // })
 
-app.use(session({ 
-    secret: 'keyboard cat', 
-    name: 'session-id',
-    // store: mongoDBstore,
-    resave: true,
-    saveUninitialized: false,
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24, // 1 day
-        secure: false, // Set to true in production with HTTPS
-        sameSite: 'None', // Required for cross-site cookies
-    },
-}));
+// app.use(session({ 
+//     secret: 'keyboard cat', 
+//     name: 'session-id',
+//     // store: mongoDBstore,
+//     resave: true,
+//     saveUninitialized: false,
+//     cookie: {
+//         maxAge: 1000 * 60 * 60 * 24, // 1 day
+//         secure: false, // Set to true in production with HTTPS
+//         sameSite: 'None', // Required for cross-site cookies
+//     },
+// }));
 
 app.use(cors({
     origin: 'http://localhost:1234', // Replace with your client's origin
     credentials: true,
-  }));
+}));
+
+app.use(express.urlencoded({extended: true}))
 
 app.use(express.json());
 app.use(express.static('dist'));
@@ -47,14 +50,6 @@ app.use(express.static('dist'));
 
 //     next();
 // });
-
-// app.use(cookieSession({
-//     name: 'session',
-//     keys: ['pineapple'],
-  
-//     // Cookie Options
-//     maxAge: 24 * 60 * 60 * 1000, // 24 hours
-// }));
 
 // app.use(function(req, res, next) {
 //     res.header("Access-Control-Allow-Origin", "*");
