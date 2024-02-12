@@ -45,18 +45,18 @@ export const signupUser = async (userObject) => {
     }
 };
 
-export const getVerify = async () => {
-    try {
-        const response = await axios.get(`${baseURL}/account/verify`);
-        if (response.message == 'Successful Authentication') {
-            return True
-        } else {
-            return False
-        }
-    } catch (err) {
-        return err;
-    }
-};
+// export const getVerify = async () => {
+//     try {
+//         const response = await axios.get(`${baseURL}/account/verify`);
+//         if (response.message == 'Successful Authentication') {
+//             return True
+//         } else {
+//             return False
+//         }
+//     } catch (err) {
+//         return err;
+//     }
+// };
 
 export const getCurrentUser = async () => {
     try {
@@ -104,6 +104,28 @@ export const getAllAchievements = async () => {
 export const getLeaderboards = async () => {
     try {
         const response = await axios.get(`${baseURL}/account/leaderboards`);
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+};
+
+export const getUserProgress = async (lessonObject) => {
+    try {
+        setHeaders();
+        const { lesson, unit } = lessonObject;
+        const username = sessionStorage.getItem('app-token');
+        console.log(username);
+        console.log(lesson);
+        console.log(unit);
+        const response = await axios.post(`${baseURL}/account/user-progress`, {
+            username,
+            lesson, 
+            unit,
+        });
+        console.log(response.data);
+        // const response = await axios.get(`${baseURL}/account/user-progress`,
+        // `username=${username}&lesson=${lesson}&unit=${unit}`)
         return response.data;
     } catch (err) {
         return err;

@@ -33743,11 +33743,24 @@ function Home(props) {
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
                                 className: "btn btn-outline-danger float-right",
                                 type: "button",
+                                onClick: ()=>(0, _users.getUserProgress)({
+                                        lesson: "Spending",
+                                        unit: 0
+                                    }),
+                                children: "TESTING REMOVE THIS LATER FRONTEND"
+                            }, void 0, false, {
+                                fileName: "client/src/App.js",
+                                lineNumber: 79,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                                className: "btn btn-outline-danger float-right",
+                                type: "button",
                                 onClick: ()=>logout(),
                                 children: "Logout"
                             }, void 0, false, {
                                 fileName: "client/src/App.js",
-                                lineNumber: 79,
+                                lineNumber: 80,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -33758,14 +33771,14 @@ function Home(props) {
                                 ]
                             }, void 0, true, {
                                 fileName: "client/src/App.js",
-                                lineNumber: 80,
+                                lineNumber: 81,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("h2", {
                                 children: "I would like to learn about..."
                             }, void 0, false, {
                                 fileName: "client/src/App.js",
-                                lineNumber: 85,
+                                lineNumber: 86,
                                 columnNumber: 7
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -33784,12 +33797,12 @@ function Home(props) {
                                         children: topic
                                     }, index, false, {
                                         fileName: "client/src/App.js",
-                                        lineNumber: 88,
+                                        lineNumber: 89,
                                         columnNumber: 11
                                     }, this))
                             }, void 0, false, {
                                 fileName: "client/src/App.js",
-                                lineNumber: 86,
+                                lineNumber: 87,
                                 columnNumber: 7
                             }, this),
                             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _categoryViewDefault.default), {
@@ -33797,7 +33810,7 @@ function Home(props) {
                                 setCategories: setCategories
                             }, void 0, false, {
                                 fileName: "client/src/App.js",
-                                lineNumber: 99,
+                                lineNumber: 100,
                                 columnNumber: 11
                             }, this)
                         ]
@@ -33813,7 +33826,7 @@ function Home(props) {
                         }
                     }, void 0, false, {
                         fileName: "client/src/App.js",
-                        lineNumber: 100,
+                        lineNumber: 101,
                         columnNumber: 15
                     }, this)
                 ]
@@ -39235,12 +39248,12 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "loginUser", ()=>loginUser);
 parcelHelpers.export(exports, "signupUser", ()=>signupUser);
-parcelHelpers.export(exports, "getVerify", ()=>getVerify);
 parcelHelpers.export(exports, "getCurrentUser", ()=>getCurrentUser);
 parcelHelpers.export(exports, "getProfileById", ()=>getProfileById);
 parcelHelpers.export(exports, "getAchievementsById", ()=>getAchievementsById);
 parcelHelpers.export(exports, "getAllAchievements", ()=>getAllAchievements);
 parcelHelpers.export(exports, "getLeaderboards", ()=>getLeaderboards);
+parcelHelpers.export(exports, "getUserProgress", ()=>getUserProgress);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
 const baseURL = "http://localhost:3000";
@@ -39268,15 +39281,6 @@ const signupUser = async (userObject)=>{
         return response;
     } catch (err) {
         console.log("error", err.message);
-    }
-};
-const getVerify = async ()=>{
-    try {
-        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/verify`);
-        if (response.message == "Successful Authentication") return True;
-        else return False;
-    } catch (err) {
-        return err;
     }
 };
 const getCurrentUser = async ()=>{
@@ -39323,6 +39327,27 @@ const getAllAchievements = async ()=>{
 const getLeaderboards = async ()=>{
     try {
         const response = await (0, _axiosDefault.default).get(`${baseURL}/account/leaderboards`);
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+};
+const getUserProgress = async (lessonObject)=>{
+    try {
+        setHeaders();
+        const { lesson, unit } = lessonObject;
+        const username = sessionStorage.getItem("app-token");
+        console.log(username);
+        console.log(lesson);
+        console.log(unit);
+        const response = await (0, _axiosDefault.default).post(`${baseURL}/account/user-progress`, {
+            username,
+            lesson,
+            unit
+        });
+        console.log(response.data);
+        // const response = await axios.get(`${baseURL}/account/user-progress`,
+        // `username=${username}&lesson=${lesson}&unit=${unit}`)
         return response.data;
     } catch (err) {
         return err;

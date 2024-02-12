@@ -15,7 +15,7 @@ import CategoryPage from './components/CategoryPage';
 import MultipleChoiceQuestion from './components/MCQ';
 import AdminConsole from './pages/AdminConsole';
 import Lessons from './components/Lessons';
-import { getCurrentUser } from './api/users';
+import { getUserProgress } from './api/users';
 
 function App() {
   const [login, setLogin] = useState(sessionStorage.getItem('app-token') != null);
@@ -76,6 +76,7 @@ function Home(props) {
       )}
       {login && (
         <><div>
+          <button className="btn btn-outline-danger float-right" type="button" onClick={() => getUserProgress({ lesson: "Spending", unit: 0 })}>TESTING REMOVE THIS LATER FRONTEND</button>
           <button className="btn btn-outline-danger float-right" type="button" onClick={() => logout()}>Logout</button>
           <div>
             Welcome

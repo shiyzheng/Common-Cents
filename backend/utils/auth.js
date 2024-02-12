@@ -45,4 +45,15 @@ const verifyUser = async (token) =>{
     }
 }
 
-module.exports = { authenticateUser, verifyUser }
+const decode = (token) => {
+    try {
+        const decoded = jwt.verify(token, process.env.KEY);
+        const { username, password } = decoded;
+        return username;
+    } catch (err) {
+        console.log('error', err.message);
+        return null;
+    }
+}
+
+module.exports = { authenticateUser, verifyUser, decode }
