@@ -10,7 +10,7 @@ import { signupUser, loginUser } from '../api/users';
 function Signup(props) {
   // signup page
   const {
-    setLogin, setUsername, setPassword, username, password, login, name
+    setLogin, setUsername, setPassword, username, password, login,
   } = props;
 
   const navigate = useNavigate();
@@ -29,8 +29,8 @@ function Signup(props) {
         const responseToken = await loginUser(userObject);
         if (responseToken) {
           sessionStorage.setItem('app-token', responseToken);
+          sessionStorage.setItem('username', userObject.username);
           setLogin(true);
-          name.current = userObject.username;
         }
       }
     } catch (err) {

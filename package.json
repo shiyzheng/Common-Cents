@@ -33,10 +33,15 @@
     },
     "devDependencies": {
         "buffer": "^6.0.3",
+        "crypto-browserify": "^3.12.0",
         "eslint": "^8.54.0",
         "eslint-plugin-react": "^7.33.2",
+        "os-browserify": "^0.3.0",
+        "path-browserify": "^1.0.1",
         "process": "^0.11.10",
-        "supertest": "^6.3.3"
+        "stream-browserify": "^3.0.0",
+        "supertest": "^6.3.3",
+        "util": "^0.12.5"
     },
     "jest": {
         "moduleNameMapper": {

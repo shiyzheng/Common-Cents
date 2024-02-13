@@ -16,22 +16,23 @@ import MultipleChoiceQuestion from './components/MCQ';
 import AdminConsole from './pages/AdminConsole';
 import Lessons from './components/Lessons';
 import { getUserProgress } from './api/users';
+import { decode } from '../../backend/utils/auth';
 
 function App() {
   const [login, setLogin] = useState(sessionStorage.getItem('app-token') != null);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const name = useRef('')
   const [categories, setCategories] = useState([]);
 
   const logout = async () => {
     sessionStorage.removeItem('app-token');
+    sessionStorage.removeItem('username');
     window.location.reload(true);
   };
 
-  const element = useRoutes([{ path: '/', element: <Home login={login} username={username} logout={logout} categories={categories} setCategories={setCategories} name={name} /> },
-    { path: '/Login', element: <Login setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} name={name} /> },
-    { path: '/Signup', element: <Signup setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} name={name} /> },
+  const element = useRoutes([{ path: '/', element: <Home login={login} username={username} logout={logout} categories={categories} setCategories={setCategories} /> },
+    { path: '/Login', element: <Login setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} /> },
+    { path: '/Signup', element: <Signup setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} /> },
     { path: '/profile/:id', element: <Profile login={login} /> },
 
     { path: '/admin-console', element: <AdminConsole login={login} username={username} /> },
@@ -48,7 +49,7 @@ function App() {
 
 function Home(props) {
   // console.log('homepage');
-  const { login, username, logout, categories, setCategories, name } = props;
+  const { login, username, logout, categories, setCategories } = props;
   const navigate = useNavigate();
 
   const topics = [
@@ -81,7 +82,7 @@ function Home(props) {
           <div>
             Welcome
             {' '}
-            {name.current}
+            {sessionStorage.getItem('username')}
           </div>
       <h2>I would like to learn about...</h2>
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>

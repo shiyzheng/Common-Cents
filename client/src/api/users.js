@@ -6,18 +6,6 @@ const setHeaders = () => {
     axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('app-token');
 }
 
-// export const checkLoginUser = async (userObject) => {
-//     try {
-//         const response = await axios.post(`${baseURL}/account/checklogin`, {
-//             username: userObject.username,
-//             password: userObject.password,
-//         })
-//         return response.data.apptoken;
-//     } catch (err) {
-//         console.log('error', err.message);
-//     }
-// }
-
 export const loginUser = async (userObject) => {
     try {
         const response = await axios.post(`${baseURL}/account/login`, {
