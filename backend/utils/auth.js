@@ -13,7 +13,6 @@ const authenticateUser = (userid, password) => {
 
     try{
         const token = jwt.sign({username: userid, password: password}, process.env.KEY, {expiresIn: '12h'});
-        console.log('token', token);
         return token;
     } catch(err) {
         console.log('error', err.message);
@@ -30,7 +29,6 @@ const verifyUser = async (token) =>{
         // decoded contains the payload of the token
         const decoded = jwt.verify(token, process.env.KEY);
         const { username, password } = decoded;
-        console.log('payload', decoded);
         // check that the payload contains a valid user
         const user = await User.findOne({ username });
         if(user.password === password) {
@@ -45,4 +43,15 @@ const verifyUser = async (token) =>{
     }
 }
 
-module.exports = { authenticateUser, verifyUser }
+const decode = (token) => {
+    try {
+        const decoded = jwt.verify(token, process.env.KEY);
+        const { username, password } = decoded;
+        return username;
+    } catch (err) {
+        console.log('error', err.message);
+        return null;
+    }
+}
+
+module.exports = { authenticateUser, verifyUser, decode }

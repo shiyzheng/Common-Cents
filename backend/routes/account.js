@@ -2,7 +2,7 @@ const express = require('express');
 
 const User = require('../models/user');
 const Achievement = require('../models/achievement');
-const { authenticateUser, verifyUser } = require('../utils/auth');
+const { authenticateUser, verifyUser, decode } = require('../utils/auth');
 
 const router = express.Router();
 
@@ -49,13 +49,13 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.post('/verify', async (req, res) => {
-  if (await verifyUser(req.headers.authorization)) {
-    res.json({message: 'Successful Authentication'})
-  } else {
-    res.json({message: 'Failed Authentication'})
-  }
-})
+// router.post('/verify', async (req, res) => {
+//   if (await verifyUser(req.headers.authorization)) {
+//     res.json({message: 'Successful Authentication'})
+//   } else {
+//     res.json({message: 'Failed Authentication'})
+//   }
+// })
 
 // router.post('/logout', (req, res) => {
 //   req.session.destroy((error) => {
@@ -80,14 +80,36 @@ router.get('/profile', async (req, res) => {
     }
 });
 
+router.get('/users', async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({users});
+  } catch (err) {
+    res.status(401).json({error: err});
+  }
+});
+
 // get user's obtained achievements
 router.get('/achievements', async (req, res) => {
   const { username } = req.query;
   try {
     const user = await User.findOne({ username: username });
-    res.json(user.achievements);
+    res.json({ achievements: user.achieved });
   } catch (e) {
     res.send('error occurred');
+  }
+});
+
+router.post('/my-achievements', async (req, res) => {
+  if (await verifyUser(req.headers.authorization)) {
+    try {
+      const { body } = req;
+      const { username } = body;
+      const user = await User.findOne({ username });
+      res.status(200).json({ achievements: user.achieved })
+    } catch (e) {
+      res.status(401).json({error: e});
+    }
   }
 });
 
@@ -109,6 +131,30 @@ router.get('/leaderboards', async (req, res) => {
     res.json(users);
   } catch (e) {
     res.send('error occurred');
+  }
+});
+
+router.post('/user-progress', async (req, res) => {
+  if (await verifyUser(req.headers.authorization)) {
+      try {
+        const { body } = req;
+        const { username, lesson } = body;
+        decoded = decode(username);
+        const user = await User.findOne({ username: decoded });
+        res.status(200).json({ unit: user.progress[lesson][0], level: user.progress[lesson][1] });
+      } catch (err) {
+        res.status(400).json({message: 'There was an error'});
+      }
+  }
+});
+
+router.post('subcategories', async (req, res) => {
+  try {
+    const { body } = req;
+    const { lesson } = body;
+    res.status(200).json()
+  } catch (err) {
+
   }
 });
 

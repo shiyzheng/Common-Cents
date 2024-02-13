@@ -10,7 +10,7 @@ import { loginUser } from '../api/users';
 function Login(props) {
   // signup page
   const {
-    setLogin, login, setUsername, setPassword, username, password, name
+    setLogin, login, setUsername, setPassword, username, password,
   } = props;
 
   const navigate = useNavigate();
@@ -22,13 +22,10 @@ function Login(props) {
   const loginUserOnClick = async (userObject) => {
     try {
       const responseToken = await loginUser(userObject);
-      console.log(responseToken);
       if (responseToken) {
         sessionStorage.setItem('app-token', responseToken);
-        console.log(sessionStorage.getItem('app-token'));
+        sessionStorage.setItem('username', userObject.username);
         setLogin(true);
-        name.current = userObject.username;
-        console.log(name.current);
       } else {
         alert('wrong username/password');
       }
