@@ -77,12 +77,25 @@ export const deleteCategoryPath = async (category) => {
     }
 }
 
-export const getCategory = async (categoryName) => {
+// export const getCategory = async (categoryName) => {
+//     try {
+//         const res = await axios.get(`${baseURL}${PATH_PREFIX}${categoryName}`);
+//         return res.data;
+//     } catch (error) {
+//         console.error("axios function call error:", error);
+//     }
+// }
+
+export const getQuestionsByLessonAndLevel = async (lessonObject) => {
     try {
-        const res = await axios.get(`${baseURL}${PATH_PREFIX}${categoryName}`);
-        return res.data;
-    } catch (error) {
-        console.error("axios function call error:", error);
+        const { lesson, level } = lessonObject;
+        const response = await axios.post(`${baseURL}${PATH_PREFIX}lesson-level`, {
+            lesson,
+            level,
+        });
+        return response.data;
+    } catch (err) {
+        return err;
     }
 }
 

@@ -104,22 +104,22 @@ router.get('/getName', async (req, res) => {
 
 // admin insert, delete, modify operations for categories 
 
-  router.get('/:name', async (req, res) => {
-  try {
-    const category = await Category.findOne({
-      name: req.params.name
-    });
-    if (category != null) {
-      res.status(STATUS.OK);
-      res.json(category);
-    } else {
-      res.status(STATUS.NOT_FOUND);
-      res.json(NO_OBJECT);
-    }
-  } catch (e) {
-    res.send('error occurred: ' + e);
-  }
-});
+//   router.get('/:name', async (req, res) => {
+//   try {
+//     const category = await Category.findOne({
+//       name: req.params.name
+//     });
+//     if (category != null) {
+//       res.status(STATUS.OK);
+//       res.json(category);
+//     } else {
+//       res.status(STATUS.NOT_FOUND);
+//       res.json(NO_OBJECT);
+//     }
+//   } catch (e) {
+//     res.send('error occurred: ' + e);
+//   }
+// });
 
 
 // used to create a new category if one does not exist yet
@@ -235,60 +235,87 @@ router.put('/add', async (req, res) => {
 // if the url contains a question, then you must delete
 // just the question and not the category
 
-async function routerDeleteCategory(req, res) {
-  try {
-    const category = await Category.findOne({ name: req.params.name });
-    if (category != null) {
-      await Category.deleteOne({ name: req.params.name });
-      res.status(STATUS.OK);
-      res.json(category);
-    } else {
-      res.status(STATUS.NOT_FOUND);
-      res.json({});
-    }
-  } catch (e) {
-    console.error('error occurred:' + e);
-    res.send('error occurred: ' + e);
-  }
-}
+// async function routerDeleteCategory(req, res) {
+//   try {
+//     const category = await Category.findOne({ name: req.params.name });
+//     if (category != null) {
+//       await Category.deleteOne({ name: req.params.name });
+//       res.status(STATUS.OK);
+//       res.json(category);
+//     } else {
+//       res.status(STATUS.NOT_FOUND);
+//       res.json({});
+//     }
+//   } catch (e) {
+//     console.error('error occurred:' + e);
+//     res.send('error occurred: ' + e);
+//   }
+// }
 
-async function routerDeleteQuestion(req, res, question) {
-  try {
-    const category = await Category.findOne({ name: req.params.name });
-    if (category != null) {
-      if (questionInCategory(category, question)) {
-        await Category.updateOne(
-          { name: req.params.name },
-          {
-            $pull: {
-              questions: { question: question.question }
-            }
-          },
-        );
-        res.status(STATUS.OK);
-        res.json(question);
-      } else {
-        res.status(STATUS.NOT_FOUND);
-        res.json({});
-      }
-    } else {
-      res.status(STATUS.NOT_FOUND);
-      res.json({});
-    }
-  } catch (e) {
-    console.error('error occurred:' + e);
-    res.send('error occurred: ' + e);
-  }
-}
+// async function routerDeleteQuestion(req, res, question) {
+//   try {
+//     const category = await Category.findOne({ name: req.params.name });
+//     if (category != null) {
+//       if (questionInCategory(category, question)) {
+//         await Category.updateOne(
+//           { name: req.params.name },
+//           {
+//             $pull: {
+//               questions: { question: question.question }
+//             }
+//           },
+//         );
+//         res.status(STATUS.OK);
+//         res.json(question);
+//       } else {
+//         res.status(STATUS.NOT_FOUND);
+//         res.json({});
+//       }
+//     } else {
+//       res.status(STATUS.NOT_FOUND);
+//       res.json({});
+//     }
+//   } catch (e) {
+//     console.error('error occurred:' + e);
+//     res.send('error occurred: ' + e);
+//   }
+// }
 
-router.delete('/:name', async (req, res) => {
-  const question = getQuestion(req.originalUrl);
-  if (question === null) {
-    routerDeleteCategory(req, res); 
-  } else {
-    routerDeleteQuestion(req, res, question);
+// router.delete('/:name', async (req, res) => {
+//   const question = getQuestion(req.originalUrl);
+//   if (question === null) {
+//     routerDeleteCategory(req, res); 
+//   } else {
+//     routerDeleteQuestion(req, res, question);
+//   }
+// });
+
+router.post('/lesson-level', async (req, res) => {
+  try {
+    const { body } = req;
+    const { lesson, level } = body;
+    const id = level[0];
+    const progress = level[1];
+    const category = Category.findOne({
+      Lesson: lesson,
+      id,
+    });
+    switch (progress) {
+      case 0:
+        res.json({questions: category.Beginner.slice(0, questions.length / 3)});
+        break;
+      case 1:
+        res.json({questions: category.Beginner.slice(questions.length / 3, -questions.length / 3)});
+        break;
+      case 2:
+        res.json({questions: category.Beginner.slice(-questions.length / 3, questions.length)})
+        break;
+    }
+  } catch (err) {
+    res.json({error: err})
   }
 });
+
 
 module.exports = {
   router,

@@ -58,14 +58,14 @@ export const signupUser = async (userObject) => {
 //     }
 // };
 
-export const getCurrentUser = async () => {
-    try {
-        const response = await axios.get(`${baseURL}/account/isLogged`);
-        return response.data;
-    } catch (err) {
-        return err;
-    }
-};
+// export const getCurrentUser = async () => {
+//     try {
+//         const response = await axios.get(`${baseURL}/account/isLogged`);
+//         return response.data;
+//     } catch (err) {
+//         return err;
+//     }
+// };
 
 export const getProfileById = async (username) => {
     try {
@@ -110,22 +110,42 @@ export const getLeaderboards = async () => {
     }
 };
 
+export const getAllUsers = async () => {
+    try {
+        const response = await axios.get(`${baseURL}/account/users`);
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+};
+
+export const getAllUsersPoints = async () => {
+    try {
+        const response = await axios.get(`${baseURL}/account/users`);
+        const points = [];
+        const { data } = response;
+        for (let i = 0; i < data.length; i++) {
+            points.push({
+                username: data[i].username,
+                points: data[i].points,
+            });
+        }
+        return points;
+    } catch (err) {
+        return err;
+    }
+};
+
 export const getUserProgress = async (lessonObject) => {
     try {
         setHeaders();
         const { lesson, unit } = lessonObject;
         const username = sessionStorage.getItem('app-token');
-        console.log(username);
-        console.log(lesson);
-        console.log(unit);
         const response = await axios.post(`${baseURL}/account/user-progress`, {
             username,
             lesson, 
-            unit,
         });
         console.log(response.data);
-        // const response = await axios.get(`${baseURL}/account/user-progress`,
-        // `username=${username}&lesson=${lesson}&unit=${unit}`)
         return response.data;
     } catch (err) {
         return err;

@@ -76,7 +76,7 @@ function Home(props) {
       )}
       {login && (
         <><div>
-          <button className="btn btn-outline-danger float-right" type="button" onClick={() => getUserProgress({ lesson: "Spending", unit: 0 })}>TESTING REMOVE THIS LATER FRONTEND</button>
+          <button className="btn btn-outline-danger float-right" type="button" onClick={() => getUserProgress({ lesson: "Spending" })}>TESTING REMOVE THIS LATER FRONTEND</button>
           <button className="btn btn-outline-danger float-right" type="button" onClick={() => logout()}>Logout</button>
           <div>
             Welcome

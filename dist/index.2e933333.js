@@ -33744,8 +33744,7 @@ function Home(props) {
                                 className: "btn btn-outline-danger float-right",
                                 type: "button",
                                 onClick: ()=>(0, _users.getUserProgress)({
-                                        lesson: "Spending",
-                                        unit: 0
+                                        lesson: "Spending"
                                     }),
                                 children: "TESTING REMOVE THIS LATER FRONTEND"
                             }, void 0, false, {
@@ -33883,10 +33882,8 @@ function Login(props) {
     const loginUserOnClick = async (userObject)=>{
         try {
             const responseToken = await (0, _users.loginUser)(userObject);
-            console.log(responseToken);
             if (responseToken) {
                 sessionStorage.setItem("app-token", responseToken);
-                console.log(sessionStorage.getItem("app-token"));
                 setLogin(true);
                 name.current = userObject.username;
                 console.log(name.current);
@@ -33900,7 +33897,7 @@ function Login(props) {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navbarDefault.default), {}, void 0, false, {
                 fileName: "client/src/components/Login.js",
-                lineNumber: 43,
+                lineNumber: 41,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -33916,7 +33913,7 @@ function Login(props) {
                             children: "Login"
                         }, void 0, false, {
                             fileName: "client/src/components/Login.js",
-                            lineNumber: 46,
+                            lineNumber: 44,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -33933,23 +33930,23 @@ function Login(props) {
                                         onChange: (e)=>setUsername(e.target.value)
                                     }, void 0, false, {
                                         fileName: "client/src/components/Login.js",
-                                        lineNumber: 49,
+                                        lineNumber: 47,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "client/src/components/Login.js",
-                                    lineNumber: 48,
+                                    lineNumber: 46,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                                     fileName: "client/src/components/Login.js",
-                                    lineNumber: 51,
+                                    lineNumber: 49,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "client/src/components/Login.js",
-                            lineNumber: 47,
+                            lineNumber: 45,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -33966,23 +33963,23 @@ function Login(props) {
                                         onChange: (e)=>setPassword(e.target.value)
                                     }, void 0, false, {
                                         fileName: "client/src/components/Login.js",
-                                        lineNumber: 55,
+                                        lineNumber: 53,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "client/src/components/Login.js",
-                                    lineNumber: 54,
+                                    lineNumber: 52,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                                     fileName: "client/src/components/Login.js",
-                                    lineNumber: 57,
+                                    lineNumber: 55,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "client/src/components/Login.js",
-                            lineNumber: 53,
+                            lineNumber: 51,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -34001,12 +33998,12 @@ function Login(props) {
                             children: "LOG IN"
                         }, void 0, false, {
                             fileName: "client/src/components/Login.js",
-                            lineNumber: 59,
+                            lineNumber: 57,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("br", {}, void 0, false, {
                             fileName: "client/src/components/Login.js",
-                            lineNumber: 72,
+                            lineNumber: 70,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("p", {
@@ -34017,30 +34014,30 @@ function Login(props) {
                                     children: "Signup here!"
                                 }, void 0, false, {
                                     fileName: "client/src/components/Login.js",
-                                    lineNumber: 75,
+                                    lineNumber: 73,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "client/src/components/Login.js",
-                            lineNumber: 73,
+                            lineNumber: 71,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "client/src/components/Login.js",
-                    lineNumber: 45,
+                    lineNumber: 43,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "client/src/components/Login.js",
-                lineNumber: 44,
+                lineNumber: 42,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "client/src/components/Login.js",
-        lineNumber: 42,
+        lineNumber: 40,
         columnNumber: 5
     }, this);
 }
@@ -39248,11 +39245,12 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "loginUser", ()=>loginUser);
 parcelHelpers.export(exports, "signupUser", ()=>signupUser);
-parcelHelpers.export(exports, "getCurrentUser", ()=>getCurrentUser);
 parcelHelpers.export(exports, "getProfileById", ()=>getProfileById);
 parcelHelpers.export(exports, "getAchievementsById", ()=>getAchievementsById);
 parcelHelpers.export(exports, "getAllAchievements", ()=>getAllAchievements);
 parcelHelpers.export(exports, "getLeaderboards", ()=>getLeaderboards);
+parcelHelpers.export(exports, "getAllUsers", ()=>getAllUsers);
+parcelHelpers.export(exports, "getAllUsersPoints", ()=>getAllUsersPoints);
 parcelHelpers.export(exports, "getUserProgress", ()=>getUserProgress);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
@@ -39281,14 +39279,6 @@ const signupUser = async (userObject)=>{
         return response;
     } catch (err) {
         console.log("error", err.message);
-    }
-};
-const getCurrentUser = async ()=>{
-    try {
-        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/isLogged`);
-        return response.data;
-    } catch (err) {
-        return err;
     }
 };
 const getProfileById = async (username)=>{
@@ -39332,22 +39322,38 @@ const getLeaderboards = async ()=>{
         return err;
     }
 };
+const getAllUsers = async ()=>{
+    try {
+        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/users`);
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+};
+const getAllUsersPoints = async ()=>{
+    try {
+        const response = await (0, _axiosDefault.default).get(`${baseURL}/account/users`);
+        const points = [];
+        const { data } = response;
+        for(let i = 0; i < data.length; i++)points.push({
+            username: data[i].username,
+            points: data[i].points
+        });
+        return points;
+    } catch (err) {
+        return err;
+    }
+};
 const getUserProgress = async (lessonObject)=>{
     try {
         setHeaders();
         const { lesson, unit } = lessonObject;
         const username = sessionStorage.getItem("app-token");
-        console.log(username);
-        console.log(lesson);
-        console.log(unit);
         const response = await (0, _axiosDefault.default).post(`${baseURL}/account/user-progress`, {
             username,
-            lesson,
-            unit
+            lesson
         });
         console.log(response.data);
-        // const response = await axios.get(`${baseURL}/account/user-progress`,
-        // `username=${username}&lesson=${lesson}&unit=${unit}`)
         return response.data;
     } catch (err) {
         return err;
@@ -40042,7 +40048,7 @@ parcelHelpers.export(exports, "getCategoryByName", ()=>getCategoryByName);
 parcelHelpers.export(exports, "deleteCategoryFromName", ()=>deleteCategoryFromName);
 parcelHelpers.export(exports, "putCategoryPath", ()=>putCategoryPath);
 parcelHelpers.export(exports, "deleteCategoryPath", ()=>deleteCategoryPath);
-parcelHelpers.export(exports, "getCategory", ()=>getCategory);
+parcelHelpers.export(exports, "getQuestionsByLessonAndLevel", ()=>getQuestionsByLessonAndLevel);
 parcelHelpers.export(exports, "respondToCategoryGet", ()=>respondToCategoryGet);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
@@ -40112,12 +40118,16 @@ const deleteCategoryPath = async (category)=>{
         console.error("axios function call error:", error);
     }
 };
-const getCategory = async (categoryName)=>{
+const getQuestionsByLessonAndLevel = async (lessonObject)=>{
     try {
-        const res = await (0, _axiosDefault.default).get(`${baseURL}${PATH_PREFIX}${categoryName}`);
-        return res.data;
-    } catch (error) {
-        console.error("axios function call error:", error);
+        const { lesson, level } = lessonObject;
+        const response = await (0, _axiosDefault.default).post(`${baseURL}${PATH_PREFIX}lesson-level`, {
+            lesson,
+            level
+        });
+        return response.data;
+    } catch (err) {
+        return err;
     }
 };
 async function respondToCategoryGet(categoryName) {

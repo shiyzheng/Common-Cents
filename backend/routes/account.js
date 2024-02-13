@@ -80,12 +80,21 @@ router.get('/profile', async (req, res) => {
     }
 });
 
+router.get('/users', async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json({users});
+  } catch (err) {
+    res.status(401).json({error: err});
+  }
+});
+
 // get user's obtained achievements
 router.get('/achievements', async (req, res) => {
   const { username } = req.query;
   try {
     const user = await User.findOne({ username: username });
-    res.json(user.achievements);
+    res.json({ achievements: user.achieved });
   } catch (e) {
     res.send('error occurred');
   }
@@ -116,10 +125,10 @@ router.post('/user-progress', async (req, res) => {
   if (await verifyUser(req.headers.authorization)) {
       try {
         const { body } = req;
-        const { username, lesson, unit } = body;
+        const { username, lesson } = body;
         decoded = decode(username);
-        const user = await User.findOne({ username: 'asd' });
-        res.json(user.progress[lesson][unit]);
+        const user = await User.findOne({ username: decoded });
+        res.status(200).json(user.progress[lesson]);
       } catch (err) {
         res.status(400).json({message: 'There was an error'});
       }
