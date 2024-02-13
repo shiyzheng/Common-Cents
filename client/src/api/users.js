@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const baseURL = 'http://localhost:3000';
 
-const setHeaders = () => {
+const setAuthorizationHeaders = () => {
     axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('app-token');
 }
 
@@ -78,6 +78,18 @@ export const getAchievementsById = async (username) => {
     }
 };
 
+export const getCurrentUserAchievements = async () => {
+    try {
+        setAuthorizationHeaders();
+        const response = await axios.post(`${baseURL}/account/my-achievements`, {
+            username: sessionStorage.getItem('username'),
+        });
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+};
+
 export const getAllAchievements = async () => {
     try {
         const response = await axios.get(`${baseURL}/account/allAchievements`);
@@ -126,14 +138,13 @@ export const getAllUsersPoints = async () => {
 
 export const getUserProgress = async (lessonObject) => {
     try {
-        setHeaders();
-        const { lesson, unit } = lessonObject;
+        setAuthorizationHeaders();
+        const { lesson } = lessonObject;
         const username = sessionStorage.getItem('app-token');
         const response = await axios.post(`${baseURL}/account/user-progress`, {
             username,
             lesson, 
         });
-        console.log(response.data);
         return response.data;
     } catch (err) {
         return err;

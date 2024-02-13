@@ -99,6 +99,26 @@ export const getQuestionsByLessonAndLevel = async (lessonObject) => {
     }
 }
 
+export const getAllUnitByLesson = async (lesson) => {
+    try {
+        const response = await axios.post(`${baseURL}${PATH_PREFIX}by-lesson`, {
+            lesson,
+        });
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+}
+
+export const getUnitByLessonAndId = async (lessonObject) => {
+    try {
+        const { lesson, id } = lessonObject;
+        const response = await axios.post(`${baseURL}${PATH_PREFIX}by-lesson`, {
+            lesson,
+        });
+    }
+}
+
 export async function respondToCategoryGet(categoryName) {
     const res = await getCategory(categoryName);
     return res;

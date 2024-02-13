@@ -81,6 +81,28 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.post('/by-lesson', async (req, res) => {
+  try {
+    const { body } = req;
+    const { lesson } = body;
+    const categories = await Category.find({ Lesson: lesson });
+    res.status(200).json({ categories });
+  } catch (err) {
+    res.status(401).json({error: err});
+  }
+});
+
+router.post('/by-lesson-id', async (req, res) => {
+  try {
+    const { body } = req;
+    const { lesson, id } = body;
+    const categories = await Category.find({ Lesson: lesson, id });
+    res.status(200).json({ categories });
+  } catch (err) {
+    res.status(401).json({error: err});
+  }
+})
+
 router.get('/getId', async (req, res) => {
   const { id } = req.query;
   try {

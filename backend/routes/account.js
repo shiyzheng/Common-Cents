@@ -100,6 +100,19 @@ router.get('/achievements', async (req, res) => {
   }
 });
 
+router.post('/my-achievements', async (req, res) => {
+  if (await verifyUser(req.headers.authorization)) {
+    try {
+      const { body } = req;
+      const { username } = body;
+      const user = await User.findOne({ username });
+      res.status(200).json({ achievements: user.achieved })
+    } catch (e) {
+      res.status(401).json({error: e});
+    }
+  }
+});
+
 
 // get all achievements
 router.get('/allAchievements', async (req, res) => {
@@ -128,10 +141,20 @@ router.post('/user-progress', async (req, res) => {
         const { username, lesson } = body;
         decoded = decode(username);
         const user = await User.findOne({ username: decoded });
-        res.status(200).json(user.progress[lesson]);
+        res.status(200).json({ unit: user.progress[lesson][0], level: user.progress[lesson][1] });
       } catch (err) {
         res.status(400).json({message: 'There was an error'});
       }
+  }
+});
+
+router.post('subcategories', async (req, res) => {
+  try {
+    const { body } = req;
+    const { lesson } = body;
+    res.status(200).json()
+  } catch (err) {
+
   }
 });
 

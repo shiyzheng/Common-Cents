@@ -21,7 +21,6 @@ const userSchema = new Schema({
   points: { type: pointsSchema, default: () => ({}) },
   progress: { type: progressSchema, default: () => ({}) },
   achieved: [achievementsSchema],
-  notAchieved: [achievementsSchema],
   admin: { type: Boolean, default: false}
 });
 
