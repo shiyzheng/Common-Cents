@@ -113,9 +113,12 @@ export const getAllUnitByLesson = async (lesson) => {
 export const getUnitByLessonAndId = async (lessonObject) => {
     try {
         const { lesson, id } = lessonObject;
-        const response = await axios.post(`${baseURL}${PATH_PREFIX}by-lesson`, {
+        const response = await axios.post(`${baseURL}${PATH_PREFIX}by-lesson-id`, {
             lesson,
         });
+        return response.data;
+    } catch (err) {
+        return err;
     }
 }
 
