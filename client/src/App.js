@@ -39,7 +39,7 @@ function App() {
     { path: '/achievements', element: <Achievements setLogin={setLogin} login={login} setUsername={setUsername} username={username}  /> },
     { path: '/leaderboards', element: <Leaderboards setLogin={setLogin} login={login} setUsername={setUsername} username={username} /> },
     { path: '/MCQ', element: <MultipleChoiceQuestion setLogin={setLogin} login={login} setUsername={setUsername} username={username}  /> },
-    { path: '/lessons/:topic', element: <Lessons setLogin={setLogin} login={login} setUsername={setUsername} username={username}  /> },
+    { path: '/lessons/:topic/:subcategory', element: <Lessons setLogin={setLogin} login={login} setUsername={setUsername} username={username}  /> },
     // { path: '/Home', element: <Categories login={login} categories={categories} setCategories={setCategories} username={username} /> },
     { path: '/Category/:name', element: <CategoryPage login={login} username={username} /> },
   ]);
@@ -60,9 +60,19 @@ function Home(props) {
     "Managing Risk",
   ];
 
-  const navigateToTopic = (topic) => {
+  const subcategories = {
+    "Earning Income": ["A", "B", "C"],
+    "Saving": ["D", "E", "F"],
+    "Spending": ["G", "H", "I"],
+    "Investing": ["J", "K", "L"],
+    "Managing Credit": ["M", "N", "O"],
+    "Managing Risk": ["P", "Q", "R"],
+  };
+
+  const navigateToTopic = (topic, subcategory) => {
     const formattedTopic = topic.toLowerCase().replace(/\s+/g, '-');
-    navigate(`/lessons/${formattedTopic}`);
+    const formattedSubcategory = subcategory.toLowerCase().replace(/\s+/g, '-');
+    navigate(`/lessons/${formattedTopic}/${formattedSubcategory}`);
   };
 
   return (
@@ -83,7 +93,7 @@ function Home(props) {
             {name.current}
           </div>
       <h2>I would like to learn about...</h2>
-      <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+      {/* <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
         {topics.map((topic, index) => (
           <button
             key={index}
@@ -94,10 +104,24 @@ function Home(props) {
             {topic}
           </button>
         ))}
+      </div> */}
+      <div className="lessons-wrapper">
+      {topics.map((topic, index) => (
+          <div key={index} className="lessons-container">
+            <h3>{topic}</h3>
+            <ul>
+              {subcategories[topic].map((subcategory, subIndex) => (
+                <li key={subIndex}>
+                  <button onClick={() => navigateToTopic(topic, subcategory)}>
+                    {subcategory}
+                  </button>
+                  <h6>{" "}</h6>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
-      
-          <CategoryView categories={categories} setCategories={setCategories} />
-        </div><div style={{ textAlign: 'center', marginTop: '50px' }}>
     </div></>
       )}
     </div>

@@ -8,10 +8,11 @@ const Lessons = (props) => {
     login, username, setUsername, setLogin
     } = props;
   const navigate = useNavigate();
-  const { topic } = useParams();
+  const { topic, subcategory } = useParams();
   console.log(topic);
+  console.log(subcategory);
   const formattedTopic = topic.replace(/-/g, ' ').replace(/(?:-| |\b)(\w)/g, function(key) { return key.toUpperCase()});
-
+  const formattedSubcategory = subcategory.replace(/-/g, ' ').replace(/(?:-| |\b)(\w)/g, function(key) { return key.toUpperCase()});
   const lessonList = [
     'Lesson 1',
     'Lesson 2',
@@ -59,7 +60,7 @@ const Lessons = (props) => {
   return (
     <><Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username} /><div>
           <div className="lessons-container">
-      <h2>{formattedTopic}</h2>
+      <h2>{formattedTopic}, {formattedSubcategory}</h2>
       <div className="lessons-wrapper">
 
       <div className="level-container">
