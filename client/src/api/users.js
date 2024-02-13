@@ -150,3 +150,11 @@ export const getUserProgress = async (lessonObject) => {
         return err;
     }
 };
+
+// export const putAchievementById = async (id) => {
+//     try {
+//         setAuthorizationHeaders();
+//         const username = sessionStorage.getItem('app-token');
+//         const response = await axios.post(`${baseURLL}/account/`)
+//     }
+// }

@@ -115,6 +115,7 @@ export const getUnitByLessonAndId = async (lessonObject) => {
         const { lesson, id } = lessonObject;
         const response = await axios.post(`${baseURL}${PATH_PREFIX}by-lesson-id`, {
             lesson,
+            id,
         });
         return response.data;
     } catch (err) {
@@ -122,7 +123,7 @@ export const getUnitByLessonAndId = async (lessonObject) => {
     }
 }
 
-export async function respondToCategoryGet(categoryName) {
-    const res = await getCategory(categoryName);
-    return res;
-}
+// export async function respondToCategoryGet(categoryName) {
+//     const res = await getCategory(categoryName);
+//     return res;
+// }
