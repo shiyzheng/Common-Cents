@@ -143,18 +143,18 @@ router.post('/user-progress', async (req, res) => {
         const user = await User.findOne({ username: decoded });
         res.status(200).json({ unit: user.progress[lesson][0], level: user.progress[lesson][1] });
       } catch (err) {
-        res.status(400).json({message: 'There was an error'});
+        res.status(400).json({error: err});
       }
   }
 });
 
-router.post('subcategories', async (req, res) => {
+router.post('/subcategories', async (req, res) => {
   try {
     const { body } = req;
     const { lesson } = body;
-    res.status(200).json()
+    res.status(200).json({ })
   } catch (err) {
-
+    res.status(400).json({error: err});
   }
 });
 
