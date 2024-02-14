@@ -48,7 +48,7 @@ function Achievements(props) {
 
       return (
         <>
-        <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout = {logout}/>
+        <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout}/>
       
       {login ? <div className="container">
         <h2>Completed Achievements</h2>

@@ -41,7 +41,7 @@ function Signup(props) {
 
   return (
     <div>
-      <Navbar />
+      <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout} />
       <div className="form-container">
         <form id="add" className="mx-auto" style={{ width: '800px' }}>
           <h2>Create your profile</h2>

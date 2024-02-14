@@ -41,14 +41,14 @@ const loggedIn = login;
 
 
   const clickedProfile = () => {
-    navigate(`/profile/${username}`);
+    navigate(`/profile/${sessionStorage.getItem('username')}`);
   };
 
-  const clickedLogout = async () => {
-    await axios.post('http://localhost:3000/account/logout');
-    setUsername('');
-    setLogin(false);
-  };
+  // const clickedLogout = async () => {
+  //   await axios.post('http://localhost:3000/account/logout');
+  //   setUsername('');
+  //   setLogin(false);
+  // };
 
   return (
     <><div className="Navbar">

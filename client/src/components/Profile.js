@@ -12,7 +12,7 @@ function PointPreview(props) {
   }
 
 function Profile(props) {
-    const { login, username } = props;
+    const { login, username, logout } = props;
     const [profile, setProfile] = useState([]);
     const { id } = useParams();
 
@@ -46,7 +46,7 @@ function Profile(props) {
 
     return (
         <div>
-            <Navbar />
+            <Navbar login={login} username={sessionStorage.getItem('username')} logout = {logout} />
             <h2 className="float-left">User { id }</h2>
             {/* {login && ( */}
                 <div>

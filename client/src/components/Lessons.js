@@ -52,7 +52,7 @@ const Lessons = (props) => {
     };
 
   return (
-    <><Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout = {logout}/><div>
+    <><Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout}/><div>
           <div className="lessons-container">
       <h2>{formattedTopic}, {formattedSubcategory}</h2>
       <div className="lessons-wrapper">

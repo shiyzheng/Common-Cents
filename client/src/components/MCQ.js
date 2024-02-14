@@ -4,7 +4,7 @@ import '../styles/MCQ.css';
 
 function MultipleChoiceQuestion(props) {
   const {
-    login, username, setUsername, setLogin
+    login, username, setUsername, setLogin, logout
   } = props;
 
   const [selectedOption, setSelectedOption] = useState(null);
@@ -27,7 +27,7 @@ function MultipleChoiceQuestion(props) {
 
   return (
     <>
-      <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username} />
+      <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout} />
       <div className="container">
         <h2>Multiple Choice Question</h2>
         <div className="question">

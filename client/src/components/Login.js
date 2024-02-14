@@ -10,7 +10,7 @@ import { loginUser } from '../api/users';
 function Login(props) {
   // signup page
   const {
-    setLogin, login, setUsername, setPassword, username, password,
+    setLogin, login, setUsername, setPassword, username, password, logout
   } = props;
 
   const navigate = useNavigate();
@@ -37,7 +37,7 @@ function Login(props) {
 
   return (
     <div>
-      <Navbar />
+      <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout}/>
       <div className="form-container">
         <form id="add" className="mx-auto" style={{ width: '800px' }}>
           <h2>Login</h2>

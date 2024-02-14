@@ -82,7 +82,7 @@ function Leaderboards(props) {
       
     return (
       <>
-        <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout = {logout}/>
+        <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout}/>
         <div className="container">
           <h2>Leaderboards</h2>
           <ul className="leaderboards-list">
