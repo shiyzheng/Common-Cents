@@ -6,6 +6,18 @@ const { authenticateUser, verifyUser, decode } = require('../utils/auth');
 
 const router = express.Router();
 
+/**
+ * COMMON HTTP STATUS CODES
+ * 200 - OK
+ * 201 - CREATED
+ * 
+ * 400 - CLIENT ERROR
+ * 401 - Unauthorized
+ * 403 - Forbidden, wrong user
+ * 404 - Not found
+ */
+
+
 router.post('/signup', async (req, res) => {
   const { body } = req;
   const { username, password } = body;
@@ -139,8 +151,7 @@ router.post('/user-progress', async (req, res) => {
       try {
         const { body } = req;
         const { username, lesson } = body;
-        decoded = decode(username);
-        const user = await User.findOne({ username: decoded });
+        const user = await User.findOne({ username });
         res.status(200).json({ unit: user.progress[lesson][0], level: user.progress[lesson][1] });
       } catch (err) {
         res.status(400).json({error: err});
@@ -148,15 +159,22 @@ router.post('/user-progress', async (req, res) => {
   }
 });
 
-router.post('/subcategories', async (req, res) => {
-  try {
-    const { body } = req;
-    const { lesson } = body;
-    res.status(200).json({ })
-  } catch (err) {
-    res.status(400).json({error: err});
+router.post('/add-achievement', async (req, res) => {
+  if (await verifyUser(req.headers.authorization)) {
+    try {
+      const { body } = req;
+      const { username, achievement } = body;
+      const { name, id } = achievement;
+      await User.updateOne(
+        { username }, 
+        { $push: { achieved: { name, id } } }
+      );
+      res.status(201).json({ message: 'Achivement added' })
+    } catch (err) {
+      res.status(400).json({error: err});
+    }
   }
-});
+})
 
 
 module.exports = router;

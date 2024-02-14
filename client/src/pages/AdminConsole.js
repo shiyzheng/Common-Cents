@@ -8,7 +8,7 @@ import {
     getAllCategories,
     respondToCategoryAdd as respondToCategoryAdd,
     respondToCategoryDelete,
-    respondToCategoryGet,
+    // respondToCategoryGet,
     putCategoryPath,
     deleteCategoryPath,
 } from '../api/category';

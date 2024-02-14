@@ -15,7 +15,7 @@ import CategoryPage from './components/CategoryPage';
 import MultipleChoiceQuestion from './components/MCQ';
 import AdminConsole from './pages/AdminConsole';
 import Lessons from './components/Lessons';
-import { getUserProgress } from './api/users';
+import { addAchievementById, getUserProgress } from './api/users';
 import { decode } from '../../backend/utils/auth';
 
 function App() {
@@ -87,7 +87,7 @@ function Home(props) {
       )}
       {login && (
         <><div>
-          <button className="btn btn-outline-danger float-right" type="button" onClick={() => getUserProgress({ lesson: "Spending" })}>TESTING REMOVE THIS LATER FRONTEND</button>
+          <button className="btn btn-outline-danger float-right" type="button" onClick={() => addAchievementById({ name: "Master a Topic", id: 0 })}>TESTING REMOVE THIS LATER FRONTEND</button>
           <button className="btn btn-outline-danger float-right" type="button" onClick={() => logout()}>Logout</button>
           <div>
             Welcome
