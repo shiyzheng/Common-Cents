@@ -124,10 +124,11 @@ export const getAllUsersPoints = async () => {
         const response = await axios.get(`${baseURL}/account/users`);
         const points = [];
         const { data } = response;
-        for (let i = 0; i < data.length; i++) {
+        const { users } = data;
+        for (let i = 0; i < users.length; i++) {
             points.push({
-                username: data[i].username,
-                points: data[i].points,
+                username: users[i].username,
+                points: users[i].points,
             });
         }
         return points;

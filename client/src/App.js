@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   useRoutes,
   useNavigate,
@@ -16,6 +16,7 @@ import MultipleChoiceQuestion from './components/MCQ';
 import AdminConsole from './pages/AdminConsole';
 import Lessons from './components/Lessons';
 import { getUserProgress } from './api/users';
+import { getAllUnitByLesson } from './api/category';
 import { decode } from '../../backend/utils/auth';
 
 function App() {
@@ -61,20 +62,34 @@ function Home(props) {
     "Managing Risk",
   ];
 
-  const subcategories = {
-    "Earning Income": ["A", "B", "C"],
-    "Saving": ["D", "E", "F"],
-    "Spending": ["G", "H", "I"],
-    "Investing": ["J", "K", "L"],
-    "Managing Credit": ["M", "N", "O"],
-    "Managing Risk": ["P", "Q", "R"],
-  };
+  // const subcategories = {
+  //   "Earning Income": ["A", "B", "C"],
+  //   "Saving": ["D", "E", "F"],
+  //   "Spending": ["G", "H", "I"],
+  //   "Investing": ["J", "K", "L"],
+  //   "Managing Credit": ["M", "N", "O"],
+  //   "Managing Risk": ["P", "Q", "R"],
+  // };
 
   const navigateToTopic = (topic, subcategory) => {
     const formattedTopic = topic.toLowerCase().replace(/\s+/g, '-');
     const formattedSubcategory = subcategory.toLowerCase().replace(/\s+/g, '-');
     navigate(`/lessons/${formattedTopic}/${formattedSubcategory}`);
   };
+
+  const [subcat, setSubcat] = useState([]);
+    useEffect(() => {
+      async function getSubcatWrapper() {
+        const c = [];
+        for (const topic of topics) {
+          const val = await getAllUnitByLesson(topic);
+          const names = val.categories.map(category => category.Name.replace(/_/g, ' '));
+          c.push(names);
+        }
+        setSubcat(c);
+      }
+      getSubcatWrapper();
+    }, topics);
 
   return (
     <div>
@@ -112,7 +127,7 @@ function Home(props) {
           <div key={index} className="lessons-container">
             <h3>{topic}</h3>
             <ul>
-              {subcategories[topic].map((subcategory, subIndex) => (
+              {subcat[index] && subcat[index].map((subcategory, subIndex) => (
                 <li key={subIndex}>
                   <button onClick={() => navigateToTopic(topic, subcategory)}>
                     {subcategory}

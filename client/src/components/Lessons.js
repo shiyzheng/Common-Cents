@@ -24,13 +24,7 @@ const Lessons = (props) => {
     'Lesson 2',
     'Lesson 3',
     'Lesson 4'];
-
-  const levelsList = [
-    'Level 1', 
-    'Level 2', 
-    'Level 3',
-    'Level 4'];
-
+    
     const renderLessonLinks = (level) => {
       const formattedLevel = level.toLowerCase().replace(/\s+/g, '-');
       return lessonList.map((lesson, index) => (
