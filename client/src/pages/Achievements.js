@@ -6,7 +6,7 @@ import { getCurrentUserAchievements, getAllAchievements } from '../api/users';
 function Achievements(props) {
     // const { login, username } = props;
     const {
-      login, username, setUsername, setLogin
+      login, username, setUsername, setLogin, logout
     } = props;
     const loggedIn = login;
     // const achievements = [
@@ -48,7 +48,7 @@ function Achievements(props) {
 
       return (
         <>
-        <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username}/>
+        <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout = {logout}/>
       
       {login ? <div className="container">
         <h2>Completed Achievements</h2>

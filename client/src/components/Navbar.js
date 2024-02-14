@@ -8,12 +8,11 @@ function Navbar(props) {
 
 //   const username = useContext(UserContext);
 const {
-  login, setUsername, setLogin
+  login, setUsername, setLogin, logout
 } = props;
 const loggedIn = login;
-const streak = 2;
-const points = 300;
-const username = 'testing';
+// const streak = 2;
+// const points = 300;
 
   const clickedHome = () => {
     navigate('/');
@@ -71,11 +70,11 @@ const username = 'testing';
           </button>
           {loggedIn ? <div className="profile">
                 <div>
-                    <span className="user">Points: {points}</span>
-                    <span className="user">Streak: {streak}</span>
-                    <span className="user">{username}</span>
+                    {/* <span className="user">Points: {points}</span>
+                    <span className="user">Streak: {streak}</span> */}
+                    <span className="user">{sessionStorage.getItem('username')}</span>
                 </div>
-                <button className="textbutton" type="button" onClick={clickedLogout}>
+                <button className="textbutton" type="button" onClick={() => logout()}>
                     {'Logout'}
                 </button>
             </div>

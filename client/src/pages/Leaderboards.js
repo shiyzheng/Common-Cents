@@ -5,7 +5,7 @@ import { getAllUsersPoints } from '../api/users';
 
 function Leaderboards(props) {
   const {
-    login, username, setUsername, setLogin
+    login, username, setUsername, setLogin, logout
   } = props;
     const usersPerPage = 10;
     const [currentPage, setCurrentPage] = useState(1);
@@ -82,7 +82,7 @@ function Leaderboards(props) {
       
     return (
       <>
-        <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username}/>
+        <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout = {logout}/>
         <div className="container">
           <h2>Leaderboards</h2>
           <ul className="leaderboards-list">

@@ -31,26 +31,26 @@ function App() {
     window.location.reload(true);
   };
 
-  const element = useRoutes([{ path: '/', element: <Home login={login} username={username} logout={logout} categories={categories} setCategories={setCategories} /> },
-    { path: '/Login', element: <Login setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} /> },
-    { path: '/Signup', element: <Signup setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} /> },
-    { path: '/profile/:id', element: <Profile login={login} /> },
+  const element = useRoutes([{ path: '/', element: <Home setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout} categories={categories} setCategories={setCategories} /> },
+    { path: '/Login', element: <Login setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} logout={logout}  /> },
+    { path: '/Signup', element: <Signup setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} logout={logout}  /> },
+    { path: '/profile/:id', element: <Profile login={login} logout={logout}  /> },
 
-    { path: '/admin-console', element: <AdminConsole login={login} username={username} /> },
+    { path: '/admin-console', element: <AdminConsole login={login} username={username} logout={logout}  /> },
 
-    { path: '/achievements', element: <Achievements setLogin={setLogin} login={login} setUsername={setUsername} username={username}  /> },
-    { path: '/leaderboards', element: <Leaderboards setLogin={setLogin} login={login} setUsername={setUsername} username={username} /> },
-    { path: '/MCQ', element: <MultipleChoiceQuestion setLogin={setLogin} login={login} setUsername={setUsername} username={username}  /> },
-    { path: '/lessons/:topic/:subcategory', element: <Lessons setLogin={setLogin} login={login} setUsername={setUsername} username={username}  /> },
+    { path: '/achievements', element: <Achievements setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}   /> },
+    { path: '/leaderboards', element: <Leaderboards setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}  /> },
+    { path: '/MCQ', element: <MultipleChoiceQuestion setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}   /> },
+    { path: '/lessons/:topic/:subcategory', element: <Lessons setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}  /> },
     // { path: '/Home', element: <Categories login={login} categories={categories} setCategories={setCategories} username={username} /> },
-    { path: '/Category/:name', element: <CategoryPage login={login} username={username} /> },
+    { path: '/Category/:name', element: <CategoryPage login={login} username={username} logout={logout}  /> },
   ]);
   return element;
 }
 
 function Home(props) {
   // console.log('homepage');
-  const { login, username, logout, categories, setCategories } = props;
+  const { setLogin, setUsername, login, username, logout, categories, setCategories } = props;
   const navigate = useNavigate();
 
   const topics = [
@@ -93,7 +93,7 @@ function Home(props) {
 
   return (
     <div>
-        <Navbar />
+        <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout = {logout}/>
       {!login && (
         <div>
           {' '}
