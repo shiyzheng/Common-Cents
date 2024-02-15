@@ -11,6 +11,8 @@ function MultipleChoiceQuestion(props) {
   const {
     login, username, setUsername, setLogin, logout
   } = props;
+  const [correctCount, setCorrectCount] = useState(0);
+  const [isReview, setIsReview] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [selectedOption, setSelectedOption] = useState("");
   const [questions, setQuestions] = useState([]);
@@ -71,7 +73,14 @@ function MultipleChoiceQuestion(props) {
   };
 
   const handleSubmit = () => {
-    console.log(`Selected option: ${selectedOption}`);
+    setIsReview(true);
+    let correct  = 0;
+    selectedOptions.forEach((selectedOption, index) => {
+      if (selectedOption === questions[index].Correct) {
+        correct++;
+      }
+    });
+    setCorrectCount(correct);
   };
   const handlePreviousQuestion = () => {
     if (currentQuestionIndex > 0) {
@@ -87,8 +96,10 @@ function MultipleChoiceQuestion(props) {
     <>
       <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout} />
       <div className="container">
-        <h2>Multiple Choice Question</h2>
-        <div className="question">
+        <h2>Lesson {lesson} Level {level} </h2>
+        {isReview ? (<><p>{correctCount} / {questions.length} correct</p></>) 
+        
+        : (<><div className="question">
           <p>{question}</p>
         </div>
         <ul className="options-list">
@@ -109,7 +120,7 @@ function MultipleChoiceQuestion(props) {
           <button onClick={handleNextQuestion}>Next</button>
         ) : (
           <button onClick={handleSubmit}>Submit</button>
-        )}
+        )} </>) }
       </div>
     </>
   );
