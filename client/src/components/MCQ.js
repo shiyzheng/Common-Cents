@@ -82,6 +82,11 @@ function MultipleChoiceQuestion(props) {
     });
     setCurrentQuestionIndex(-1);
     setCorrectCount(correct);
+    setSelectedOptions(prevOptions => {
+      const updatedOptions = [...prevOptions];
+      updatedOptions[currentQuestionIndex + 1] = null;
+      return updatedOptions;
+    });
   };
   const handlePreviousQuestion = () => {
     if (currentQuestionIndex > 0) {
@@ -106,8 +111,40 @@ function MultipleChoiceQuestion(props) {
           <button onClick={handleNextQuestion}>Review</button>
           </>
         ) : (
-          <button onClick={handleSubmit}>Submit</button>
-        )}
+          <><div className="question">
+              <p>{question}</p>
+            </div>
+            <ul className="options-list">
+              {options.map((option) => (
+                <li
+                  key={option.id}
+                  className={`option-box
+                    ${questions[currentQuestionIndex].Correct === option 
+                        ? 'incorrect'
+                        : ''
+                    } 
+                    ${selectedOptions[currentQuestionIndex] === option 
+                      ? 'selected'
+                      : ''}
+                    ${selectedOptions[currentQuestionIndex] === option && selectedOptions[currentQuestionIndex] === questions[currentQuestionIndex].Correct
+                      ? 'correct'
+                      : ''}
+                      
+                      `}
+                >
+                  {option}
+                </li>
+              ))}
+            </ul>
+            {currentQuestionIndex > 0 && (
+              <button onClick={handlePreviousQuestion}>Back</button>
+            )}
+            {currentQuestionIndex < questions.length - 1 ? (
+              <button onClick={handleNextQuestion}>Next</button>
+            ) : (
+              <button>Return</button>
+            )} </>
+            )}
         </>) 
         
         : (<><div className="question">
