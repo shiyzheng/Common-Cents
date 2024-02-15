@@ -328,10 +328,10 @@ router.post('/lesson-progress', async (req, res) => {
         res.json({questions: category.Beginner.slice(0, Math.floor(category.Beginner.length / 3))});
         break;
       case 1:
-        res.json({questions: category.Beginner.slice(questions.length / 3, -questions.length / 3)});
+        res.json({questions: category.Beginner.slice(category.Beginner.length / 3, -category.Beginner.length / 3)});
         break;
       case 2:
-        res.json({questions: category.Beginner.slice(-questions.length / 3, questions.length)})
+        res.json({questions: category.Beginner.slice(-category.Beginner.length / 3, category.Beginner.length)})
         break;
     }
   } catch (err) {
