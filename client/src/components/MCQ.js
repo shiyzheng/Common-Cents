@@ -38,7 +38,7 @@ function MultipleChoiceQuestion(props) {
   }, []);
 
   useEffect(() => {
-    if (currentQuestionIndex < questions.length) {
+    if (currentQuestionIndex < questions.length && currentQuestionIndex >= 0) {
       setQuestion(questions[currentQuestionIndex].Question);
       setOptions(questions[currentQuestionIndex].Answers);
     }
@@ -80,6 +80,7 @@ function MultipleChoiceQuestion(props) {
         correct++;
       }
     });
+    setCurrentQuestionIndex(-1);
     setCorrectCount(correct);
   };
   const handlePreviousQuestion = () => {
@@ -97,7 +98,17 @@ function MultipleChoiceQuestion(props) {
       <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout} />
       <div className="container">
         <h2>Lesson {lesson} Level {level} </h2>
-        {isReview ? (<><p>{correctCount} / {questions.length} correct</p></>) 
+        {isReview ? (<>
+        
+        {currentQuestionIndex < 0 ? (
+          <>
+          <p>{correctCount} / {questions.length} correct</p>
+          <button onClick={handleNextQuestion}>Review</button>
+          </>
+        ) : (
+          <button onClick={handleSubmit}>Submit</button>
+        )}
+        </>) 
         
         : (<><div className="question">
           <p>{question}</p>
