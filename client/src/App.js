@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   useRoutes,
   useNavigate,
@@ -15,8 +15,8 @@ import CategoryPage from './components/CategoryPage';
 import MultipleChoiceQuestion from './components/MCQ';
 import AdminConsole from './pages/AdminConsole';
 import Lessons from './components/Lessons';
-import { addAchievementById, getUserProgress } from './api/users';
-import { decode } from '../../backend/utils/auth';
+import { getUserProgress } from './api/users';
+import { getAllUnitByLesson } from './api/category';
 
 function App() {
   const [login, setLogin] = useState(sessionStorage.getItem('app-token') != null);
@@ -30,26 +30,26 @@ function App() {
     window.location.reload(true);
   };
 
-  const element = useRoutes([{ path: '/', element: <Home login={login} username={username} logout={logout} categories={categories} setCategories={setCategories} /> },
-    { path: '/Login', element: <Login setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} /> },
-    { path: '/Signup', element: <Signup setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} /> },
-    { path: '/profile/:id', element: <Profile login={login} /> },
+  const element = useRoutes([{ path: '/', element: <Home setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout} categories={categories} setCategories={setCategories} /> },
+    { path: '/Login', element: <Login setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} logout={logout}  /> },
+    { path: '/Signup', element: <Signup setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} logout={logout}  /> },
+    { path: '/profile/:id', element: <Profile login={login} logout={logout}  /> },
 
-    { path: '/admin-console', element: <AdminConsole login={login} username={username} /> },
+    { path: '/admin-console', element: <AdminConsole login={login} username={username} logout={logout}  /> },
 
-    { path: '/achievements', element: <Achievements setLogin={setLogin} login={login} setUsername={setUsername} username={username}  /> },
-    { path: '/leaderboards', element: <Leaderboards setLogin={setLogin} login={login} setUsername={setUsername} username={username} /> },
-    { path: '/MCQ', element: <MultipleChoiceQuestion setLogin={setLogin} login={login} setUsername={setUsername} username={username}  /> },
-    { path: '/lessons/:topic/:subcategory', element: <Lessons setLogin={setLogin} login={login} setUsername={setUsername} username={username}  /> },
+    { path: '/achievements', element: <Achievements setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}   /> },
+    { path: '/leaderboards', element: <Leaderboards setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}  /> },
+    { path: '/MCQ/*', element: <MultipleChoiceQuestion setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}   /> },
+    { path: '/lessons/:topic/:subcategory', element: <Lessons setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}  /> },
     // { path: '/Home', element: <Categories login={login} categories={categories} setCategories={setCategories} username={username} /> },
-    { path: '/Category/:name', element: <CategoryPage login={login} username={username} /> },
+    { path: '/Category/:name', element: <CategoryPage login={login} username={username} logout={logout}  /> },
   ]);
   return element;
 }
 
 function Home(props) {
   // console.log('homepage');
-  const { login, username, logout, categories, setCategories } = props;
+  const { setLogin, setUsername, login, username, logout, categories, setCategories } = props;
   const navigate = useNavigate();
 
   const topics = [
@@ -61,14 +61,14 @@ function Home(props) {
     "Managing Risk",
   ];
 
-  const subcategories = {
-    "Earning Income": ["A", "B", "C"],
-    "Saving": ["D", "E", "F"],
-    "Spending": ["G", "H", "I"],
-    "Investing": ["J", "K", "L"],
-    "Managing Credit": ["M", "N", "O"],
-    "Managing Risk": ["P", "Q", "R"],
-  };
+  // const subcategories = {
+  //   "Earning Income": ["A", "B", "C"],
+  //   "Saving": ["D", "E", "F"],
+  //   "Spending": ["G", "H", "I"],
+  //   "Investing": ["J", "K", "L"],
+  //   "Managing Credit": ["M", "N", "O"],
+  //   "Managing Risk": ["P", "Q", "R"],
+  // };
 
   const navigateToTopic = (topic, subcategory) => {
     const formattedTopic = topic.toLowerCase().replace(/\s+/g, '-');
@@ -76,9 +76,23 @@ function Home(props) {
     navigate(`/lessons/${formattedTopic}/${formattedSubcategory}`);
   };
 
+  const [subcat, setSubcat] = useState([]);
+    useEffect(() => {
+      async function getSubcatWrapper() {
+        const c = [];
+        for (const topic of topics) {
+          const val = await getAllUnitByLesson(topic);
+          const names = val.categories.map(category => category.Name.replace(/_/g, ' '));
+          c.push(names);
+        }
+        setSubcat(c);
+      }
+      getSubcatWrapper();
+    }, topics);
+
   return (
     <div>
-        <Navbar />
+        <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout = {logout}/>
       {!login && (
         <div>
           {' '}
@@ -112,7 +126,7 @@ function Home(props) {
           <div key={index} className="lessons-container">
             <h3>{topic}</h3>
             <ul>
-              {subcategories[topic].map((subcategory, subIndex) => (
+              {subcat[index] && subcat[index].map((subcategory, subIndex) => (
                 <li key={subIndex}>
                   <button onClick={() => navigateToTopic(topic, subcategory)}>
                     {subcategory}
