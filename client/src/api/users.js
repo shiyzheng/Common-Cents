@@ -137,6 +137,28 @@ export const getAllUsersPoints = async () => {
     }
 };
 
+export const getUsersPointsTotal = async () => {
+    try {
+        const response = await axios.get(`${baseURL}/users`);
+        const points = [];
+        const { data } = response;
+        const { users } = data;
+        for (let i = 0; i < users.length; i++) {
+            let pointTotal = 0
+            for (const [key, value] of Object.entries(users[i].points)) {
+                pointTotal += value;
+            }
+            points.push({
+                username: users[i].username,
+                points: pointTotal,
+            });
+        }
+        return points;
+    } catch (err) {
+        return err;
+    }
+};
+
 export const getUserProgress = async (lessonObject) => {
     try {
         setAuthorizationHeaders();
@@ -151,6 +173,21 @@ export const getUserProgress = async (lessonObject) => {
         return err;
     }
 };
+
+export const updateUserProgress = async (lessonObject) => {
+    try {
+        setAuthorizationHeaders();
+        const { lesson } = lessonObject;
+        const username = sessionStorage.getItem('username');
+        const response = await axios.post(`${baseURL}/update-user-progress`, {
+            username,
+            lesson,
+        });
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+}
 
 export const addAchievementById = async (achievement) => {
     try {

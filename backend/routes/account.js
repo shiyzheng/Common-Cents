@@ -101,6 +101,17 @@ router.get('/users', async (req, res) => {
   }
 });
 
+router.get('/user', async (req, res) => {
+  try {
+    const { body } = req;
+    const { username } = body;
+    const user = await User.findOne({ username });
+    res.status(200).json({user});
+  } catch (err) {
+    res.status(401).json({error: err});
+  }
+});
+
 // get user's obtained achievements
 router.get('/achievements', async (req, res) => {
   const { username } = req.query;
@@ -159,6 +170,35 @@ router.post('/user-progress', async (req, res) => {
   }
 });
 
+/**
+ * further changes: check length of Category.find({ lesson }) to cap out progress
+ */
+router.post('/update-user-progress', async (req, res) => {
+  if (await verifyUser(req.headers.authorization)) {
+    try {
+      const { body } = req;
+      const { username, lesson } = body;
+      const user = await User.findOne({ username });
+      const { progress } = user;
+      const newLevel = progress[lesson][1] + 1;
+      let newProgress;
+      if (newLevel > 9) {
+        newProgress = [progress[lesson][0] + 1, 0];
+      } else {
+        newProgress = [progress[lesson][0], newLevel];
+      }
+      console.log(newProgress);
+      await User.updateOne(
+        { username },
+        { $set: { [`progress.${lesson}`]: newProgress }}
+      );
+      res.status(201).json({ message: 'Progress updated' })
+    } catch (err) {
+      res.status(400).json({error: err})
+    }
+  }
+});
+
 router.post('/add-achievement', async (req, res) => {
   if (await verifyUser(req.headers.authorization)) {
     try {
@@ -175,6 +215,5 @@ router.post('/add-achievement', async (req, res) => {
     }
   }
 })
-
 
 module.exports = router;
