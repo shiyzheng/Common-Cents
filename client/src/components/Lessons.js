@@ -5,7 +5,7 @@ import '../styles/Lessons.css';
 
 const Lessons = (props) => {
   const {
-    login, username, setUsername, setLogin
+    login, username, setUsername, setLogin, logout
     } = props;
   const navigate = useNavigate();
   const { topic, subcategory } = useParams();
@@ -24,19 +24,13 @@ const Lessons = (props) => {
     'Lesson 2',
     'Lesson 3',
     'Lesson 4'];
-
-  const levelsList = [
-    'Level 1', 
-    'Level 2', 
-    'Level 3',
-    'Level 4'];
-
+    
     const renderLessonLinks = (level) => {
       const formattedLevel = level.toLowerCase().replace(/\s+/g, '-');
       return lessonList.map((lesson, index) => (
         <li key={index}>
           {/* <button className="button" onClick={() => navigate(`/lessons/${topic}/${formattedLevel}/${index + 1}`)}> */}
-          <button className="button" onClick={() => navigate(`/mcq`)}>
+          <button className="button" onClick={() => navigate(`/mcq?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}>
             {`${lesson}`}
           </button>
           <h6>{" "}</h6>
@@ -49,7 +43,7 @@ const Lessons = (props) => {
       return lessonList2.map((lesson, index) => (
         <li key={index}>
           {/* <button className="button" onClick={() => navigate(`/lessons/${topic}/${formattedLevel}/${index + 1}`)}> */}
-          <button className="button" onClick={() => navigate(`/mcq`)}>
+          <button className="button" onClick={() => navigate(`/mcq?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}>
             {`${lesson}`}
           </button>
           <h6>{" "}</h6>
@@ -58,7 +52,7 @@ const Lessons = (props) => {
     };
 
   return (
-    <><Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username} /><div>
+    <><Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout}/><div>
           <div className="lessons-container">
       <h2>{formattedTopic}, {formattedSubcategory}</h2>
       <div className="lessons-wrapper">

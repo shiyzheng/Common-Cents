@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import '../styles/MCQ.css'; 
+import { useLocation } from 'react-router-dom';
 
 function MultipleChoiceQuestion(props) {
   const {
-    login, username, setUsername, setLogin
+    login, username, setUsername, setLogin, logout
   } = props;
 
   const [selectedOption, setSelectedOption] = useState(null);
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const lesson = parseInt(params.get('lesson'));
+  const level = parseInt(params.get('level'));
 
+  console.log(lesson);
+  console.log(level);
   const options = [
     { id: 1, text: "Option A" },
     { id: 2, text: "Option B" },
@@ -27,7 +34,7 @@ function MultipleChoiceQuestion(props) {
 
   return (
     <>
-      <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username} />
+      <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout} />
       <div className="container">
         <h2>Multiple Choice Question</h2>
         <div className="question">
