@@ -46,6 +46,7 @@ function MultipleChoiceQuestion(props) {
   console.log(questions);
   console.log(options);
   console.log(question);
+  console.log(selectedOptions);
   // const options = [
   //   { id: 1, text: "Option A" },
   //   { id: 2, text: "Option B" },
@@ -63,17 +64,19 @@ function MultipleChoiceQuestion(props) {
   };
 
   const handleNextQuestion = () => {
-    // Move to the next question if there is one
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(prevIndex => prevIndex + 1);
     }
   };
 
   const handleSubmit = () => {
-    // Add logic to handle submission, check the selected option, etc.
     console.log(`Selected option: ${selectedOption}`);
   };
-
+  const handlePreviousQuestion = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(prevIndex => prevIndex - 1);
+    }
+  };
   return (
     <>
       <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout} />
@@ -93,6 +96,9 @@ function MultipleChoiceQuestion(props) {
             </li>
           ))}
         </ul>
+        {currentQuestionIndex > 0 && (
+          <button onClick={handlePreviousQuestion}>Back</button>
+        )}
         {currentQuestionIndex < questions.length - 1 ? (
           <button onClick={handleNextQuestion}>Next</button>
         ) : (
