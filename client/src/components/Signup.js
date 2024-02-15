@@ -10,7 +10,7 @@ import { signupUser, loginUser } from '../api/users';
 function Signup(props) {
   // signup page
   const {
-    setLogin, setUsername, setPassword, username, password, login,
+    setLogin, setUsername, setPassword, username, password, login, logout
   } = props;
 
   const navigate = useNavigate();
