@@ -4,6 +4,7 @@ import '../styles/MCQ.css';
 import { useLocation } from 'react-router-dom';
 import { getUserProgress } from '../api/users';
 import { getQuestionsByLessonAndProgress } from '../api/category';
+import { set } from 'mongoose';
 
 
 function MultipleChoiceQuestion(props) {
@@ -75,6 +76,11 @@ function MultipleChoiceQuestion(props) {
   const handlePreviousQuestion = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(prevIndex => prevIndex - 1);
+    }
+    if (currentQuestionIndex < selectedOptions.length && selectedOptions[currentQuestionIndex] != null) {
+      setSelectedOption(selectedOptions[currentQuestionIndex]);
+    } else {
+      setSelectedOption("");
     }
   };
   return (
