@@ -1,7 +1,7 @@
 import Navbar from '../components/Navbar';
 import '../styles/Leaderboards.css';
 import { useState, useEffect } from 'react';
-import { getAllUsersPoints } from '../api/users';
+import { getUsersPointsTotal } from '../api/users';
 
 function Leaderboards(props) {
   const {
@@ -37,7 +37,8 @@ function Leaderboards(props) {
     const [users, setUsers] = useState([]);
     useEffect(() => {
       async function getLeaderboardsWrapper() {
-        const response = await getAllUsersPoints();
+        const response = await getUsersPointsTotal();
+        console.log(response);
         setUsers(response);
       }
       getLeaderboardsWrapper();
@@ -89,8 +90,8 @@ function Leaderboards(props) {
           {usersOnCurrentPage.map((user, index) => (
             <li key={index} className="leaderboards-box">
               {/* fix for total points */}
-              {/* {user.username} - {user.points} points */}
-              {user.username} - {user.points.Spending} points
+              {user.username} - {user.points} points
+              {/* {user.username} - {user.points.Spending} points */}
             </li>
           ))}
           </ul>
