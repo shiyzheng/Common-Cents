@@ -312,19 +312,20 @@ router.put('/add', async (req, res) => {
 //   }
 // });
 
-router.post('/lesson-level', async (req, res) => {
+router.post('/lesson-progress', async (req, res) => {
   try {
     const { body } = req;
-    const { lesson, level } = body;
-    const id = level[0];
-    const progress = level[1];
-    const category = Category.findOne({
+    const { lesson, progress } = body;
+    const { unit, level } = progress;
+    const category = await Category.findOne({
       Lesson: lesson,
-      id,
+      id: unit,
     });
-    switch (progress) {
+    switch (level) {
       case 0:
-        res.json({questions: category.Beginner.slice(0, questions.length / 3)});
+        // console.log({ questions: category.Beginner.slice(0, 10) })
+        // console.log({questions: category.Beginner.slice(0, Math.floor(questions.length / 3))})
+        res.json({questions: category.Beginner.slice(0, Math.floor(category.Beginner.length / 3))});
         break;
       case 1:
         res.json({questions: category.Beginner.slice(questions.length / 3, -questions.length / 3)});

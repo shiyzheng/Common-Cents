@@ -13,6 +13,7 @@ const authenticateUser = (userid, password) => {
 
     try{
         const token = jwt.sign({username: userid, password: password}, process.env.KEY, {expiresIn: '12h'});
+        console.log('token', token);
         return token;
     } catch(err) {
         console.log('error', err.message);

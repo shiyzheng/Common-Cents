@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'http://localhost:3000';
+const baseURL = 'http://localhost:3000/account';
 
 const setAuthorizationHeaders = () => {
     axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('app-token');
@@ -8,7 +8,7 @@ const setAuthorizationHeaders = () => {
 
 export const loginUser = async (userObject) => {
     try {
-        const response = await axios.post(`${baseURL}/account/login`, {
+        const response = await axios.post(`${baseURL}/login`, {
             username: userObject.username,
             password: userObject.password,
         })
@@ -23,7 +23,7 @@ export const signupUser = async (userObject) => {
         if (userObject.username === '' || userObject.password === '') {
             throw new Error('invalid username or password');
         }
-        const response = await axios.post(`${baseURL}/account/signup`, {
+        const response = await axios.post(`${baseURL}/signup`, {
         username: userObject.username,
         password: userObject.password,
       });
@@ -58,7 +58,7 @@ export const signupUser = async (userObject) => {
 export const getProfileById = async (username) => {
     try {
         console.log(username);
-        const response = await axios.get(`${baseURL}/account/profile`, {
+        const response = await axios.get(`${baseURL}/profile`, {
             params: { username },
         });
         return response.data;
@@ -69,7 +69,7 @@ export const getProfileById = async (username) => {
 
 export const getAchievementsById = async (username) => {
     try {
-        const response = await axios.get(`${baseURL}/account/achievements`, {
+        const response = await axios.get(`${baseURL}/achievements`, {
             params: { username },
         });
         return response.data;
@@ -81,7 +81,7 @@ export const getAchievementsById = async (username) => {
 export const getCurrentUserAchievements = async () => {
     try {
         setAuthorizationHeaders();
-        const response = await axios.post(`${baseURL}/account/my-achievements`, {
+        const response = await axios.post(`${baseURL}/my-achievements`, {
             username: sessionStorage.getItem('username'),
         });
         return response.data;
@@ -92,7 +92,7 @@ export const getCurrentUserAchievements = async () => {
 
 export const getAllAchievements = async () => {
     try {
-        const response = await axios.get(`${baseURL}/account/allAchievements`);
+        const response = await axios.get(`${baseURL}/allAchievements`);
         return response.data;
     } catch (err) {
         return err;
@@ -103,7 +103,7 @@ export const getAllAchievements = async () => {
 
 export const getLeaderboards = async () => {
     try {
-        const response = await axios.get(`${baseURL}/account/leaderboards`);
+        const response = await axios.get(`${baseURL}/leaderboards`);
         return response.data;
     } catch (err) {
         return err;
@@ -112,7 +112,7 @@ export const getLeaderboards = async () => {
 
 export const getAllUsers = async () => {
     try {
-        const response = await axios.get(`${baseURL}/account/users`);
+        const response = await axios.get(`${baseURL}/users`);
         return response.data;
     } catch (err) {
         return err;
@@ -121,7 +121,7 @@ export const getAllUsers = async () => {
 
 export const getAllUsersPoints = async () => {
     try {
-        const response = await axios.get(`${baseURL}/account/users`);
+        const response = await axios.get(`${baseURL}/users`);
         const points = [];
         const { data } = response;
         const { users } = data;
@@ -141,8 +141,8 @@ export const getUserProgress = async (lessonObject) => {
     try {
         setAuthorizationHeaders();
         const { lesson } = lessonObject;
-        const username = sessionStorage.getItem('app-token');
-        const response = await axios.post(`${baseURL}/account/user-progress`, {
+        const username = sessionStorage.getItem('username');
+        const response = await axios.post(`${baseURL}/user-progress`, {
             username,
             lesson, 
         });
@@ -152,10 +152,16 @@ export const getUserProgress = async (lessonObject) => {
     }
 };
 
-// export const putAchievementById = async (id) => {
-//     try {
-//         setAuthorizationHeaders();
-//         const username = sessionStorage.getItem('app-token');
-//         const response = await axios.post(`${baseURLL}/account/`)
-//     }
-// }
+export const addAchievementById = async (achievement) => {
+    try {
+        setAuthorizationHeaders();
+        const username = sessionStorage.getItem('username');
+        const response = await axios.post(`${baseURL}/add-achievement`, {
+            username,
+            achievement,
+        });
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+}

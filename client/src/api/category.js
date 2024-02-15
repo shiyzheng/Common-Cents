@@ -86,12 +86,12 @@ export const deleteCategoryPath = async (category) => {
 //     }
 // }
 
-export const getQuestionsByLessonAndLevel = async (lessonObject) => {
+export const getQuestionsByLessonAndProgress = async (lessonObject) => {
     try {
-        const { lesson, level } = lessonObject;
-        const response = await axios.post(`${baseURL}${PATH_PREFIX}lesson-level`, {
+        const { lesson, progress } = lessonObject;
+        const response = await axios.post(`${baseURL}${PATH_PREFIX}lesson-progress`, {
             lesson,
-            level,
+            progress,
         });
         return response.data;
     } catch (err) {
