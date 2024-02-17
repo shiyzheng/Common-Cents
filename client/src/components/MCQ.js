@@ -40,9 +40,23 @@ function MultipleChoiceQuestion(props) {
   }, []);
 
   useEffect(() => {
+    setSelectedOptions(prevOptions => {
+      const updatedOptions = [...prevOptions];
+      updatedOptions[questions.length] = null;
+      return updatedOptions;
+    });
     if (currentQuestionIndex < questions.length && currentQuestionIndex >= 0) {
       setQuestion(questions[currentQuestionIndex].Question);
       setOptions(questions[currentQuestionIndex].Answers);
+      var i, x = document.getElementsByClassName("step");
+      for (i = 0; i < x.length; i++) {
+        x[i].className = x[i].className.replace(" active", "");
+        x[i].className = x[i].className.replace(" finish", "");
+        if (selectedOptions[i] != null && selectedOptions[i] != undefined) {
+          x[i].className += " finish";
+        }
+      }
+      x[currentQuestionIndex].className += " active";
     }
   }, [currentQuestionIndex, questions]);
   
@@ -116,6 +130,15 @@ function MultipleChoiceQuestion(props) {
       <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout} />
       <div className="container">
         <h2>Lesson {lesson} Level {level} </h2>
+        {currentQuestionIndex >= 0 && currentQuestionIndex < questions.length ? (
+        <div style={{ textAlign: "center", marginTop: "40px" }}>
+          <span class="step active"></span>
+          <span class="step"></span>
+          <span class="step"></span>
+          <span class="step"></span>
+        </div>
+        ) : (<></>)}
+        
         {isReview ? (<>
         
         {currentQuestionIndex < 0 ? (
