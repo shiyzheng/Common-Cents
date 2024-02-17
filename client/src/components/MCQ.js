@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import '../styles/MCQ.css'; 
-import { useLocation } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { getUserProgress } from '../api/users';
 import { getQuestionsByLessonAndProgress } from '../api/category';
 import { set } from 'mongoose';
@@ -23,11 +23,13 @@ function MultipleChoiceQuestion(props) {
   const params = new URLSearchParams(location.search);
   const lesson = parseInt(params.get('lesson'));
   const level = parseInt(params.get('level'));
+
+  const { topic } = useParams();
   useEffect(() => {
     const fetchQuestionsFromAPI = async () => {
       try {
-        const output = await getUserProgress({lesson:"Spending"});
-        const response = await getQuestionsByLessonAndProgress({lesson:"Spending", progress:output});
+        const output = await getUserProgress({lesson:topic});
+        const response = await getQuestionsByLessonAndProgress({lesson:topic, progress:output});
         setQuestions(response.questions);
       } catch (error) {
         console.error('Error fetching questions:', error);
