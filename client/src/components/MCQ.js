@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import '../styles/MCQ.css'; 
 import { useParams, useLocation } from 'react-router-dom';
-import { getUserProgress } from '../api/users';
+import { getUserProgress, updateUserProgress } from '../api/users';
 import { getQuestionsByLessonAndProgress } from '../api/category';
 import { set } from 'mongoose';
 
@@ -89,6 +89,17 @@ function MultipleChoiceQuestion(props) {
       updatedOptions[currentQuestionIndex + 1] = null;
       return updatedOptions;
     });
+    if (correct / questions.length >= 0.6) {
+      const updateUser = async () => {
+        try {
+          const response = await updateUserProgress({lesson:topic});
+          console.log(response);
+        } catch (err) {
+          console.log(err);
+        }  
+      }
+      updateUser();
+    }
   };
   const handlePreviousQuestion = () => {
     if (currentQuestionIndex > 0) {
