@@ -214,6 +214,22 @@ router.post('/add-achievement', async (req, res) => {
       res.status(400).json({error: err});
     }
   }
-})
+});
+
+router.post('/add-points', async (req, res) => {
+  if (await verifyUser(req.headers.authorization)) {
+    try {
+      const { body } = req;
+      const { username, lesson } = body;
+      await User.updateOne(
+        { username },
+        { $inc: { [`points.${lesson}`]: 100 } } // OPEN TO CHANGE
+      );
+      res.status(200).json({ message: 'Points Updated' });
+    } catch (err) {
+      res.status(400).json({ error: err });
+    }
+  }
+});
 
 module.exports = router;

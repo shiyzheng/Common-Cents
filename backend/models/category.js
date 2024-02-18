@@ -13,7 +13,8 @@ const categorySchema = new Schema({
   Name: { type: String, required: true },
   Beginner: [questionSchema],
   Waystage: [questionSchema],
-  Advanced: [questionSchema]
+  Advanced: [questionSchema],
+  study_guide: { type: String },
   // questions: [questionSchema],
 });
 
