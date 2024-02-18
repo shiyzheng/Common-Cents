@@ -132,10 +132,9 @@ function MultipleChoiceQuestion(props) {
         <h2>Lesson {lesson} Level {level} </h2>
         {currentQuestionIndex >= 0 && currentQuestionIndex < questions.length ? (
         <div style={{ textAlign: "center", marginTop: "40px" }}>
-          <span class="step active"></span>
-          <span class="step"></span>
-          <span class="step"></span>
-          <span class="step"></span>
+          {Array.from({ length: questions.length }, (_, index) => (
+            <span key={index} className="step"></span>
+          ))}
         </div>
         ) : (<></>)}
         
