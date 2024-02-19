@@ -88,6 +88,7 @@ function MultipleChoiceQuestion(props) {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(prevIndex => prevIndex + 1);
     }
+    setSelectedOption("");
   };
 
   const handleSubmit = () => {
