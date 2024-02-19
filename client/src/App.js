@@ -15,6 +15,7 @@ import CategoryPage from './components/CategoryPage';
 import MultipleChoiceQuestion from './components/MCQ';
 import AdminConsole from './pages/AdminConsole';
 import Lessons from './components/Lessons';
+import Study from './components/Study';
 import { getUserProgress } from './api/users';
 import { getAllUnitByLesson } from './api/category';
 
@@ -41,6 +42,7 @@ function App() {
     { path: '/leaderboards', element: <Leaderboards setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}  /> },
     { path: '/MCQ/:topic/*', element: <MultipleChoiceQuestion setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}   /> },
     { path: '/lessons/:topic/:subcategory', element: <Lessons setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}  /> },
+    { path: '/Study/:topic', element: <Study setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}  /> },
     // { path: '/Home', element: <Categories login={login} categories={categories} setCategories={setCategories} username={username} /> },
     { path: '/Category/:name', element: <CategoryPage login={login} username={username} logout={logout}  /> },
   ]);
@@ -122,9 +124,14 @@ function Home(props) {
         ))}
       </div> */}
       <div className="lessons-wrapper">
+      
       {topics.map((topic, index) => (
           <div key={index} className="lessons-container">
             <h3>{topic}</h3>
+            <button onClick={() => navigate(`/study/${topic}`)}>
+              Study Guide
+            </button>
+            <h6>{" "}</h6>
             <ul>
               {subcat[index] && subcat[index].map((subcategory, subIndex) => (
                 <li key={subIndex}>
