@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import '../styles/MCQ.css'; 
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { getUserProgress, updateUserProgress } from '../api/users';
 import { getQuestionsByLessonAndProgress } from '../api/category';
 import { set } from 'mongoose';
@@ -24,7 +24,9 @@ function MultipleChoiceQuestion(props) {
   const lesson = parseInt(params.get('lesson'));
   const level = parseInt(params.get('level'));
 
+  const navigate = useNavigate();
   const { topic } = useParams();
+  
   useEffect(() => {
     const fetchQuestionsFromAPI = async () => {
       try {
@@ -91,10 +93,16 @@ function MultipleChoiceQuestion(props) {
   const handleSubmit = () => {
     setIsReview(true);
     let correct  = 0;
-    selectedOptions.forEach((selectedOption, index) => {
-      if (selectedOption === questions[index].Correct) {
-        correct++;
+    selectedOptions.forEach((o, index) => {
+      if (index < questions.length) {
+        console.log("answer");
+        console.log(o);
+        console.log(questions)
+        if (o === questions[index].Correct) {
+          correct++;
+        }
       }
+      
     });
     setCurrentQuestionIndex(-1);
     setCorrectCount(correct);
@@ -177,7 +185,7 @@ function MultipleChoiceQuestion(props) {
             {currentQuestionIndex < questions.length - 1 ? (
               <button onClick={handleNextQuestion}>Next</button>
             ) : (
-              <button>Return</button>
+              <button onClick={() => navigate(`/`)}>Return</button>
             )} </>
             )}
         </>) 
