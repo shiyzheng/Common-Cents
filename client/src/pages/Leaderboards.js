@@ -38,7 +38,7 @@ function Leaderboards(props) {
     useEffect(() => {
       async function getLeaderboardsWrapper() {
         const response = await getUsersPointsTotal();
-        console.log(response);
+        // console.log(response);
         setUsers(response);
       }
       getLeaderboardsWrapper();
