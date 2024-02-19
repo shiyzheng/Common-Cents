@@ -205,3 +205,19 @@ export const getUsersPointsTotal = async () => {
         return err;
     }
 };
+
+export const addPointsToUser = async (lessonObject) => {
+    try {
+        setAuthorizationHeaders();
+        const { lesson, points } = lessonObject;
+        const username = sessionStorage.getItem('username');
+        const response = await axios.post(`${baseURL}/add-points`, {
+            username,
+            lesson,
+            points
+        });
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+}

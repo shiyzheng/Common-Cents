@@ -78,10 +78,6 @@ router.post('/login', async (req, res) => {
 //   })
 // });
 
-router.get('/isLogged', (req, res) => {
-  res.json(req.session.username);
-});
-
 router.get('/profile', async (req, res) => {
     const { username } = req.query;
     try {
@@ -220,10 +216,10 @@ router.post('/add-points', async (req, res) => {
   if (await verifyUser(req.headers.authorization)) {
     try {
       const { body } = req;
-      const { username, lesson } = body;
+      const { username, lesson, points } = body;
       await User.updateOne(
         { username },
-        { $inc: { [`points.${lesson}`]: 100 } } // OPEN TO CHANGE
+        { $inc: { [`points.${lesson}`]: points } } // OPEN TO CHANGE
       );
       res.status(200).json({ message: 'Points Updated' });
     } catch (err) {
