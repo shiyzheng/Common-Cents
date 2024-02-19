@@ -339,7 +339,6 @@ router.post('/lesson-progress', async (req, res) => {
   }
 });
 
-
 module.exports = {
   router,
 

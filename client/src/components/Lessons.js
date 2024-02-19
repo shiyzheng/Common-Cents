@@ -30,7 +30,7 @@ const Lessons = (props) => {
       return lessonList.map((lesson, index) => (
         <li key={index}>
           {/* <button className="button" onClick={() => navigate(`/lessons/${topic}/${formattedLevel}/${index + 1}`)}> */}
-          <button className="button" onClick={() => navigate(`/mcq?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}>
+          <button className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}>
             {`${lesson}`}
           </button>
           <h6>{" "}</h6>
@@ -43,7 +43,7 @@ const Lessons = (props) => {
       return lessonList2.map((lesson, index) => (
         <li key={index}>
           {/* <button className="button" onClick={() => navigate(`/lessons/${topic}/${formattedLevel}/${index + 1}`)}> */}
-          <button className="button" onClick={() => navigate(`/mcq?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}>
+          <button className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}>
             {`${lesson}`}
           </button>
           <h6>{" "}</h6>

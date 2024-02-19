@@ -15,6 +15,7 @@ import CategoryPage from './components/CategoryPage';
 import MultipleChoiceQuestion from './components/MCQ';
 import AdminConsole from './pages/AdminConsole';
 import Lessons from './components/Lessons';
+import Study from './components/Study';
 import { getUserProgress } from './api/users';
 import { getAllUnitByLesson } from './api/category';
 
@@ -23,7 +24,7 @@ function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [categories, setCategories] = useState([]);
-
+  
   const logout = async () => {
     sessionStorage.removeItem('app-token');
     sessionStorage.removeItem('username');
@@ -39,8 +40,9 @@ function App() {
 
     { path: '/achievements', element: <Achievements setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}   /> },
     { path: '/leaderboards', element: <Leaderboards setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}  /> },
-    { path: '/MCQ/*', element: <MultipleChoiceQuestion setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}   /> },
+    { path: '/MCQ/:topic/*', element: <MultipleChoiceQuestion setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}   /> },
     { path: '/lessons/:topic/:subcategory', element: <Lessons setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}  /> },
+    { path: '/Study/:topic', element: <Study setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}  /> },
     // { path: '/Home', element: <Categories login={login} categories={categories} setCategories={setCategories} username={username} /> },
     { path: '/Category/:name', element: <CategoryPage login={login} username={username} logout={logout}  /> },
   ]);
@@ -51,7 +53,7 @@ function Home(props) {
   // console.log('homepage');
   const { setLogin, setUsername, login, username, logout, categories, setCategories } = props;
   const navigate = useNavigate();
-
+  const [levels, setLevels] = useState([0, 0]);
   const topics = [
     "Earning Income",
     "Saving",
@@ -60,7 +62,6 @@ function Home(props) {
     "Managing Credit",
     "Managing Risk",
   ];
-
   // const subcategories = {
   //   "Earning Income": ["A", "B", "C"],
   //   "Saving": ["D", "E", "F"],
@@ -69,7 +70,32 @@ function Home(props) {
   //   "Managing Credit": ["M", "N", "O"],
   //   "Managing Risk": ["P", "Q", "R"],
   // };
-
+  useEffect(() => {
+    const getLevels = async (topic) => {
+      try {
+        console.log(topic);
+        const output = await getUserProgress({lesson:topic});
+        // console.log(output["unit"]);
+        // console.log(subIndex);
+        // console.log(typeof(output["unit"]));
+        // console.log(typeof(subIndex));
+        // console.log(subIndex <= output["unit"]);]
+        console.log(output);
+        setLevels(prevLevels => {
+          const updatedLevels = [...prevLevels];
+          updatedLevels[prevLevels.length] = output["unit"];
+          return updatedLevels;
+        });
+      } catch (error) {
+        console.error('Error fetching questions:', error);
+      }
+    }
+    for (let i = 2; i < 3; i++) {
+      getLevels(topics[i]);
+    }
+    console.log(levels);
+    
+  }, [])
   const navigateToTopic = (topic, subcategory) => {
     const formattedTopic = topic.toLowerCase().replace(/\s+/g, '-');
     const formattedSubcategory = subcategory.toLowerCase().replace(/\s+/g, '-');
@@ -90,6 +116,8 @@ function Home(props) {
       getSubcatWrapper();
     }, topics);
 
+  
+  
   return (
     <div>
         <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout = {logout}/>
@@ -122,17 +150,30 @@ function Home(props) {
         ))}
       </div> */}
       <div className="lessons-wrapper">
+      
       {topics.map((topic, index) => (
           <div key={index} className="lessons-container">
             <h3>{topic}</h3>
+            <button onClick={() => navigate(`/study/${topic}`)}>
+              Study Guide
+            </button>
+            <h6>{" "}</h6>
             <ul>
               {subcat[index] && subcat[index].map((subcategory, subIndex) => (
-                <li key={subIndex}>
+                subIndex <= levels[2] ? 
+                (<li key={subIndex}>
                   <button onClick={() => navigateToTopic(topic, subcategory)}>
                     {subcategory}
                   </button>
                   <h6>{" "}</h6>
-                </li>
+                </li>)
+                :
+                (<li key={subIndex}>
+                  <button onClick={() => navigateToTopic(topic, subcategory)} style={{ pointerEvents: 'none', opacity: 0.5 }}>
+                    {subcategory}
+                  </button>
+                  <h6>{" "}</h6>
+                </li>)
               ))}
             </ul>
           </div>
