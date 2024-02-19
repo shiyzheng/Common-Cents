@@ -73,14 +73,14 @@ function Home(props) {
   useEffect(() => {
     const getLevels = async (topic) => {
       try {
-        console.log(topic);
+        // console.log(topic);
         const output = await getUserProgress({lesson:topic});
         // console.log(output["unit"]);
         // console.log(subIndex);
         // console.log(typeof(output["unit"]));
         // console.log(typeof(subIndex));
         // console.log(subIndex <= output["unit"]);]
-        console.log(output);
+        // console.log(output);
         setLevels(prevLevels => {
           const updatedLevels = [...prevLevels];
           updatedLevels[prevLevels.length] = output["unit"];
@@ -93,7 +93,7 @@ function Home(props) {
     for (let i = 2; i < 3; i++) {
       getLevels(topics[i]);
     }
-    console.log(levels);
+    // console.log(levels);
     
   }, [])
   const navigateToTopic = (topic, subcategory) => {

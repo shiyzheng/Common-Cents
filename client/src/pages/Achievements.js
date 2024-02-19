@@ -26,7 +26,7 @@ function Achievements(props) {
     useEffect(() => {
       async function getAchievementsWrapper() {
         const response = await getCurrentUserAchievements();
-        console.log(response);
+        // console.log(response);
         // if response.achievements is list of object
         const ach = response.achievements.map(a => a.name);
         // setCompletedAchievements(ach);
