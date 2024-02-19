@@ -5,7 +5,7 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { getUserProgress, updateUserProgress } from '../api/users';
 import { getQuestionsByLessonAndProgress } from '../api/category';
 import { set } from 'mongoose';
-
+import _ from 'lodash';
 
 function MultipleChoiceQuestion(props) {
   const {
@@ -32,6 +32,13 @@ function MultipleChoiceQuestion(props) {
       try {
         const output = await getUserProgress({lesson:topic});
         const response = await getQuestionsByLessonAndProgress({lesson:topic, progress:output});
+        // console.log(response.questions);
+        // console.log("shuffle");
+        response.questions.forEach(element => {
+          // console.log(_.shuffle(element.Answers));
+          element.Answers = _.shuffle(element.Answers);
+          // console.log(element.Answers);
+        });
         setQuestions(response.questions);
       } catch (error) {
         console.error('Error fetching questions:', error);
