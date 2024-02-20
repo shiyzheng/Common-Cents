@@ -26,6 +26,12 @@ function MultipleChoiceQuestion(props) {
 
   const navigate = useNavigate();
   const { topic } = useParams();
+
+  useEffect(() => {
+    if (sessionStorage.getItem('app-token') === null) {
+      navigate('/');
+    }
+  }, []);
   
   useEffect(() => {
     const fetchQuestionsFromAPI = async () => {

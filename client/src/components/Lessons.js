@@ -26,6 +26,12 @@ const Lessons = (props) => {
     'Lesson 4'];
 
     useEffect(() => {
+      if (sessionStorage.getItem('app-token') === null) {
+        navigate('/');
+      }
+    }, []);
+
+    useEffect(() => {
       const getLevels = async () => {
         try {
           const output = await getUserProgress({lesson:formattedTopic});

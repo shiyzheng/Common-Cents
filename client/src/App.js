@@ -124,7 +124,7 @@ function Home(props) {
       {!login && (
         <div>
           {' '}
-          Temporary Home Page
+          <h2>Welcome to Common Cents!</h2>
         </div>
       )}
       {login && (
