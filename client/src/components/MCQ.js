@@ -54,6 +54,11 @@ function MultipleChoiceQuestion(props) {
       updatedOptions[questions.length] = null;
       return updatedOptions;
     });
+    if (currentQuestionIndex < selectedOptions.length && selectedOptions[currentQuestionIndex] != null) {
+      setSelectedOption(selectedOptions[currentQuestionIndex]);
+    } else {
+      setSelectedOption("");
+    }
     if (currentQuestionIndex < questions.length && currentQuestionIndex >= 0) {
       setQuestion(questions[currentQuestionIndex].Question);
       setOptions(questions[currentQuestionIndex].Answers);
@@ -69,12 +74,12 @@ function MultipleChoiceQuestion(props) {
     }
   }, [currentQuestionIndex, questions]);
   
-  console.log(lesson);
-  console.log(level);
-  console.log(questions);
-  console.log(options);
-  console.log(question);
-  console.log(selectedOptions);
+  // console.log(lesson);
+  // console.log(level);
+  // console.log(questions);
+  // console.log(options);
+  // console.log(question);
+  // console.log(selectedOptions);
   // const options = [
   //   { id: 1, text: "Option A" },
   //   { id: 2, text: "Option B" },
@@ -95,9 +100,10 @@ function MultipleChoiceQuestion(props) {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(prevIndex => prevIndex + 1);
     }
-    setSelectedOption("");
+    // setSelectedOption("");
   };
-
+  
+  
   const handleSubmit = () => {
     setIsReview(true);
     let correct  = 0;
@@ -135,11 +141,12 @@ function MultipleChoiceQuestion(props) {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(prevIndex => prevIndex - 1);
     }
-    if (currentQuestionIndex < selectedOptions.length && selectedOptions[currentQuestionIndex] != null) {
-      setSelectedOption(selectedOptions[currentQuestionIndex]);
-    } else {
-      setSelectedOption("");
-    }
+    // console.log(selectedOptions);
+    // if (currentQuestionIndex - 1 < selectedOptions.length && selectedOptions[currentQuestionIndex - 1] != null) {
+    //   setSelectedOption(selectedOptions[currentQuestionIndex - 1]);
+    // } else {
+    //   setSelectedOption("");
+    // }
   };
   return (
     <>
