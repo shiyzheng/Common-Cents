@@ -73,9 +73,9 @@ function Home(props) {
   useEffect(() => {
     const getLevels = async (topic) => {
       try {
-        // console.log(topic);
+        console.log(typeof(topic));
         const output = await getUserProgress({lesson:topic});
-        // console.log(output["unit"]);
+        // console.log(output);
         // console.log(subIndex);
         // console.log(typeof(output["unit"]));
         // console.log(typeof(subIndex));
