@@ -20,11 +20,16 @@ function Profile(props) {
         async function getProfileWrapper() {
             const response = await getProfileById(id);
             const nums = []
+            console.log(response);
+            var total = 0;
             Object.entries(response).forEach((key, value) => {
-                console.log(key);
-                // console.log(value);
-                nums.push(`${key[0]}: (${key[1]} points)`);
+                if (key[0] != "_id") {
+                    console.log(key);
+                    nums.push(`${key[0]}: (${key[1]} points)`);
+                    total += key[1];
+                }
             })
+            nums.unshift(`Total Points: (${total} points)`);
             setProfile(nums);
         }
         getProfileWrapper();
@@ -47,58 +52,17 @@ function Profile(props) {
     return (
         <div>
             <Navbar login={login} username={sessionStorage.getItem('username')} logout = {logout} />
+            {login ? <div>
             <h2 className="float-left">User { id }</h2>
-            {/* {login && ( */}
-                <div>
-                    <button
-                        className="btn btn-primary float-right"
-                        data-testid="button"
-                        onClick={(e) => {
-
-                        }}
-                        type="submit"
-                        >
-                            Message
-                    </button>
-                    <button
-                        className="btn btn-primary float-right"
-                        data-testid="button"
-                        onClick={(e) => {
-
-                        }}
-                        type="submit"
-                        >
-                            Add Friend
-                    </button>
-                </div>
-            {/* )} */}
             <br />
-            <br />
-            <div className="card" style={{width: 200}}>
-                <ul className="list-group list-group-flush">
-                    <li className="list-group-item">Level: 52</li>
-                    <li className="list-group-item">Longest streak: 14d</li>
-                </ul>
-            </div>
             <br />
             <div className="card" style={{width: 500}}>
                 <ul className="list-group list-group-flush">
-                    {/* <li className="list-group-item">Investing: Waystage (1000 points)</li>
-                    <li className="list-group-item">Saving: Waystage (1500 points)</li>
-                    <li className="list-group-item">Spending: Proficient (5500 points)</li>
-                    <li className="list-group-item">Earning Income: Beginner (0 points)</li>
-                    <li className="list-group-item">Managing Credit: Beginner (950 points)</li>
-                    <li className="list-group-item">Managing Risk: Proficient (7000 points)</li> */}
                     { displayedPoints }
                 </ul>
             </div>
-            <br />
-            <h2>Achievements</h2>
-            <div className="card" style={{width: 500}}>
-                <ul className="list-group list-group-flush">
-                </ul>
-            </div>
-            {/* { profile } */}
+            <br /></div> : <div className="container"> <h2>Login to check your Profile!</h2></div>}
+            
         </div>
     )
 }

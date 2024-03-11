@@ -129,8 +129,6 @@ function Home(props) {
       )}
       {login && (
         <><div>
-          <button className="btn btn-outline-danger float-right" type="button" onClick={() => addAchievementById({ name: "Master a Topic", id: 0 })}>TESTING REMOVE THIS LATER FRONTEND</button>
-          <button className="btn btn-outline-danger float-right" type="button" onClick={() => logout()}>Logout</button>
           <div>
             Welcome
             {' '}
