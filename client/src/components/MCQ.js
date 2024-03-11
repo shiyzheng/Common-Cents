@@ -6,6 +6,7 @@ import { getUserProgress, updateUserProgress } from '../api/users';
 import { getQuestionsByLessonAndProgress } from '../api/category';
 import { set } from 'mongoose';
 import _ from 'lodash';
+import Confetti from 'react-confetti';
 
 function MultipleChoiceQuestion(props) {
   const {
@@ -23,6 +24,21 @@ function MultipleChoiceQuestion(props) {
   const params = new URLSearchParams(location.search);
   const lesson = parseInt(params.get('lesson'));
   const level = parseInt(params.get('level'));
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [windowSize, setWindowSize] = useState({
+    width: undefined,
+    height: undefined
+  });
+
+  function handleWindowSize() {
+    setWindowSize({
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+    console.log(window.innerWidth, window.innerHeight);
+  }
+  // const [newAchievement, setNewAchievement] = useState("");
 
   const navigate = useNavigate();
   const { topic } = useParams();
@@ -135,6 +151,11 @@ function MultipleChoiceQuestion(props) {
       const updateUser = async () => {
         try {
           const response = await updateUserProgress({lesson:topic});
+          handleWindowSize();
+          setShowPopup(true);
+          setTimeout(() => {
+            setShowPopup(false);
+          }, 5000);
           console.log(response);
         } catch (err) {
           console.log(err);
@@ -142,7 +163,21 @@ function MultipleChoiceQuestion(props) {
       }
       updateUser();
     }
+    const updateAchievements = async () => {
+      try {
+        // const response = await checkAchievements();
+        const response = "Achieve 1,000 Points";
+        if (response) {
+          
+        }
+        console.log(response);
+      } catch (err) {
+        console.log(err);
+      }  
+    }
+    updateAchievements();
   };
+  // console.log(showPopup, windowSize.width, windowSize.height, "new123");
   const handlePreviousQuestion = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(prevIndex => prevIndex - 1);
@@ -156,9 +191,12 @@ function MultipleChoiceQuestion(props) {
   };
   return (
     <>
+    <div>
       <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout} />
+    {showPopup && <Confetti width = {windowSize.width} height = {windowSize.height}/>}
+    </div>
       <div className="container">
-        <h2>Lesson {lesson} Level {level} </h2>
+        <h2>Lessons {lesson} Level {level} </h2>
         {currentQuestionIndex >= 0 && currentQuestionIndex < questions.length ? (
         <div style={{ textAlign: "center", marginTop: "40px" }}>
           {Array.from({ length: questions.length }, (_, index) => (
