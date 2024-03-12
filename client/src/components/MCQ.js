@@ -38,7 +38,8 @@ function MultipleChoiceQuestion(props) {
     });
     console.log(window.innerWidth, window.innerHeight);
   }
-  // const [newAchievement, setNewAchievement] = useState("");
+  const [newAchievement, setNewAchievement] = useState([]);
+  const [showAchievement, setShowAchievement] = useState(false);
 
   const navigate = useNavigate();
   const { topic } = useParams();
@@ -166,11 +167,15 @@ function MultipleChoiceQuestion(props) {
     const updateAchievements = async () => {
       try {
         // const response = await checkAchievements();
-        const response = "Achieve 1,000 Points";
+        const response = ["Achieve 1,000 Points", "Achieve 10,000 Points"];
         if (response) {
-          
+          setNewAchievement(response);
+          setShowAchievement(true);
+          setTimeout(() => {
+            setShowAchievement(false);
+          }, 5000);
         }
-        console.log(response);
+        console.log(response, "updated asd");
       } catch (err) {
         console.log(err);
       }  
@@ -194,9 +199,18 @@ function MultipleChoiceQuestion(props) {
     <div>
       <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout} />
     {showPopup && <Confetti width = {windowSize.width} height = {windowSize.height}/>}
+    <div className={`popup-notification ${showAchievement ? 'show' : ''}`}>
+      <div className="star-icon">&#9733;</div>
+        <div className="popup-content">
+        <p>Congratulations, you earned an achievement(s)!</p>
+        <strong>{newAchievement.map((ach, index) => (
+          <p key={index}>{ach}</p>
+        ))}</strong>
+        </div>
+      </div>
     </div>
       <div className="container">
-        <h2>Lessons {lesson} Level {level} </h2>
+        <h2>Lesson {lesson} Level {level} </h2>
         {currentQuestionIndex >= 0 && currentQuestionIndex < questions.length ? (
         <div style={{ textAlign: "center", marginTop: "40px" }}>
           {Array.from({ length: questions.length }, (_, index) => (

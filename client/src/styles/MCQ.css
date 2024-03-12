@@ -78,3 +78,33 @@
   .step.finish {
     background-color: #04AA6D;
   }
+
+  .popup-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .popup-notification.show {
+    opacity: 1;
+  }
+  
+  .star-icon {
+    font-size: 72px;
+    color: #FFCC00;
+    margin-right: 10px;
+    margin-top: -15px;
+  }
+  
+  .popup-content {
+    margin-top: 5px;
+  }
