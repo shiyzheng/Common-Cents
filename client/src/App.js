@@ -19,6 +19,18 @@ import Study from './components/Study';
 import { getUserProgress } from './api/users';
 import { getAllUnitByLesson } from './api/category';
 import {Button} from "@mui/material";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#00ffe1', // Change this to your desired primary color
+    },
+    secondary: {
+      main: '#ad1844', // Change this to your desired secondary color
+    },
+  },
+});
 
 function App() {
   const [login, setLogin] = useState(sessionStorage.getItem('app-token') != null);
@@ -116,8 +128,6 @@ function Home(props) {
       getSubcatWrapper();
     }, topics);
 
-  
-  
   return (
     <div>
         <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout = {logout}/>
@@ -152,10 +162,9 @@ function Home(props) {
       {topics.map((topic, index) => (
           <div key={index} className="lessons-container">
             <h3>{topic}</h3>
-            <button onClick={() => navigate(`/study/${topic}`)}>
+            <Button variant="contained" onClick={() => navigate(`/study/${topic}`)}>
               Study Guide
-            </button>
-            <Button variant="contained">Contained</Button>
+            </Button>
             <h6>{" "}</h6>
             <ul>
               {subcat[index] && subcat[index].map((subcategory, subIndex) => (
