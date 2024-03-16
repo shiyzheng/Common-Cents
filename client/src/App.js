@@ -18,6 +18,7 @@ import Lessons from './components/Lessons';
 import Study from './components/Study';
 import { getUserProgress } from './api/users';
 import { getAllUnitByLesson } from './api/category';
+import {Button} from "@mui/material";
 
 function App() {
   const [login, setLogin] = useState(sessionStorage.getItem('app-token') != null);
@@ -55,12 +56,11 @@ function Home(props) {
   const navigate = useNavigate();
   const [levels, setLevels] = useState([0, 0]);
   const topics = [
+    "Introduction",
     "Earning Income",
     "Saving",
     "Spending",
-    "Investing",
     "Managing Credit",
-    "Managing Risk",
   ];
   // const subcategories = {
   //   "Earning Income": ["A", "B", "C"],
@@ -155,6 +155,7 @@ function Home(props) {
             <button onClick={() => navigate(`/study/${topic}`)}>
               Study Guide
             </button>
+            <Button variant="contained">Contained</Button>
             <h6>{" "}</h6>
             <ul>
               {subcat[index] && subcat[index].map((subcategory, subIndex) => (

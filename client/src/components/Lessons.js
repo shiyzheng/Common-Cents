@@ -4,6 +4,10 @@ import Navbar from '../components/Navbar';
 import '../styles/Lessons.css';
 import { getUserProgress } from '../api/users';
 
+function Button(props) {
+  return null;
+}
+
 const Lessons = (props) => {
   const {
     login, username, setUsername, setLogin, logout
@@ -56,6 +60,7 @@ const Lessons = (props) => {
           <button className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}>
             {`${lesson}`}
           </button>
+          <Button variant="contained">Contained</Button>
           <h6>{" "}</h6>
         </li>
 
