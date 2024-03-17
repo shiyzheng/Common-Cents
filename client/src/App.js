@@ -12,6 +12,7 @@ import Achievements from './pages/achievements';
 import Leaderboards from './pages/Leaderboards';
 import CategoryView from './components/CategoryView';
 import CategoryPage from './components/CategoryPage';
+
 import MultipleChoiceQuestion from './components/MCQ';
 import AdminConsole from './pages/AdminConsole';
 import Lessons from './components/Lessons';
@@ -24,11 +25,30 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#00ffe1', // Change this to your desired primary color
+      main: '#69b3dd',
     },
     secondary: {
-      main: '#ad1844', // Change this to your desired secondary color
+      main: '#65af60',
     },
+    error: {
+      main: '#751307',
+    },
+    warning: {
+      main: '#d89514',
+    },
+    info: {
+      main: '#6e83de',
+    },
+    success: {
+      main: '#086402',
+    },
+    text: {
+      primary: '#000000', // Set default text color to black
+    },
+  },
+  typography: {
+    fontFamily: 'Josefin Sans, sans-serif',
+    secondaryFontFamily: 'Nunito, sans-serif',
   },
 });
 
@@ -37,7 +57,7 @@ function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [categories, setCategories] = useState([]);
-  
+
   const logout = async () => {
     sessionStorage.removeItem('app-token');
     sessionStorage.removeItem('username');
@@ -59,7 +79,7 @@ function App() {
     // { path: '/Home', element: <Categories login={login} categories={categories} setCategories={setCategories} username={username} /> },
     { path: '/Category/:name', element: <CategoryPage login={login} username={username} logout={logout}  /> },
   ]);
-  return element;
+  return <ThemeProvider theme={theme}>{element}</ThemeProvider>;
 }
 
 function Home(props) {

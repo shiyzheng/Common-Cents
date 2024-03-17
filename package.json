@@ -17,6 +17,7 @@
         "jsonwebtoken": "^9.0.2",
         "@mui/material": "^5.15.13",
         "@mui/icons-material": "^5.15.13",
+        "@mui/system": "^5.15.13",
         "mongodb": "^6.3.0",
         "mongoose": "^8.0.1",
         "papaparse": "^5.4.1",

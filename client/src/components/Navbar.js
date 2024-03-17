@@ -16,12 +16,23 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
-import AdbIcon from '@mui/icons-material/Adb';
-import { ThemeProvider } from '@mui/material/styles';
-import theme from '../App';
+import { styled } from '@mui/system';
+import PaidIcon from '@mui/icons-material/Paid';
 
 const pages = ['Learn', 'Leaderboards', 'Achievements'];
 const settings = ['Profile', 'Account'];
+
+const NavbarText = styled(Typography)({
+    fontFamily: 'Josefin Sans, sans-serif',
+    fontWeight: 1000,
+    fontSize: '1.35rem',
+});
+
+const NavbarButton = styled(Button)({
+    fontFamily: 'Nunito, sans-serif',
+    fontWeight: 900,
+    fontSize: '1.1rem',
+});
 
 function ResponsiveAppBar(props) {
     const [anchorElNav, setAnchorElNav] = useState(null);
@@ -76,25 +87,29 @@ function ResponsiveAppBar(props) {
                 >
                     <MenuIcon />
                 </IconButton>
-                <Typography
-                    variant="h6"
-                    component={Link}
-                    to="/"
-                    sx={{ flexGrow: 1, fontFamily: 'monospace', fontWeight: 700, letterSpacing: '.3rem' }}
-                >
-                    COMMON CENTS
-                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, letterSpacing: 'normal', color: 'black'}}>
+                    <PaidIcon sx={{ mr: 2, fontSize: '2.5rem', alignSelf: 'center' }} />
+                    <NavbarText
+                        variant="h6"
+                        component={Link}
+                        to="/"
+                        color="text.primary"
+                        sx={{ alignSelf: 'center', marginTop: '4px'}}
+                    >
+                        COMMON CENTS
+                    </NavbarText>
+                </Box>
 
                 <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                    {pages.map((page, index) => (
-                        <Button
+                    {loggedIn && pages.map((page, index) => (
+                        <NavbarButton
                             key={index}
                             component={Link}
                             to={index === 0 ? '/' : `/${page.toLowerCase()}`}
-                            sx={{ color: 'inherit', mr: 1 }}
+                            sx={{ color: 'inherit', mr: 4 }}
                         >
                             {page}
-                        </Button>
+                        </NavbarButton>
                     ))}
                 </Box>
 
@@ -103,15 +118,21 @@ function ResponsiveAppBar(props) {
                 <Box>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         {loggedIn && (
-                            <Typography variant="body1" sx={{ mr: 2 }}>
-                                Welcome {getUsername()}
+                            <Typography variant="body1" sx={{ mr: 2, fontFamily: 'Nunito, sans-serif', fontWeight: 900 }}>
+                                Welcome {getUsername()}!
                             </Typography>
                         )}
                         <Button
                             component={Link}
                             to={loggedIn ? "/" : "/login"}
                             onClick={handleLoginLogout}
-                            sx={{ color: 'inherit', mr: 2 }}
+                            sx={{
+                                color: loggedIn ? 'error.main' : 'success.main',
+                                mr: 2,
+                                fontFamily: 'Nunito, sans-serif',
+                                fontWeight: 900,
+                                fontSize: '1.15rem'
+                            }}
                         >
                             {loggedIn ? "Logout" : "Login"}
                         </Button>
