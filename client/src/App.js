@@ -79,6 +79,7 @@ function App() {
     // { path: '/Home', element: <Categories login={login} categories={categories} setCategories={setCategories} username={username} /> },
     { path: '/Category/:name', element: <CategoryPage login={login} username={username} logout={logout}  /> },
   ]);
+
   return <ThemeProvider theme={theme}>{element}</ThemeProvider>;
 }
 
@@ -149,49 +150,22 @@ function Home(props) {
     }, topics);
 
   return (
-    <div>
-        <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout = {logout}/>
-      {!login && (
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div>
-          {' '}
-          <h2>Welcome to Common Cents!</h2>
+          <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}/>
         </div>
-      )}
-      {login && (
-        <><div>
-      <div className="lessons-wrapper">
-      
-      {topics.map((topic, index) => (
-          <div key={index} className="lessons-container">
-            <h3>{topic}</h3>
-            <Button variant="contained" onClick={() => navigate(`/study/${topic}`)}>
-              Study Guide
-            </Button>
-            <h6>{" "}</h6>
-            <ul>
-              {subcat[index] && subcat[index].map((subcategory, subIndex) => (
-                subIndex <= levels[2] ? 
-                (<li key={subIndex}>
-                  <button onClick={() => navigateToTopic(topic, subcategory)}>
-                    {subcategory}
-                  </button>
-                  <h6>{" "}</h6>
-                </li>)
-                :
-                (<li key={subIndex}>
-                  <button onClick={() => navigateToTopic(topic, subcategory)} style={{ pointerEvents: 'none', opacity: 0.5 }}>
-                    {subcategory}
-                  </button>
-                  <h6>{" "}</h6>
-                </li>)
-              ))}
-            </ul>
-          </div>
-        ))}
+        {!login && (
+            <div>
+              {' '}
+              <h2>Welcome to Common Cents!</h2>
+            </div>
+        )}
+        {login && (
+            <div style={{ marginTop: '0px' }}>
+              <Lessons topics={topics} subcat={subcat} levels={levels} />
+            </div>
+        )}
       </div>
-    </div></>
-      )}
-    </div>
   );
 }
 export default App;
