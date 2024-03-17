@@ -23,10 +23,15 @@ import theme from '../App';
 const pages = ['Learn', 'Leaderboards', 'Achievements'];
 const settings = ['Profile', 'Account'];
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar(props) {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
-    const [loggedIn, setLoggedIn] = useState(false); // Assuming initially the user is not logged in
+    //const [loggedIn, setLoggedIn] = useState(false); // Assuming initially the user is not logged in
+
+    const {
+        login, setUsername, setLogin, logout
+    } = props;
+    const loggedIn = login;
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -46,7 +51,9 @@ function ResponsiveAppBar() {
 
     const handleLoginLogout = () => {
         // Toggle login state
-        setLoggedIn(!loggedIn);
+        setUsername('');
+        setLogin(false);
+        sessionStorage.removeItem('username');
     };
 
     const getUsername = () => {
@@ -102,7 +109,7 @@ function ResponsiveAppBar() {
                         )}
                         <Button
                             component={Link}
-                            to={loggedIn ? "/logout" : "/login"}
+                            to={loggedIn ? "/" : "/login"}
                             onClick={handleLoginLogout}
                             sx={{ color: 'inherit', mr: 2 }}
                         >
@@ -147,8 +154,7 @@ function ResponsiveAppBar() {
 
 export default ResponsiveAppBar;
 
-/*
-function Navbar(props) {
+/*function Navbar(props) {
   const navigate = useNavigate();
 
 //   const username = useContext(UserContext);
@@ -233,6 +239,6 @@ const loggedIn = login;
         </div>
         </>
   );
-}
+}*/
 
-export default Navbar;*/
+// export default Navbar;
