@@ -13,7 +13,6 @@ function Learn({ topics, subcat, levels }) {
 
     return (
         <div>
-            <h2>I would like to learn about...</h2>
             <div className="lessons-wrapper">
                 {topics.map((topic, index) => (
                     <div key={index} className="lessons-container">

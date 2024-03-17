@@ -159,24 +159,6 @@ function Home(props) {
       )}
       {login && (
         <><div>
-          <div>
-            Welcome
-            {' '}
-            {sessionStorage.getItem('username')}
-          </div>
-      <h2>I would like to learn about...</h2>
-      {/* <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-        {topics.map((topic, index) => (
-          <button
-            key={index}
-            className="btn btn-primary float-right"
-            type="button"
-            onClick={() => navigateToTopic(topic)}
-            style={{ margin: '0 10px' }}>
-            {topic}
-          </button>
-        ))}
-      </div> */}
       <div className="lessons-wrapper">
       
       {topics.map((topic, index) => (
