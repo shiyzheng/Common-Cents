@@ -15,6 +15,7 @@ import CategoryPage from './components/CategoryPage';
 
 import MultipleChoiceQuestion from './components/MCQ';
 import AdminConsole from './pages/AdminConsole';
+import Lesson from './components/Lesson';
 import Lessons from './components/Lessons';
 import Study from './components/Study';
 import { getUserProgress } from './api/users';
@@ -162,7 +163,7 @@ function Home(props) {
         )}
         {login && (
             <div style={{ marginTop: '0px' }}>
-              <Lessons topics={topics} subcat={subcat} levels={levels} />
+              <Lesson topics={topics} subcat={subcat} levels={levels} />
             </div>
         )}
       </div>
