@@ -22,7 +22,7 @@ import { getAllUnitByLesson } from './api/category';
 import {Button} from "@mui/material";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-const theme = createTheme({
+export const theme = createTheme({
   palette: {
     primary: {
       main: '#69b3dd',
