@@ -65,6 +65,7 @@ function ResponsiveAppBar(props) {
         setUsername('');
         setLogin(false);
         sessionStorage.removeItem('username');
+        sessionStorage.removeItem('app-token');
     };
 
     const getUsername = () => {

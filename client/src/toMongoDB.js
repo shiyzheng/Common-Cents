@@ -50,10 +50,14 @@ const toMongo = async (results) => {
             continue
         }
         const obj = {}
-        obj.category = 'Payment Methods' // CHANGE
+        obj.unit = 'Payment Methods' // CHANGE
+        
         // obj.difficulty = 'Beginner' // CHANGE
         // obj.difficulty = 'Waystage' // CHANGE
         obj.difficulty = 'Advanced' // CHANGE
+
+        obj.lesson = 'Intro' // CHANGE
+
         obj.name = results.data[i][1]
         obj.answers = []
         for (let j = 2; j < 5; j++) {
