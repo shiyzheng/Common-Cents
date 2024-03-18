@@ -45,3 +45,8 @@
   .pagination button:not(.active):hover {
     text-decoration: underline;
   }
+
+  .pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
