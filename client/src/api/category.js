@@ -130,7 +130,7 @@ export const getStudyGuideByLessonAndId = async (lessonObject) => {
             lesson, 
             id,
         });
-        return response.data.study_guide;
+        return response.data.categories.study_guide;
     } catch (err) {
         return err;
     }
