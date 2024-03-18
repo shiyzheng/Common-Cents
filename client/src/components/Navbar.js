@@ -15,7 +15,7 @@ import { styled } from '@mui/system';
 import PaidIcon from '@mui/icons-material/Paid';
 
 const pages = ['Learn', 'Leaderboards', 'Achievements'];
-const settings = ['Profile', 'Account'];
+const settings = ['Profile'];
 
 const NavbarText = styled(Typography)({
     fontFamily: 'Josefin Sans, sans-serif',
@@ -144,7 +144,7 @@ function ResponsiveAppBar(props) {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting, index) => (
-                                <MenuItem key={index} onClick={handleCloseUserMenu} component={Link} to={`/${setting.toLowerCase()}`}>
+                                <MenuItem key={index} onClick={handleCloseUserMenu} component={Link} to={`/account`}>
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}

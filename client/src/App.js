@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import {
-  useRoutes,
-  useNavigate,
-} from 'react-router-dom';
+import { useRoutes, useNavigate } from 'react-router-dom';
 import Login from './components/Login';
-// import Classrooms from './components/Classrooms';
 import Signup from './components/Signup';
 import Profile from './components/Profile';
 import Navbar from './components/Navbar';
 import Achievements from './pages/achievements';
 import Leaderboards from './pages/Leaderboards';
-import CategoryView from './components/CategoryView';
 import CategoryPage from './components/CategoryPage';
+import Account from './components/Account/Account';
 
 import MultipleChoiceQuestion from './components/MCQ';
 import AdminConsole from './pages/AdminConsole';
@@ -69,6 +65,7 @@ function App() {
     { path: '/Login', element: <Login setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} logout={logout}  /> },
     { path: '/Signup', element: <Signup setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} logout={logout}  /> },
     { path: '/profile/:id', element: <Profile login={login} logout={logout}  /> },
+    { path: '/account', element: <Account /> },
 
     { path: '/admin-console', element: <AdminConsole login={login} username={username} logout={logout}  /> },
 
