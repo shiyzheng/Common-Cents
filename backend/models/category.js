@@ -15,6 +15,7 @@ const categorySchema = new Schema({
   Waystage: [questionSchema],
   Advanced: [questionSchema],
   study_guide: { type: String },
+  id: { type: Number, required: true },
   // questions: [questionSchema],
 });
 

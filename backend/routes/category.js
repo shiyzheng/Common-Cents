@@ -187,7 +187,9 @@ router.put('/add', async (req, res) => {
         Name: req.body.unit,
         Beginner: [],
         Waystage: [],
-        Advanced: []
+        Advanced: [],
+        study_guide: req.body.study_guide,
+        id: req.body.id
       }
       if (req.body.difficulty == "Beginner") {
         new_category.Beginner.push({
@@ -222,7 +224,7 @@ router.put('/add', async (req, res) => {
             Answers: req.body.answers,
             Correct: req.body.correct
           })
-          await Category.findOneAndUpdate({ Name: req.body.lesson },
+          await Category.findOneAndUpdate({ Name: req.body.unit },
             { Beginner: existing_category.Beginner })
         } else if (req.body.difficulty == "Waystage") {
           existing_category.Waystage.push({
@@ -230,7 +232,7 @@ router.put('/add', async (req, res) => {
             Answers: req.body.answers,
             Correct: req.body.correct
           })
-          await Category.findOneAndUpdate({ Name: req.body.lesson },
+          await Category.findOneAndUpdate({ Name: req.body.unit },
             { Waystage: existing_category.Waystage })
         } else if (req.body.difficulty == "Advanced") {
           existing_category.Advanced.push({
@@ -238,7 +240,7 @@ router.put('/add', async (req, res) => {
             Answers: req.body.answers,
             Correct: req.body.correct
           })
-          await Category.findOneAndUpdate({ Name: req.body.lesson },
+          await Category.findOneAndUpdate({ Name: req.body.unit },
             { Advanced: existing_category.Advanced })
         }
         res.status(STATUS.CREATED);

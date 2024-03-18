@@ -10,30 +10,11 @@ const baseURL = 'http://localhost:3000';
 const PATH_PREFIX = '/category/';
 
 const results = Papa.parse(`
-1,Virtual currencies like Bitcoin offer complete anonymity in financial transactions.,True,False,,False,,,,,,,
-2,The use of mobile payment platforms eliminates the risk of financial fraud.,True,False,,False,,,,,,,
-3,"How does the use of decentralized cryptocurrencies impact traditional payment methods?
-",Disrupts existing financial systems and introduces regulatory challenges,Reduces the risk of fraud and identity theft,Enhances the speed and efficiency of transactions,A,,,,,,,
-4,"What is one potential disadvantage of using mobile payment platforms for consumer spending?
-
-",Increased vulnerability to data breaches and hacking,Limited acceptance in large establishments,Higher transaction fees compared to other payment methods,A,,,,,,,
-5,"How does the use of installment payment options, such as ""buy now, pay later"" services, impact consumer spending habits?
-
-",Increases the likelihood of overspending and impulse purchases,Provides flexibility in managing payments and budgeting,Encourages responsible budgeting and financial planning,A,,,,,,,
-6,"What is one potential risk associated with using virtual wallets for contactless payments?
-
-",Exposure to potential data breaches and unauthorized access,Limited acceptance among merchants and businesses,Higher transaction fees compared to traditional payment methods,A,,,,,,,
-7,"How do chargebacks offered by credit card companies impact consumer spending behavior?
-",Encourage responsible spending and provide additional buyer protection,Lead to increased transaction disputes and delays,Result in higher interest rates and fees for credit card usage,A,,,,,,,
-8,"What is one potential drawback of using digital currencies for online transactions?
-
-",Increased susceptibility to market volatility and price fluctuations,"Offers better privacy and anonymity in financial transactions
-",Provides faster and more efficient cross-border transactions,A,,,,,,,
-9,"How does the use of contactless payment methods impact consumer spending habits?
-","Increases speed and convenience of making purchases, thus increasing the likelihood of impulse purchases and overspending ",Reduces transaction fees and overall costs associated with purchases,Encourages more mindful and intentional spending,A,,,,,,,
-10,"What is one potential risk associated with using prepaid cards for consumer spending?
-
-",Limited acceptance among merchants and businesses,Higher interest rates and fees compared to other payment methods,Increased vulnerability to identity theft and fraudulent transactions,A,,,,,,,
+1,The capabilities of an HSA were broadened recently under the...,CARES act,Economic relief programs associated with the 2008 financial crisis,Affordable Care Act (Obamacare),A
+2,"Is it still possible to cover a spouse or dependent's medical expenses with your HSA, even if your HSA-eligible plan does not cover them?","Yes, qualified distributions can count necessary medical expenses for your spouse or dependents","No, if no one else is listed as an HSA joint owner, the funds can only be used to cover your own medical expenses","No, but the funds may be still be used as long as a 20% tax penalty for regular early withdrawal is paid",A
+3,"Can HSA balances be transferred to other accounts, similar to how IRA balances can?","Yes, in a process called consolidation to other HSAs, which may or may not be subject to taxation","No, HSA balances cannot be transferred without incurring a 20% penalty for early withdrawal","Yes, as long as it is proven that the funds transferred will be used for medical expenses within three years",A
+4,Do pre-existing conditions affect eligibility for an HSA?,No,Yes,"No, but pre-existing conditions may affect your qualification for a high-deductible health plan",A
+5,An antiquiated form of tax-advantaged health savings accounts was:,Archer Medical Savings Accounts (MSAs),High-deductible Health Spending Accounts (HDHSA),Medical Individual Retirement Accounts (MIRA),A
 `)
 
 const putCategory = async (category) => {
@@ -50,13 +31,18 @@ const toMongo = async (results) => {
             continue
         }
         const obj = {}
-        obj.unit = 'Payment Methods' // CHANGE
-        
+        obj.unit = 'HSAs' // CHANGE
+
         // obj.difficulty = 'Beginner' // CHANGE
         // obj.difficulty = 'Waystage' // CHANGE
         obj.difficulty = 'Advanced' // CHANGE
 
-        obj.lesson = 'Intro' // CHANGE
+        obj.lesson = 'Saving' // CHANGE
+
+        obj.id = 9
+
+        obj.study_guide = 
+``
 
         obj.name = results.data[i][1]
         obj.answers = []
@@ -65,11 +51,16 @@ const toMongo = async (results) => {
                 obj.answers.push(results.data[i][j])
             }
         }
-        if (results.data[i][5] == '1' || results.data[i][5] == 'A' || results.data[i][5] == 'True' || results.data[i][5] == "YES") {
+        if (results.data[i][5] == '1' || results.data[i][5] == 'A' || results.data[i][5] == 'a' || results.data[i][5] == "YES") {
             obj.correct = results.data[i][2]
-        } else if (results.data[i][5] == '0' || results.data[i][5] == "NO" || results.data[i][5] == "False") {
+        } else if (results.data[i][5] == 'TRUE') {
+            obj.correct = "True"
+        } else if (results.data[i][5] == '0' || results.data[i][5] == "NO") {
             obj.correct = results.data[i][3]
+        } else if (results.data[i][5] == "FALSE") {
+            obj.correct = "False"
         }
+        // obj.correct = results.data[i][2]
         await putCategory(obj)
     }
 };

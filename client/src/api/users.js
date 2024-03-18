@@ -181,6 +181,19 @@ export const addAchievementById = async (achievement) => {
     }
 }
 
+
+export const checkAchievementByPoints = async (lessonObject, points) => {
+    try {
+        const response = await axios.post(`${baseURL}/achievement-by-lesson`, {
+            lessonObject,
+            points
+        });
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+}
+
 export const getUsersPointsTotal = async () => {
     try {
         const response = await axios.get(`${baseURL}/users`);

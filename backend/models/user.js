@@ -11,8 +11,7 @@ const pointsSchema = new Schema({
 })
 
 const achievementsSchema = new Schema({
-  name: { type: String },
-  id: { type: Number },
+  name: { type: String }
 })
 
 const userSchema = new Schema({

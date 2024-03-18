@@ -143,6 +143,23 @@ router.get('/allAchievements', async (req, res) => {
   }
 });
 
+router.post('/achievement-by-lesson', async (req, res) => {
+  try {
+    const { body } = req;
+    const { lessonObject, points } = body;
+    const { lesson, unit } = lessonObject;
+    console.log(lesson);
+    console.log(points);
+    const achievements = await Achievement.find({
+      lesson,
+      pointThreshold: { $lte: points }
+    });
+    console.log(achievements);
+    res.status(200).json(achievements);
+  } catch (e) {
+    res.status(401).json({ error: e });
+  }
+});
 
 router.get('/leaderboards', async (req, res) => {
   try {
@@ -200,10 +217,10 @@ router.post('/add-achievement', async (req, res) => {
     try {
       const { body } = req;
       const { username, achievement } = body;
-      const { name, id } = achievement;
+      const { name } = achievement;
       await User.updateOne(
         { username }, 
-        { $push: { achieved: { name, id } } }
+        { $addToSet: { achieved: { name } } }
       );
       res.status(201).json({ message: 'Achivement added' })
     } catch (err) {
