@@ -33,11 +33,7 @@ function Lesson({ topics, subcat, levels }) {
           <div>
             <UnitText>{topic}</UnitText>
           </div>
-          <div style={{ marginBottom: '20px' }}>
-            <Button variant="contained" onClick={() => navigate(`/study/${topic}`)}>
-              Study Guide
-            </Button>
-          </div>
+          
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', maxWidth: 'calc(3 * 60px + 3 * 20px)' }}>
               {subcat[index] && subcat[index].map((subcategory) => (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '5px' }}>
