@@ -47,7 +47,7 @@ const Lessons = (props) => {
 
     const renderLessonLinks = (level) => {
       const formattedLevel = level.toLowerCase().replace(/\s+/g, '-');
-      // console.log(formattedLevel);
+      // console.log(formattedTopic);
       // console.log(parseInt(formattedLevel[formattedLevel.length - 1]));
       return lessonList.map((lesson, index) => (
         (index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) == progress ? 
@@ -116,7 +116,7 @@ const Lessons = (props) => {
           <div className="lessons-container">
           <h2>{formattedTopic}, {formattedSubcategory}</h2>
           <div style={{ marginBottom: '20px' }}>
-            <Button variant="contained" onClick={() => navigate(`/study/${topic}`)}>
+            <Button variant="contained" onClick={() => navigate(`/study/${formattedTopic}`)}>
               Study Guide
             </Button>
           </div>

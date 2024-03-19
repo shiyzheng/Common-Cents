@@ -15,7 +15,7 @@ function Study(props) {
             const output = await getUserProgress({lesson:topic});
             console.log(topic);
             console.log(output.unit);
-            const response = await getStudyGuideByLessonAndId({lesson:topic, id: output.unit});
+            const response = await getStudyGuideByLessonAndId({lesson:"Spending", id: output.unit});
             
             console.log(response);
         } catch (error) {
