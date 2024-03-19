@@ -3,11 +3,19 @@ const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
 const progressSchema = new Schema({
-  Spending: { type: Array, default: [0, 0] }
+  Intro: { type: Array, default: [0, 0] },
+  Saving: { type: Array, default: [0, 0] },
+  Spending: { type: Array, default: [0, 0] },
+  "Earning Income": { type: Array, default: [0, 0] },
+  "Managing Credit": { type: Array, default: [0, 0] },
 })
 
 const pointsSchema = new Schema({
-  Spending: { type: Number, default: 0 }
+  Intro: { type: Number, default: 0 },
+  Saving: { type: Number, default: 0 },
+  Spending: { type: Number, default: 0 },
+  "Earning Income": { type: Number, default: 0 },
+  "Managing Credit": { type: Number, default: 0 },
 })
 
 const achievementsSchema = new Schema({

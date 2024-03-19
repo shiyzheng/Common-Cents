@@ -31,15 +31,15 @@ const toMongo = async (results) => {
             continue
         }
         const obj = {}
-        obj.unit = 'HSAs' // CHANGE
+        obj.unit = 'Credit Sources' // CHANGE
 
-        // obj.difficulty = 'Beginner' // CHANGE
+        obj.difficulty = 'Beginner' // CHANGE
         // obj.difficulty = 'Waystage' // CHANGE
-        obj.difficulty = 'Advanced' // CHANGE
+        // obj.difficulty = 'Advanced' // CHANGE
 
-        obj.lesson = 'Saving' // CHANGE
+        obj.lesson = 'Managing Credit' // CHANGE
 
-        obj.id = 9
+        obj.id = 0
 
         obj.study_guide = 
 ``
@@ -54,11 +54,11 @@ const toMongo = async (results) => {
         if (results.data[i][5] == '1' || results.data[i][5] == 'A' || results.data[i][5] == 'a' || results.data[i][5] == "YES") {
             obj.correct = results.data[i][2]
         } else if (results.data[i][5] == 'TRUE') {
-            obj.correct = "True"
+            obj.correct = "TRUE"
         } else if (results.data[i][5] == '0' || results.data[i][5] == "NO") {
             obj.correct = results.data[i][3]
         } else if (results.data[i][5] == "FALSE") {
-            obj.correct = "False"
+            obj.correct = "FALSE"
         }
         // obj.correct = results.data[i][2]
         await putCategory(obj)
