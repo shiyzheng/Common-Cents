@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import '../styles/Lessons.css';
 import { getUserProgress } from '../api/users';
-
+import {Button} from "@mui/material";
 const Lessons = (props) => {
   const {
     login, username, setUsername, setLogin, logout
@@ -114,7 +114,12 @@ const Lessons = (props) => {
   return (
     <><Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout}/><div>
           <div className="lessons-container">
-      <h2>{formattedTopic}, {formattedSubcategory}</h2>
+          <h2>{formattedTopic}, {formattedSubcategory}</h2>
+          <div style={{ marginBottom: '20px' }}>
+            <Button variant="contained" onClick={() => navigate(`/study/${topic}`)}>
+              Study Guide
+            </Button>
+          </div>
       <div className="lessons-wrapper">
 
       <div className="level-container">
