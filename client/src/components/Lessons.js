@@ -215,21 +215,21 @@ const getGradient = (progress) => {
             <div className="lessons-wrapper">
               <div className="level-container">
                 <Typography variant="h2" style={{marginTop: '20px'}}>
-                  <span style={{fontWeight: 700, marginBottom: '5px'}}>Level 1</span>
+                  <span style={{fontWeight: 700, marginBottom: '5px'}}>Beginner</span>
                   <ul style={{ paddingTop: '10px' }}>{renderLessonLinks('Level 1')}</ul>
                 </Typography>
               </div>
 
               <div className="level-container">
                 <Typography variant="h2" style={{marginTop: '20px'}}>
-                  <span style={{fontWeight: 700, marginBottom: '5px'}}>Level 2</span>
+                  <span style={{fontWeight: 700, marginBottom: '5px'}}>Waystage</span>
                   <ul style={{ paddingTop: '10px' }}>{renderLessonLinks('Level 2')}</ul>
                 </Typography>
               </div>
 
               <div className="level-container">
                 <Typography variant="h2" style={{marginTop: '20px'}}>
-                  <span style={{fontWeight: 700, marginBottom: '5px'}}>Level 3</span>
+                  <span style={{fontWeight: 700, marginBottom: '5px'}}>Advanced</span>
                   <ul style={{ paddingTop: '10px' }}>{renderLessonLinks2('Level 3')}</ul>
                 </Typography>
               </div>
