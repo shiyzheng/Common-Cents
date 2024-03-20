@@ -27,7 +27,7 @@ function Lesson({ topics, subcat, levels }) {
   });
 
   return (
-    <div className="lessons-wrapper" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }}>
+    <div className="lessons-wrapper" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '10px' }}>
       {topics.map((topic, index) => (
         <div key={index} className="lessons-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div>

@@ -8,6 +8,10 @@ import {theme} from "../App";
 import {ThemeProvider} from "@mui/material/styles";
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import {styled} from "@mui/system";
+import DeleteIcon from '@mui/icons-material/Delete';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import PendingIcon from '@mui/icons-material/Pending';
+import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
 
 const Lessons = (props) => {
   const {
@@ -54,7 +58,14 @@ const Lessons = (props) => {
     <ThemeProvider theme={theme}>
       {(index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) == progress ?
       <li key={index}>
-        <Button variant="contained" className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}>
+        <Button
+            variant="contained"
+            className="button"
+            size="large"
+            startIcon={<PlayCircleFilledWhiteIcon />}
+            onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}
+            style={{ marginBottom: '10px' }}
+        >
           {`${lesson}`}
         </Button>
       </li>
@@ -62,13 +73,23 @@ const Lessons = (props) => {
       : ((index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) < progress
       ?
       <li key={index}>
-        <Button variant="contained" className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)} style={{ pointerEvents: 'none',  backgroundColor: 'blue' }}>
+        <Button variant="contained"
+                className="button"
+                size="large"
+                startIcon={<CheckCircleIcon />}
+                onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}
+                style={{ pointerEvents: 'none',  backgroundColor: theme.palette.success.main, marginBottom: '10px', color: 'white' }}>
           {`${lesson}`}
         </Button>
       </li>
       :
       <li key={index}>
-        <Button variant="contained" className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)} style={{ pointerEvents: 'none', opacity: 0.5 }}>
+        <Button variant="contained"
+                className="button"
+                size="large"
+                startIcon={<PendingIcon />}
+                onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}
+                style={{ pointerEvents: 'none', opacity: 0.25, marginBottom: '10px' }}>
           {`${lesson}`}
         </Button>
       </li>)}
@@ -82,7 +103,12 @@ const Lessons = (props) => {
     <ThemeProvider theme={theme}>
       {(index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) == progress ?
       <li key={index}>
-        <Button variant="contained" className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}>
+        <Button variant="contained"
+                className="button"
+                size="large"
+                startIcon={<PlayCircleFilledWhiteIcon />}
+                onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}
+                style={{ marginBottom: '10px' }}>
           {`${lesson}`}
         </Button>
       </li>
@@ -90,13 +116,23 @@ const Lessons = (props) => {
       : ((index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) < progress
       ?
       <li key={index}>
-        <Button variant="contained" className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)} style={{ pointerEvents: 'none',  backgroundColor: 'blue' }}>
+        <Button variant="contained"
+                className="button"
+                size="large"
+                startIcon={<CheckCircleIcon />}
+                onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}
+                style={{ pointerEvents: 'none',  backgroundColor: theme.palette.success.main, marginBottom: '10px', color: 'white' }}>
           {`${lesson}`}
         </Button>
       </li>
       :
       <li key={index}>
-        <Button variant="contained" className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)} style={{ pointerEvents: 'none', opacity: 0.5 }}>
+        <Button variant="contained"
+                className="button"
+                size="large"
+                startIcon={<PendingIcon />}
+                onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}
+                style={{ pointerEvents: 'none', opacity: 0.25, marginBottom: '10px' }}>
           {`${lesson}`}
         </Button>
       </li>)}
@@ -142,11 +178,15 @@ const getGradient = (progress) => {
 }));
 
   const ProgressBarWithLabel = ({ value }) => {
-    console.log(getGradient(value))
+  console.log(getGradient(value))
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <BorderLinearProgress variant="determinate" value={value} />
-      <span style={{ marginTop: '10px' }}>{value}%</span>
+      <span style={{ marginTop: '10px' }}>
+        <b>
+        {value === 100 ? "Congratulations! You've mastered this topic." : `${value}% Complete`}
+        </b>
+        </span>
     </div>
   );
 };
@@ -156,36 +196,42 @@ const getGradient = (progress) => {
         <div>
           <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout}/>
           <div className="lessons-container">
-            <Typography variant="h1">
+            <Typography variant="h1" style={{marginTop: '20px'}}>
               <span style={{fontWeight: 700}}>Unit:</span> {formattedTopic}
               <br/>
               <span style={{fontWeight: 700}}>Topic:</span> {formattedSubcategory}
             </Typography>
 
-            <div style={{marginBottom: '20px'}}>
-              <Button variant="contained" color="secondary" onClick={() => navigate(`/study/${formattedTopic}`)}>
+            <div style={{marginTop: '20px'}}>
+              <Button variant="contained" color="info" onClick={() => navigate(`/study/${formattedTopic}`)}>
                 Study Guide
               </Button>
             </div>
 
-            <div style={{marginBottom: '20px'}}>
-              <ProgressBarWithLabel value={10} />
+            <div style={{marginTop: '25px'}}>
+              <ProgressBarWithLabel value={43} />
             </div>
 
             <div className="lessons-wrapper">
               <div className="level-container">
-                Level 1
-                <ul>{renderLessonLinks('Level 1')}</ul>
+                <Typography variant="h2" style={{marginTop: '20px'}}>
+                  <span style={{fontWeight: 700, marginBottom: '5px'}}>Level 1</span>
+                  <ul style={{ paddingTop: '10px' }}>{renderLessonLinks('Level 1')}</ul>
+                </Typography>
               </div>
 
               <div className="level-container">
-                Level 2
-                <ul>{renderLessonLinks('Level 2')}</ul>
+                <Typography variant="h2" style={{marginTop: '20px'}}>
+                  <span style={{fontWeight: 700, marginBottom: '5px'}}>Level 2</span>
+                  <ul style={{ paddingTop: '10px' }}>{renderLessonLinks('Level 2')}</ul>
+                </Typography>
               </div>
 
               <div className="level-container">
-                Level 3
-                <ul>{renderLessonLinks2('Level 3')}</ul>
+                <Typography variant="h2" style={{marginTop: '20px'}}>
+                  <span style={{fontWeight: 700, marginBottom: '5px'}}>Level 3</span>
+                  <ul style={{ paddingTop: '10px' }}>{renderLessonLinks2('Level 3')}</ul>
+                </Typography>
               </div>
 
             </div>
