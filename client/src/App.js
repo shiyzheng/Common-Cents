@@ -16,7 +16,7 @@ import Lessons from './components/Lessons';
 import Study from './components/Study';
 import { getUserProgress } from './api/users';
 import { getAllUnitByLesson } from './api/category';
-import {Button} from "@mui/material";
+import {Button, responsiveFontSizes} from "@mui/material";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 export const theme = createTheme({
@@ -40,14 +40,28 @@ export const theme = createTheme({
       main: '#086402',
     },
     text: {
-      primary: '#000000', // Set default text color to black
+      primary: '#000000',
     },
   },
   typography: {
     fontFamily: 'Josefin Sans, sans-serif',
     secondaryFontFamily: 'Nunito, sans-serif',
+    h1: {
+      fontFamily: 'Nunito, sans-serif',
+      fontSize: '2rem',
+    },
+    h2: {
+      fontFamily: 'Nunito, sans-serif',
+      fontSize: '1.3rem',
+    },
+    h3: {
+      fontFamily: 'Nunito, sans-serif',
+      fontSize: '1.1rem',
+    },
   },
 });
+
+const responsiveTheme = responsiveFontSizes(theme);
 
 function App() {
   const [login, setLogin] = useState(sessionStorage.getItem('app-token') != null);
@@ -78,7 +92,7 @@ function App() {
     { path: '/Category/:name', element: <CategoryPage login={login} username={username} logout={logout}  /> },
   ]);
 
-  return <ThemeProvider theme={theme}>{element}</ThemeProvider>;
+  return <ThemeProvider theme={responsiveTheme}>{element}</ThemeProvider>;
 }
 
 function Home(props) {

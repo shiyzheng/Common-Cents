@@ -3,9 +3,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import '../styles/Lessons.css';
 import { getUserProgress } from '../api/users';
-import {Button} from "@mui/material";
+import {Button, Typography} from "@mui/material";
 import {theme} from "../App";
 import {ThemeProvider} from "@mui/material/styles";
+import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+import {styled} from "@mui/system";
 
 const Lessons = (props) => {
   const {
@@ -102,37 +104,93 @@ const Lessons = (props) => {
   ));
 };
 
+  const interpolateColor = (color1, color2, factor) => {
+  const r1 = parseInt(color1.substring(1, 3), 16);
+  const g1 = parseInt(color1.substring(3, 5), 16);
+  const b1 = parseInt(color1.substring(5, 7), 16);
+
+  const r2 = parseInt(color2.substring(1, 3), 16);
+  const g2 = parseInt(color2.substring(3, 5), 16);
+  const b2 = parseInt(color2.substring(5, 7), 16);
+
+  const r = Math.round(r1 + factor * (r2 - r1));
+  const g = Math.round(g1 + factor * (g2 - g1));
+  const b = Math.round(b1 + factor * (b2 - b1));
+
+  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+};
+
+const getGradient = (progress) => {
+  const color1 = theme.palette.warning.main;
+  const color2 = theme.palette.success.main;
+  const progressPercentage = progress / 100;
+  return interpolateColor(color1, color2, progressPercentage);
+};
+
+  const BorderLinearProgress = styled(LinearProgress)(({ theme, value }) => ({
+  height: 10,
+  borderRadius: 5,
+  width: '60%',
+  margin: '0 auto',
+  [`&.${linearProgressClasses.colorPrimary}`]: {
+    backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+  },
+  [`& .${linearProgressClasses.bar1Determinate}`]: {
+    borderRadius: 5,
+    backgroundColor: getGradient(value),
+  },
+}));
+
+  const ProgressBarWithLabel = ({ value }) => {
+    console.log(getGradient(value))
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <BorderLinearProgress variant="determinate" value={value} />
+      <span style={{ marginTop: '10px' }}>{value}%</span>
+    </div>
+  );
+};
+
   return (
       <ThemeProvider theme={theme}>
-    <>
-      <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout}/><div>
+        <div>
+          <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout}/>
           <div className="lessons-container">
-          {formattedTopic}, {formattedSubcategory}
-          <div style={{ marginBottom: '20px' }}>
-            <Button variant="contained" onClick={() => navigate(`/study/${formattedTopic}`)}>
-              Study Guide
-            </Button>
+            <Typography variant="h1">
+              <span style={{fontWeight: 700}}>Unit:</span> {formattedTopic}
+              <br/>
+              <span style={{fontWeight: 700}}>Topic:</span> {formattedSubcategory}
+            </Typography>
+
+            <div style={{marginBottom: '20px'}}>
+              <Button variant="contained" color="secondary" onClick={() => navigate(`/study/${formattedTopic}`)}>
+                Study Guide
+              </Button>
+            </div>
+
+            <div style={{marginBottom: '20px'}}>
+              <ProgressBarWithLabel value={10} />
+            </div>
+
+            <div className="lessons-wrapper">
+              <div className="level-container">
+                Level 1
+                <ul>{renderLessonLinks('Level 1')}</ul>
+              </div>
+
+              <div className="level-container">
+                Level 2
+                <ul>{renderLessonLinks('Level 2')}</ul>
+              </div>
+
+              <div className="level-container">
+                Level 3
+                <ul>{renderLessonLinks2('Level 3')}</ul>
+              </div>
+
+            </div>
           </div>
-      <div className="lessons-wrapper">
-
-      <div className="level-container">
-        Level 1
-        <ul>{renderLessonLinks('Level 1')}</ul>
-      </div>
-          
-      <div className="level-container">
-        Level 2
-        <ul>{renderLessonLinks('Level 2')}</ul>
-      </div>
-
-      <div className="level-container">
-        Level 3
-        <ul>{renderLessonLinks2('Level 3')}</ul>
-      </div>
-
-      </div>
-    </div>
-      </div></>
+        </div>
       </ThemeProvider>
   );
 };
