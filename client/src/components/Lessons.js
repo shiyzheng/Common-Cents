@@ -4,6 +4,9 @@ import Navbar from '../components/Navbar';
 import '../styles/Lessons.css';
 import { getUserProgress } from '../api/users';
 import {Button} from "@mui/material";
+import {theme} from "../App";
+import {ThemeProvider} from "@mui/material/styles";
+
 const Lessons = (props) => {
   const {
     login, username, setUsername, setLogin, logout
@@ -42,79 +45,69 @@ const Lessons = (props) => {
       }
       getLevels();
     }, []);
-    // console.log(progress);
 
+  const renderLessonLinks = (level) => {
+  const formattedLevel = level.toLowerCase().replace(/\s+/g, '-');
+  return lessonList.map((lesson, index) => (
+    <ThemeProvider theme={theme}>
+      {(index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) == progress ?
+      <li key={index}>
+        <Button variant="contained" className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}>
+          {`${lesson}`}
+        </Button>
+      </li>
 
-    const renderLessonLinks = (level) => {
-      const formattedLevel = level.toLowerCase().replace(/\s+/g, '-');
-      // console.log(formattedTopic);
-      // console.log(parseInt(formattedLevel[formattedLevel.length - 1]));
-      return lessonList.map((lesson, index) => (
-        (index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) == progress ? 
-        <li key={index}>
-          {/* <button className="button" onClick={() => navigate(`/lessons/${topic}/${formattedLevel}/${index + 1}`)}> */}
-          <button className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}>
-            {`${lesson}`}
-          </button>
-          <h6>{" "}</h6>
-        </li>
+      : ((index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) < progress
+      ?
+      <li key={index}>
+        <Button variant="contained" className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)} style={{ pointerEvents: 'none',  backgroundColor: 'blue' }}>
+          {`${lesson}`}
+        </Button>
+      </li>
+      :
+      <li key={index}>
+        <Button variant="contained" className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)} style={{ pointerEvents: 'none', opacity: 0.5 }}>
+          {`${lesson}`}
+        </Button>
+      </li>)}
+    </ThemeProvider>
+  ));
+};
 
-        : ((index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) < progress
-        ?
-        <li key={index}>
-          {/* <button className="button" onClick={() => navigate(`/lessons/${topic}/${formattedLevel}/${index + 1}`)}> */}
-          <button className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)} style={{ pointerEvents: 'none',  backgroundColor: 'blue' }}>
-            {`${lesson}`}
-          </button>
-          <h6>{" "}</h6>
-        </li>
-        :
-        <li key={index}>
-          {/* <button className="button" onClick={() => navigate(`/lessons/${topic}/${formattedLevel}/${index + 1}`)}> */}
-          <button className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)} style={{ pointerEvents: 'none', opacity: 0.5 }}>
-            {`${lesson}`}
-          </button>
-          <h6>{" "}</h6>
-        </li>)
-      ));
-    };
+  const renderLessonLinks2 = (level) => {
+  const formattedLevel = level.toLowerCase().replace(/\s+/g, '-');
+  return lessonList2.map((lesson, index) => (
+    <ThemeProvider theme={theme}>
+      {(index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) == progress ?
+      <li key={index}>
+        <Button variant="contained" className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}>
+          {`${lesson}`}
+        </Button>
+      </li>
 
-    const renderLessonLinks2 = (level) => {
-      const formattedLevel = level.toLowerCase().replace(/\s+/g, '-');
-      return lessonList2.map((lesson, index) => (
-        (index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) == progress ? 
-        <li key={index}>
-          {/* <button className="button" onClick={() => navigate(`/lessons/${topic}/${formattedLevel}/${index + 1}`)}> */}
-          <button className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}>
-            {`${lesson}`}
-          </button>
-          <h6>{" "}</h6>
-        </li>
-
-        : ((index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) < progress
-        ?
-        <li key={index}>
-          {/* <button className="button" onClick={() => navigate(`/lessons/${topic}/${formattedLevel}/${index + 1}`)}> */}
-          <button className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)} style={{ pointerEvents: 'none',  backgroundColor: 'blue' }}>
-            {`${lesson}`}
-          </button>
-          <h6>{" "}</h6>
-        </li>
-        :
-        <li key={index}>
-          {/* <button className="button" onClick={() => navigate(`/lessons/${topic}/${formattedLevel}/${index + 1}`)}> */}
-          <button className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)} style={{ pointerEvents: 'none', opacity: 0.5 }}>
-            {`${lesson}`}
-          </button>
-          <h6>{" "}</h6>
-        </li>)
-      ));
-    };
+      : ((index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) < progress
+      ?
+      <li key={index}>
+        <Button variant="contained" className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)} style={{ pointerEvents: 'none',  backgroundColor: 'blue' }}>
+          {`${lesson}`}
+        </Button>
+      </li>
+      :
+      <li key={index}>
+        <Button variant="contained" className="button" onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)} style={{ pointerEvents: 'none', opacity: 0.5 }}>
+          {`${lesson}`}
+        </Button>
+      </li>)}
+    </ThemeProvider>
+  ));
+};
 
   return (
-    <><Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout}/><div>
+      <ThemeProvider theme={theme}>
+    <>
+      <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout}/><div>
           <div className="lessons-container">
-          <h2>{formattedTopic}, {formattedSubcategory}</h2>
+          {formattedTopic}, {formattedSubcategory}
           <div style={{ marginBottom: '20px' }}>
             <Button variant="contained" onClick={() => navigate(`/study/${formattedTopic}`)}>
               Study Guide
@@ -123,23 +116,24 @@ const Lessons = (props) => {
       <div className="lessons-wrapper">
 
       <div className="level-container">
-        <h3>Level 1</h3>
+        Level 1
         <ul>{renderLessonLinks('Level 1')}</ul>
       </div>
           
       <div className="level-container">
-        <h3>Level 2</h3>
+        Level 2
         <ul>{renderLessonLinks('Level 2')}</ul>
       </div>
 
       <div className="level-container">
-        <h3>Level 3</h3>
+        Level 3
         <ul>{renderLessonLinks2('Level 3')}</ul>
       </div>
 
       </div>
     </div>
       </div></>
+      </ThemeProvider>
   );
 };
 

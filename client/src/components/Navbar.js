@@ -67,7 +67,6 @@ function ResponsiveAppBar(props) {
     };
 
     return (
-        // <ThemeProvider theme={theme}>
         <AppBar position="static">
             <Toolbar>
                 <IconButton
@@ -165,7 +164,6 @@ function ResponsiveAppBar(props) {
                 ))}
             </Menu>
         </AppBar>
-        /*</ThemeProvider>*/
     );
 }
 
