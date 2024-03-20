@@ -4,9 +4,17 @@ import '../styles/MCQ.css';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { getUserProgress, updateUserProgress } from '../api/users';
 import { getQuestionsByLessonAndProgress } from '../api/category';
-import { set } from 'mongoose';
+import {theme} from "../App";
+import {ThemeProvider} from "@mui/material/styles";
 import _ from 'lodash';
 import Confetti from 'react-confetti';
+import {Button} from "@mui/material";
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
+import PublishIcon from '@mui/icons-material/Publish';
+import LensIcon from '@mui/icons-material/Lens';
+import { Box, Typography } from '@mui/material';
 
 function MultipleChoiceQuestion(props) {
   const {
@@ -24,6 +32,20 @@ function MultipleChoiceQuestion(props) {
   const params = new URLSearchParams(location.search);
   const lesson = parseInt(params.get('lesson'));
   const level = parseInt(params.get('level'));
+  const [totalLessons, setTotalLessons] = useState(0);
+
+  useEffect(() => {
+    const fetchTotalLessons = async () => {
+      try {
+        const total = await getTotalLessons(level);
+        setTotalLessons(total);
+      } catch (error) {
+        console.error('Error fetching total lessons:', error);
+      }
+    };
+
+    fetchTotalLessons();
+  }, [level]);
 
   const [showPopup, setShowPopup] = useState(false);
   const [windowSize, setWindowSize] = useState({
@@ -44,6 +66,22 @@ function MultipleChoiceQuestion(props) {
   const navigate = useNavigate();
   const { topic } = useParams();
 
+  const NumberedIcon = ({ number }) => (
+      <Box position="relative" display="inline-flex" style={{ marginRight: '10px' }}>
+        <svg height="24" width="24" style={{ color: theme.palette.warning.main, opacity: 0.25 }}>
+          <circle cx="12" cy="12" r="10" fill="currentColor" />
+        </svg>
+        <Typography
+            variant="caption"
+            component="div"
+            color="text.primary"
+            style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+        >
+          {number}
+        </Typography>
+      </Box>
+  );
+
   useEffect(() => {
     if (sessionStorage.getItem('app-token') === null) {
       navigate('/');
@@ -55,12 +93,8 @@ function MultipleChoiceQuestion(props) {
       try {
         const output = await getUserProgress({lesson:topic});
         const response = await getQuestionsByLessonAndProgress({lesson:topic, progress:output});
-        // console.log(response.questions);
-        // console.log("shuffle");
         response.questions.forEach(element => {
-          // console.log(_.shuffle(element.Answers));
           element.Answers = _.shuffle(element.Answers);
-          // console.log(element.Answers);
         });
         setQuestions(response.questions);
       } catch (error) {
@@ -96,19 +130,40 @@ function MultipleChoiceQuestion(props) {
       x[currentQuestionIndex].className += " active";
     }
   }, [currentQuestionIndex, questions]);
-  
-  // console.log(lesson);
-  // console.log(level);
-  // console.log(questions);
-  // console.log(options);
-  // console.log(question);
-  // console.log(selectedOptions);
-  // const options = [
-  //   { id: 1, text: "Option A" },
-  //   { id: 2, text: "Option B" },
-  //   { id: 3, text: "Option C" },
-  //   { id: 4, text: "Option D" },
-  // ];
+
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      switch (event.key) {
+        case '1':
+          handleOptionSelect(options[0]);
+          break;
+        case '2':
+          handleOptionSelect(options[1]);
+          break;
+        case '3':
+          if (options[2]) {
+            handleOptionSelect(options[2]);
+          }
+          break;
+        case 'Enter':
+          if (currentQuestionIndex < questions.length - 1) {
+            handleNextQuestion();
+          } else {
+            handleSubmit();
+          }
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener('keypress', handleKeyPress);
+
+    // Cleanup function to remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('keypress', handleKeyPress);
+    };
+  }, [options, currentQuestionIndex, questions.length]);
 
   const handleOptionSelect = (option) => {
     setSelectedOptions(prevOptions => {
@@ -123,10 +178,8 @@ function MultipleChoiceQuestion(props) {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(prevIndex => prevIndex + 1);
     }
-    // setSelectedOption("");
   };
-  
-  
+
   const handleSubmit = () => {
     setIsReview(true);
     let correct  = 0;
@@ -182,19 +235,20 @@ function MultipleChoiceQuestion(props) {
     }
     updateAchievements();
   };
-  // console.log(showPopup, windowSize.width, windowSize.height, "new123");
+
+  const levelNames = {
+    1: 'Beginner',
+    2: 'Waystage',
+    3: 'Advanced',
+  };
+
   const handlePreviousQuestion = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(prevIndex => prevIndex - 1);
     }
-    // console.log(selectedOptions);
-    // if (currentQuestionIndex - 1 < selectedOptions.length && selectedOptions[currentQuestionIndex - 1] != null) {
-    //   setSelectedOption(selectedOptions[currentQuestionIndex - 1]);
-    // } else {
-    //   setSelectedOption("");
-    // }
   };
   return (
+      <ThemeProvider theme={theme}>
     <>
     <div>
       <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout} />
@@ -210,7 +264,13 @@ function MultipleChoiceQuestion(props) {
       </div>
     </div>
       <div className="container">
-        <h2>Lesson {lesson} Level {level} </h2>
+        <Typography variant="h2" style={{marginTop: '20px'}}>
+          <span style={{fontWeight: 700}}>Topic:</span> {topic}
+          <br/>
+          <span style={{fontWeight: 700}}>Lesson:</span> {lesson} of {totalLessons}
+          <br/>
+          <span style={{fontWeight: 700}}>Level:</span> {levelNames[level]}
+        </Typography>
         {currentQuestionIndex >= 0 && currentQuestionIndex < questions.length ? (
         <div style={{ textAlign: "center", marginTop: "40px" }}>
           {Array.from({ length: questions.length }, (_, index) => (
@@ -224,69 +284,132 @@ function MultipleChoiceQuestion(props) {
         {currentQuestionIndex < 0 ? (
           <>
           <p>{correctCount} / {questions.length} correct</p>
-          <button onClick={handleNextQuestion}>Review</button>
+          <Button
+              variant="contained"
+              startIcon={<PublishIcon />}
+              style={{backgroundColor: theme.palette.info.main, color: 'white'}}
+              onClick={handleNextQuestion}>
+            Review
+          </Button>
           </>
         ) : (
-          <><div className="question">
-              <p>{question}</p>
-            </div>
-            <ul className="options-list">
-              {options.map((option) => (
-                <li
-                  key={option.id}
-                  className={`option-box
-                    ${questions[currentQuestionIndex].Correct === option 
-                        ? 'incorrect'
-                        : ''
-                    } 
-                    ${selectedOptions[currentQuestionIndex] === option 
-                      ? 'selected'
-                      : ''}
+            <>
+              <div className="question">
+                <p>{question}</p>
+              </div>
+              <ul className="options-list">
+                {options.map((option) => (
+                    <li
+                        key={option.id}
+                        className={`option-box
+                    ${questions[currentQuestionIndex].Correct === option
+                            ? 'incorrect'
+                            : ''
+                        } 
+                    ${selectedOptions[currentQuestionIndex] === option
+                            ? 'selected'
+                            : ''}
                     ${selectedOptions[currentQuestionIndex] === option && selectedOptions[currentQuestionIndex] === questions[currentQuestionIndex].Correct
-                      ? 'correct'
-                      : ''}
+                            ? 'correct'
+                            : ''}
                       
                       `}
-                >
-                  {option}
-                </li>
-              ))}
-            </ul>
-            {currentQuestionIndex > 0 && (
-              <button onClick={handlePreviousQuestion}>Back</button>
-            )}
-            {currentQuestionIndex < questions.length - 1 ? (
-              <button onClick={handleNextQuestion}>Next</button>
-            ) : (
-              <button onClick={() => navigate(`/`)}>Return</button>
-            )} </>
-            )}
-        </>) 
-        
-        : (<><div className="question">
-          <p>{question}</p>
-        </div>
-        <ul className="options-list">
-          {options.map((option) => (
-            <li
-              key={option.id}
-              className={`option-box ${selectedOption === option ? 'selected' : ''}`}
-              onClick={() => handleOptionSelect(option)}
-            >
-              {option}
-            </li>
-          ))}
-        </ul>
-        {currentQuestionIndex > 0 && (
-          <button onClick={handlePreviousQuestion}>Back</button>
+                    >
+                      {option}
+                    </li>
+                ))}
+              </ul>
+
+              <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '10px'}}>
+                {currentQuestionIndex > 0 && (
+                    <Button
+                        variant="contained"
+                        startIcon={<ArrowBackIosNewIcon/>}
+                        style={{backgroundColor: theme.palette.warning.main, marginRight: '10px'}}
+                        onClick={handlePreviousQuestion}>
+                      Back
+                    </Button>
+                )}
+                {currentQuestionIndex < questions.length - 1 ? (
+                    <Button
+                        variant="contained"
+                        startIcon={<ArrowForwardIosIcon/>}
+                        style={{backgroundColor: theme.palette.secondary.main, color: 'white', marginLeft: '10px'}}
+                        onClick={handleNextQuestion}>
+                      Next
+                    </Button>
+                ) : (
+                    <Button
+                        variant="contained"
+                        startIcon={<PublishIcon/>}
+                        style={{backgroundColor: theme.palette.success.main, color: 'white'}}
+                        onClick={handleSubmit}>
+                      Submit
+                    </Button>
+                )}
+              </div>
+
+            </>
         )}
-        {currentQuestionIndex < questions.length - 1 ? (
-          <button onClick={handleNextQuestion}>Next</button>
-        ) : (
-          <button onClick={handleSubmit}>Submit</button>
-        )} </>) }
+            </>)
+
+            : (<>
+              <div className="question">
+                <p>{question}</p>
+              </div>
+              <ul className="options-list" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                {options.map((option, index) => (
+                    <Button variant="contained"
+                            className={"button"}
+                            key={option.id}
+                            size="large"
+                            onClick={() => handleOptionSelect(option)}
+                            style={{
+                              backgroundColor: selectedOption === option ? 'lightblue' : 'white',
+                              marginBottom: '10px',
+                              color: 'black',
+                              textTransform: 'none'
+                            }}>
+                      <NumberedIcon number={index + 1} />
+                      {option.trim().toLowerCase() === 'true' ? 'True' : option.trim().toLowerCase() === 'false' ? 'False' : option}
+                    </Button>
+                ))}
+              </ul>
+
+              <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '10px'}}>
+                {currentQuestionIndex > 0 && (
+                    <Button
+                        variant="contained"
+                        startIcon={<ArrowBackIosNewIcon/>}
+                        style={{backgroundColor: theme.palette.warning.main, marginRight: '10px'}}
+                        onClick={handlePreviousQuestion}>
+                      Back
+                    </Button>
+                )}
+                {currentQuestionIndex < questions.length - 1 ? (
+                    <Button
+                        variant="contained"
+                        startIcon={<ArrowForwardIosIcon/>}
+                        style={{backgroundColor: theme.palette.secondary.main, color: 'white', marginLeft: '10px'}}
+                        onClick={handleNextQuestion}>
+                      Next
+                    </Button>
+                ) : (
+                    <Button
+                        variant="contained"
+                        startIcon={<KeyboardReturnIcon/>}
+                        style={{backgroundColor: theme.palette.success.main}}
+                        onClick={handleSubmit}>
+                      Submit
+                    </Button>
+                )}
+              </div>
+
+            </>)}
+
       </div>
     </>
+      </ThemeProvider>
   );
 }
 

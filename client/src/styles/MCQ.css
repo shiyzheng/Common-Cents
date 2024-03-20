@@ -34,20 +34,10 @@
   .selected {
     background-color: #b3daff;
   }
-  
-  button {
-    background-color: #4caf50;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
+
   button:hover {
     background-color: #45a049;
   }
-
   
   .selected {
     background-color: lightblue;
@@ -108,3 +98,15 @@
   .popup-content {
     margin-top: 5px;
   }
+
+.option-button {
+  pointer-events: none;
+  background-color: white;
+  margin-bottom: 10px;
+  color: black;
+  text-transform: none;
+}
+
+.option-button.selected {
+  background-color: lightblue;
+}
