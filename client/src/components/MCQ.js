@@ -122,8 +122,9 @@ function MultipleChoiceQuestion(props) {
       var i, x = document.getElementsByClassName("step");
       for (i = 0; i < x.length; i++) {
         x[i].className = x[i].className.replace(" active", "");
-        x[i].className = x[i].className.replace(" finish", "");
-        if (selectedOptions[i] != null && selectedOptions[i] != undefined) {
+        if (isReview && selectedOptions[i] != questions[i].Correct) {
+          x[i].className += " inc";
+        } else if (selectedOptions[i] != null && selectedOptions[i] != undefined) {
           x[i].className += " finish";
         }
       }

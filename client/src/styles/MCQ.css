@@ -69,6 +69,10 @@
     background-color: #04AA6D;
   }
 
+  .step.inc {
+    background-color: lightcoral;
+  }
+
   .popup-notification {
     position: fixed;
     bottom: 20px;
