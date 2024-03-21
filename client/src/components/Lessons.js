@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import '../styles/Lessons.css';
 import { getUserProgress } from '../api/users';
+import { getAllUnitByLesson } from '../api/category';
 import {Button, Typography} from "@mui/material";
 import {theme} from "../App";
 import {ThemeProvider} from "@mui/material/styles";
@@ -20,6 +21,8 @@ const Lessons = (props) => {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(0);
   const { topic, subcategory } = useParams();
+  const [currUnit, setCurrUnit] = useState(0);
+  const [unit, setUnit] = useState(0);
   const formattedTopic = topic.replace(/-/g, ' ').replace(/(?:-| |\b)(\w)/g, function(key) { return key.toUpperCase()});
   const formattedSubcategory = subcategory.replace(/-/g, ' ').replace(/(?:-| |\b)(\w)/g, function(key) { return key.toUpperCase()});
   const lessonList = [
@@ -44,19 +47,43 @@ const Lessons = (props) => {
       const getLevels = async () => {
         try {
           const output = await getUserProgress({lesson:formattedTopic});
+          // console.log(output);
           setProgress(output["level"]);
+          setUnit(output["unit"])
         } catch (error) {
           console.error('Error fetching progress:', error);
         }
       }
       getLevels();
     }, []);
-
+    useEffect(() => {
+      const getCategory = async () => {
+        try {
+          const output = await getAllUnitByLesson(formattedTopic);
+          
+          console.log(unit);
+          console.log(formattedSubcategory);
+          console.log(output.categories);
+          output.categories.forEach(function(element, index) {
+            if (element.Name === formattedSubcategory) {
+              setCurrUnit(index);
+            }
+          });
+        } catch (error) {
+          console.error('Error fetching progress:', error);
+        }
+      }
+      getCategory();
+    }, []);
+    // console.log(topic, subcategory);
+    // console.log(progress);
+    console.log(currUnit, unit);
   const renderLessonLinks = (level) => {
   const formattedLevel = level.toLowerCase().replace(/\s+/g, '-');
   return lessonList.map((lesson, index) => (
     <ThemeProvider theme={theme}>
-      {(index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) == progress ?
+      {(currUnit == unit) ? 
+      ((index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) == progress ?
       <li key={index}>
         <Button
             variant="contained"
@@ -92,7 +119,35 @@ const Lessons = (props) => {
                 style={{ pointerEvents: 'none', opacity: 0.25, marginBottom: '10px' }}>
           {`${lesson}`}
         </Button>
-      </li>)}
+      </li>))
+      : (
+        (currUnit < unit) ?
+        (<li key={index}>
+          <Button variant="contained"
+                  className="button"
+                  size="large"
+                  startIcon={<CheckCircleIcon />}
+                  onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}
+                  style={{ pointerEvents: 'none',  backgroundColor: theme.palette.success.main, marginBottom: '10px', color: 'white' }}>
+            {`${lesson}`}
+          </Button>
+        </li>)
+        :
+        (<li key={index}>
+          <Button variant="contained"
+                  className="button"
+                  size="large"
+                  startIcon={<PendingIcon />}
+                  onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}
+                  style={{ pointerEvents: 'none', opacity: 0.25, marginBottom: '10px' }}>
+            {`${lesson}`}
+          </Button>
+        </li>)
+
+
+      )
+    
+    }
     </ThemeProvider>
   ));
 };
@@ -101,7 +156,8 @@ const Lessons = (props) => {
   const formattedLevel = level.toLowerCase().replace(/\s+/g, '-');
   return lessonList2.map((lesson, index) => (
     <ThemeProvider theme={theme}>
-      {(index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) == progress ?
+      { (currUnit == unit) ? 
+      ((index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) == progress ?
       <li key={index}>
         <Button variant="contained"
                 className="button"
@@ -135,7 +191,32 @@ const Lessons = (props) => {
                 style={{ pointerEvents: 'none', opacity: 0.25, marginBottom: '10px' }}>
           {`${lesson}`}
         </Button>
-      </li>)}
+      </li>))
+      :
+      (
+        (currUnit == unit) ? 
+        (<li key={index}>
+          <Button variant="contained"
+                  className="button"
+                  size="large"
+                  startIcon={<CheckCircleIcon />}
+                  onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}
+                  style={{ pointerEvents: 'none',  backgroundColor: theme.palette.success.main, marginBottom: '10px', color: 'white' }}>
+            {`${lesson}`}
+          </Button>
+        </li>) :
+        (<li key={index}>
+          <Button variant="contained"
+                  className="button"
+                  size="large"
+                  startIcon={<PendingIcon />}
+                  onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}
+                  style={{ pointerEvents: 'none', opacity: 0.25, marginBottom: '10px' }}>
+            {`${lesson}`}
+          </Button>
+        </li>)
+      )
+      }
     </ThemeProvider>
   ));
 };
