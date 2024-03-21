@@ -47,7 +47,6 @@ const Lessons = (props) => {
       const getLevels = async () => {
         try {
           const output = await getUserProgress({lesson:formattedTopic});
-          // console.log(output);
           setProgress(output["level"]);
           setUnit(output["unit"])
         } catch (error) {
@@ -60,10 +59,6 @@ const Lessons = (props) => {
       const getCategory = async () => {
         try {
           const output = await getAllUnitByLesson(formattedTopic);
-          
-          // console.log(unit);
-          // console.log(formattedSubcategory);
-          // console.log(output.categories);
           output.categories.forEach(function(element, index) {
             if (element.Name === formattedSubcategory) {
               setCurrUnit(index);
@@ -74,11 +69,7 @@ const Lessons = (props) => {
         }
       }
       getCategory();
-      console.log(currUnit);
     }, []);
-    // console.log(topic, subcategory);
-    // console.log(progress);
-    console.log(currUnit, unit);
   const renderLessonLinks = (level) => {
   const formattedLevel = level.toLowerCase().replace(/\s+/g, '-');
   return lessonList.map((lesson, index) => (
@@ -285,9 +276,20 @@ const getGradient = (progress) => {
             </Typography>
 
             <div style={{marginTop: '20px'}}>
-              <Button variant="contained" color="info" onClick={() => navigate(`/study/${topic}/${subcategory}`)}>
-                Study Guide
-              </Button>
+              {
+                (currUnit <= unit)
+                ? 
+                <Button variant="contained" color="info" onClick={() => navigate(`/study/${topic}/${subcategory}`)}>
+                  Study Guide
+                </Button>
+                :
+                <Button variant="contained" color="info" onClick={() => navigate(`/study/${topic}/${subcategory}`)}
+                style={{ pointerEvents: 'none', opacity: 0.50, marginBottom: '10px' }}
+                >
+                  Study Guide
+                </Button>
+              }
+              
             </div>
 
             <div style={{marginTop: '25px'}}>

@@ -18,20 +18,11 @@ function Study(props) {
         const getCurrUnit = async () => {
           try {
             const output = await getAllUnitByLesson(formattedTopic);
-            
-            // console.log(unit);
-            // console.log(formattedSubcategory);
-            // console.log(output.categories);
             output.categories.forEach(function(element, index) {
               if (element.Name === formattedSubcategory) {
-                // console.log(index);
-                // console.log(currUnit);
                 setCurrUnit(index);
-                
-                // console.log(currUnit);
               }
             });
-            // console.log(currUnit);
           } catch (error) {
             console.error('Error fetching progress:', error);
           }
@@ -41,16 +32,7 @@ function Study(props) {
     useEffect(() => {
         const fetchStudyGuideFromAPI = async () => {
         try {
-            // const output = await getUserProgress({lesson:formattedTopic});
-            // console.log(topic);
-            // console.log(output.unit);
-            // console.log("here");
-            // console.log(formattedTopic);
-            // console.log(currUnit)
             const response = await getStudyGuideByLessonAndId({lesson:formattedTopic, id: currUnit});
-            
-            // console.log(response);
-            // console.log(typeof(response));
             setGuide(response);
         } catch (error) {
             console.error('Error fetching study guide', error);
@@ -59,7 +41,6 @@ function Study(props) {
 
         fetchStudyGuideFromAPI();
     }, [currUnit]);
-    // console.log(currUnit);
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div>
