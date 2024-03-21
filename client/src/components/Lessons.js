@@ -61,9 +61,9 @@ const Lessons = (props) => {
         try {
           const output = await getAllUnitByLesson(formattedTopic);
           
-          console.log(unit);
-          console.log(formattedSubcategory);
-          console.log(output.categories);
+          // console.log(unit);
+          // console.log(formattedSubcategory);
+          // console.log(output.categories);
           output.categories.forEach(function(element, index) {
             if (element.Name === formattedSubcategory) {
               setCurrUnit(index);
@@ -74,6 +74,7 @@ const Lessons = (props) => {
         }
       }
       getCategory();
+      console.log(currUnit);
     }, []);
     // console.log(topic, subcategory);
     // console.log(progress);
@@ -284,7 +285,7 @@ const getGradient = (progress) => {
             </Typography>
 
             <div style={{marginTop: '20px'}}>
-              <Button variant="contained" color="info" onClick={() => navigate(`/study/${formattedTopic}`)}>
+              <Button variant="contained" color="info" onClick={() => navigate(`/study/${topic}/${subcategory}`)}>
                 Study Guide
               </Button>
             </div>
