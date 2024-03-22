@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-import qs from 'qs';
-
 const baseURL = 'http://localhost:3000';
 
 const PATH_PREFIX = '/category/';
@@ -53,39 +51,6 @@ export const deleteCategoryFromName = async (categoryName) => {
     }
 }
 
-export const putCategoryPath = async (category) => {
-    let query_params = "";
-    if (category.questions.length > 0) {
-        query_params = "?" + qs.stringify(category.questions[0]);
-    }
-    try {
-        await axios.put(`${baseURL}${PATH_PREFIX}${category.name}${query_params}`) 
-    } catch (error) {
-        console.error("axios function call error:", error);
-    }
-}
-
-export const deleteCategoryPath = async (category) => {
-    let query_params = "";
-    if (category.questions.length > 0) {
-        query_params = "?" + qs.stringify(category.questions[0]);
-    }
-    try {
-        await axios.delete(`${baseURL}${PATH_PREFIX}${category.name}${query_params}`) 
-    } catch (error) {
-        console.error("axios function call error:", error);
-    }
-}
-
-// export const getCategory = async (categoryName) => {
-//     try {
-//         const res = await axios.get(`${baseURL}${PATH_PREFIX}${categoryName}`);
-//         return res.data;
-//     } catch (error) {
-//         console.error("axios function call error:", error);
-//     }
-// }
-
 export const getQuestionsByLessonAndProgress = async (lessonObject) => {
     try {
         const { lesson, progress } = lessonObject;
@@ -135,8 +100,3 @@ export const getStudyGuideByLessonAndId = async (lessonObject) => {
         return err;
     }
 }
-
-// export async function respondToCategoryGet(categoryName) {
-//     const res = await getCategory(categoryName);
-//     return res;
-// }

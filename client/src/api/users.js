@@ -33,28 +33,6 @@ export const signupUser = async (userObject) => {
     }
 };
 
-// export const getVerify = async () => {
-//     try {
-//         const response = await axios.get(`${baseURL}/account/verify`);
-//         if (response.message == 'Successful Authentication') {
-//             return True
-//         } else {
-//             return False
-//         }
-//     } catch (err) {
-//         return err;
-//     }
-// };
-
-// export const getCurrentUser = async () => {
-//     try {
-//         const response = await axios.get(`${baseURL}/account/isLogged`);
-//         return response.data;
-//     } catch (err) {
-//         return err;
-//     }
-// };
-
 export const getProfileById = async (username) => {
     try {
         console.log(username);
@@ -228,6 +206,23 @@ export const addPointsToUser = async (lessonObject) => {
             username,
             lesson,
             points
+        });
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+}
+
+export const postDifficultyArray = async (lessonObject) => {
+    try {
+        setAuthorizationHeaders();
+        const { lesson, difficulty, wrong } = lessonObject;
+        const username = sessionStorage.getItem('username');
+        const response = await axios.post(`${baseURL}/`, {
+            username,
+            lesson,
+            difficulty,
+            wrong
         });
         return response.data;
     } catch (err) {

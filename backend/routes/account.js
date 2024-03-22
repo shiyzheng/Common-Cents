@@ -200,7 +200,6 @@ router.post('/update-user-progress', async (req, res) => {
       } else {
         newProgress = [progress[lesson][0], newLevel];
       }
-      console.log(newProgress);
       await User.updateOne(
         { username },
         { $set: { [`progress.${lesson}`]: newProgress }}
@@ -244,5 +243,21 @@ router.post('/add-points', async (req, res) => {
     }
   }
 });
+
+router.post('/difficulty-array', async (req, res) => {
+  if (await verifyUser(req.headers.authorization)) {
+    try {
+      const { body } = req;
+      const { username, lesson, difficulty, wrong } = body;
+      await User.updateOne(
+        { username },
+        { $addToSet: { [`difficultyScores.${lesson}.${difficulty}`]: { $each: wrong } }}
+      )
+      res.status(200).json({ message: 'Questions added' })
+    } catch (err) {
+      res.status(400).json({ error: err });
+    }
+  }
+})
 
 module.exports = router;

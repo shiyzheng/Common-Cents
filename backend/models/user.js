@@ -18,6 +18,20 @@ const pointsSchema = new Schema({
   "Managing Credit": { type: Number, default: 0 },
 })
 
+// CAN CHANGE ORIGINAL DIFFICULTY
+const catSchema = new Schema({
+  Beginner: { type: Array, default: [] },
+  Waystage: { type: Array, default: [] }
+})
+
+const diffSchema = new Schema({
+  Intro: { type: catSchema, default: () => ({}) },
+  Saving: { type: catSchema, default: () => ({}) },
+  Spending: { type: catSchema, default: () => ({}) },
+  "Earning Income": { type: catSchema, default: () => ({}) },
+  "Managing Credit": { type: catSchema, default: () => ({}) },
+})
+
 const achievementsSchema = new Schema({
   name: { type: String }
 })
@@ -27,6 +41,7 @@ const userSchema = new Schema({
   password: { type: String, required: true },
   points: { type: pointsSchema, default: () => ({}) },
   progress: { type: progressSchema, default: () => ({}) },
+  difficultyScores: { type: diffSchema, default: () => ({}) },
   achieved: [achievementsSchema],
   admin: { type: Boolean, default: false}
 });

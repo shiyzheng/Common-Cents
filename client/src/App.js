@@ -10,7 +10,7 @@ import CategoryPage from './components/CategoryPage';
 import Account from './components/Account/Account';
 
 import MultipleChoiceQuestion from './components/MCQ';
-import AdminConsole from './pages/AdminConsole';
+// import AdminConsole from './pages/AdminConsole';
 import Lesson from './components/Lesson';
 import Lessons from './components/Lessons';
 import Study from './components/Study';
@@ -81,7 +81,7 @@ function App() {
     { path: '/profile/:id', element: <Profile login={login} logout={logout}  /> },
     { path: '/account', element: <Account /> },
 
-    { path: '/admin-console', element: <AdminConsole login={login} username={username} logout={logout}  /> },
+    // { path: '/admin-console', element: <AdminConsole login={login} username={username} logout={logout}  /> },
 
     { path: '/achievements', element: <Achievements setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}   /> },
     { path: '/leaderboards', element: <Leaderboards setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}  /> },
