@@ -2,25 +2,37 @@ import React, { useState, useEffect} from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import { getUserProgress } from '../api/users';
-import { getStudyGuideByLessonAndId, getUnitByLessonAndId } from '../api/category';
+import { getStudyGuideByLessonAndId, getUnitByLessonAndId, getAllUnitByLesson } from '../api/category';
 
 function Study(props) {
-    const { topic } = useParams();
+    const { topic, subcategory } = useParams();
     const {
         login, username, setUsername, setLogin, logout
     } = props;
-
+    const formattedTopic = topic.replace(/-/g, ' ').replace(/(?:-| |\b)(\w)/g, function(key) { return key.toUpperCase()});
+    const formattedSubcategory = subcategory.replace(/-/g, ' ').replace(/(?:-| |\b)(\w)/g, function(key) { return key.toUpperCase()});
     const [guide, setGuide] = useState('');
+    const [currUnit, setCurrUnit] = useState(0);
+
+    useEffect(() => {
+        const getCurrUnit = async () => {
+          try {
+            const output = await getAllUnitByLesson(formattedTopic);
+            output.categories.forEach(function(element, index) {
+              if (element.Name === formattedSubcategory) {
+                setCurrUnit(index);
+              }
+            });
+          } catch (error) {
+            console.error('Error fetching progress:', error);
+          }
+        }
+        getCurrUnit();
+      }, []);
     useEffect(() => {
         const fetchStudyGuideFromAPI = async () => {
         try {
-            const output = await getUserProgress({lesson:topic});
-            console.log(topic);
-            console.log(output.unit);
-            const response = await getStudyGuideByLessonAndId({lesson:"Spending", id: output.unit});
-            
-            console.log(response);
-            console.log(typeof(response));
+            const response = await getStudyGuideByLessonAndId({lesson:formattedTopic, id: currUnit});
             setGuide(response);
         } catch (error) {
             console.error('Error fetching study guide', error);
@@ -28,7 +40,7 @@ function Study(props) {
         };
 
         fetchStudyGuideFromAPI();
-    }, []);
+    }, [currUnit]);
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div>
