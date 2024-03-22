@@ -1,6 +1,7 @@
 const express = require('express');
 
 const Category = require('../models/category');
+const User = require('../models/user');
 
 const router = express.Router();
 
@@ -9,6 +10,15 @@ const STATUS = {
   CREATED: 201,
   EXISTS: 409,
   NOT_FOUND: 404,
+}
+
+const shuffleArray = array => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
 }
 
 router.get('/', async (req, res) => {
@@ -142,13 +152,19 @@ router.put('/add', async (req, res) => {
 router.post('/lesson-progress', async (req, res) => {
   try {
     const { body } = req;
-    const { lesson, progress } = body;
+    const { lesson, progress, username } = body;
     const { unit, level } = progress;
     const category = await Category.findOne({
       Lesson: lesson,
       id: unit,
     });
     const { Beginner, Waystage, Advanced } = category;
+
+    const user = await User.findOne({
+      username
+    });
+    const { difficultyScores } = user;
+
     switch (level) {
       case 0:
         res.json({questions: Beginner.slice(0, Math.floor(Beginner.length / 3))});
@@ -160,29 +176,42 @@ router.post('/lesson-progress', async (req, res) => {
         res.json({questions: Beginner.slice(-Beginner.length / 3, Beginner.length)})
         break;
       case 3:
-        res.json({questions: Waystage.slice(0, Waystage.length / 3).concat([])  })
+        shuffleArray(Beginner);
+        res.json({questions: Waystage.slice(0, Waystage.length / 3).concat(difficultyScores[lesson].Beginner).concat(Beginner).slice(0, 10) });
         break;
       case 4:
-        res.json({questions: Waystage.slice(Waystage.length / 3, (2 * Waystage.length / 3)).concat([])  })
+        shuffleArray(Beginner);
+        res.json({questions: Waystage.slice(Waystage.length / 3, (2 * Waystage.length / 3)).concat(difficultyScores[lesson].Beginner).concat(Beginner).slice(0, 10)  })
         break;
       case 5:
-        res.json({questions: Waystage.slice((2 * Waystage.length / 3), Waystage.length).concat([])  })
+        shuffleArray(Beginner);
+        res.json({questions: Waystage.slice((2 * Waystage.length / 3), Waystage.length).concat(difficultyScores[lesson].Beginner).concat(Beginner).slice(0, 10)  })
         break;
       case 6:
-        res.json({questions: Advanced.slice(0, Advanced.length / 4).concat([])  })
+        shuffleArray(Beginner);
+        shuffleArray(Waystage);
+        res.json({questions: Advanced.slice(0, Advanced.length / 4).concat(difficultyScores[lesson].Waystage).concat(difficultyScores[lesson].Beginner).concat(Waystage).concat(Beginner).slice(0, 10)  })
         break;
       case 7:
-        res.json({questions: Advanced.slice(Advanced.length / 4, (2 * Advanced.length / 4)).concat([])  })
+        shuffleArray(Beginner);
+        shuffleArray(Waystage);
+        res.json({questions: Advanced.slice(Advanced.length / 4, (2 * Advanced.length / 4)).concat(difficultyScores[lesson].Waystage).concat(difficultyScores[lesson].Beginner).concat(Waystage).concat(Beginner).slice(0, 10)  })
         break;
       case 8:
-        res.json({questions: Advanced.slice((2 * Advanced.length / 4), (3 * Advanced.length / 4)).concat([])  })
+        shuffleArray(Beginner);
+        shuffleArray(Waystage);
+        res.json({questions: Advanced.slice((2 * Advanced.length / 4), (3 * Advanced.length / 4)).concat(difficultyScores[lesson].Waystage).concat(difficultyScores[lesson].Beginner).concat(Waystage).concat(Beginner).slice(0, 10)  })
         break;
       case 9:
-        res.json({questions: Advanced.slice((3 * Advanced.length / 4), Advanced.length).concat([])  })
+        shuffleArray(Beginner);
+        shuffleArray(Waystage);
+        res.json({questions: Advanced.slice((3 * Advanced.length / 4), Advanced.length).concat(difficultyScores[lesson].Waystage).concat(difficultyScores[lesson].Beginner).concat(Waystage).concat(Beginner).slice(0, 10)  })
         break;
+      default:
+        res.status(404).json({ message: "level out of bounds" });
     }
   } catch (err) {
-    res.json({error: err})
+    res.status(400).json({error: err})
   }
 });
 

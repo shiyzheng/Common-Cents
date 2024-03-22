@@ -54,9 +54,11 @@ export const deleteCategoryFromName = async (categoryName) => {
 export const getQuestionsByLessonAndProgress = async (lessonObject) => {
     try {
         const { lesson, progress } = lessonObject;
+        const username = sessionStorage.getItem('username');
         const response = await axios.post(`${baseURL}${PATH_PREFIX}lesson-progress`, {
             lesson,
             progress,
+            username
         });
         return response.data;
     } catch (err) {

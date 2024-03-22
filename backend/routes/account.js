@@ -17,6 +17,11 @@ const router = express.Router();
  * 404 - Not found
  */
 
+const CAPS = {
+  Intro: 7,
+  Saving: 9,
+  Spending: 7,
+}
 
 router.post('/signup', async (req, res) => {
   const { body } = req;
@@ -193,13 +198,21 @@ router.post('/update-user-progress', async (req, res) => {
       const { username, lesson } = body;
       const user = await User.findOne({ username });
       const { progress } = user;
+
       const newLevel = progress[lesson][1] + 1;
       let newProgress;
+
       if (newLevel > 9) {
         newProgress = [progress[lesson][0] + 1, 0];
       } else {
         newProgress = [progress[lesson][0], newLevel];
       }
+
+      if (newProgress[0] > CAPS[lesson]) {
+        // COMMUNICATE WITH FRONT END, MAY HAVE TO CHANGE DEPENDING ON IMPLEMENTATION, ENDLESS MODE?
+        newProgress = [-1, -1];
+      }
+
       await User.updateOne(
         { username },
         { $set: { [`progress.${lesson}`]: newProgress }}
