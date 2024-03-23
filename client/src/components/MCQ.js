@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import '../styles/MCQ.css'; 
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { getUserProgress, updateUserProgress } from '../api/users';
+import { getUserProgress, updateUserProgress, checkAchievements } from '../api/users';
 import { getQuestionsByLessonAndProgress } from '../api/category';
 import {theme} from "../App";
 import {ThemeProvider} from "@mui/material/styles";
@@ -229,16 +229,16 @@ function MultipleChoiceQuestion(props) {
     }
     const updateAchievements = async () => {
       try {
-        // const response = await checkAchievements();
-        const response = ["Achieve 1,000 Points", "Achieve 10,000 Points"];
-        if (response) {
-          setNewAchievement(response);
+        const response = await checkAchievements({score: correct / questions.length, quizNum: lesson});
+        console.log(correct / questions.length, lesson);
+        if (response.returnedAchievements.length > 0) {
+          setNewAchievement(response.returnedAchievements);
           setShowAchievement(true);
           setTimeout(() => {
             setShowAchievement(false);
           }, 5000);
         }
-        console.log(response, "updated asd");
+        console.log(response, "updated asds");
       } catch (err) {
         console.log(err);
       }  

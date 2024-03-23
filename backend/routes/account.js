@@ -225,21 +225,98 @@ router.post('/update-user-progress', async (req, res) => {
   }
 });
 
-router.post('/add-achievement', async (req, res) => {
+// router.post('/add-achievement', async (req, res) => {
+//   if (await verifyUser(req.headers.authorization)) {
+//     try {
+//       const { body } = req;
+//       const { username, achievement } = body;
+//       const { name } = achievement;
+//       await User.updateOne(
+//         { username }, 
+//         { $addToSet: { achieved: { name } } }
+//       );
+//       res.status(201).json({ message: 'Achivement added' })
+//     } catch (err) {
+//       res.status(400).json({error: err});
+//     }
+//   }
+// });
+
+router.post('/update-achievements', async (req, res) => {
   if (await verifyUser(req.headers.authorization)) {
     try {
       const { body } = req;
-      const { username, achievement } = body;
-      const { name } = achievement;
-      await User.updateOne(
-        { username }, 
-        { $addToSet: { achieved: { name } } }
-      );
-      res.status(201).json({ message: 'Achivement added' })
+      const { username, score, quizNum } = body;
+      const user = await User.findOne({ username });
+      const earnedAchievements = user.achieved.map(achievement => achievement.name);
+
+      const newAchievements = [];
+      const total = user.totalPoints;
+
+      const users = await User.find();
+      const pointsArr = users.map(user => ({
+        username: user.username,
+        totalPoints: user.totalPoints
+      }));
+
+      newAchievements.push("Complete Introduction to a Topic");
+
+      if (score >= 0.6 && quizNum == 10) {
+        newAchievements.push("Master a Topic");
+      }
+
+      if (score >= 0.6) {
+        newAchievements.push("Pass a Quiz");
+      }
+
+      if (score == 1) {
+        newAchievements.push("Acquire a Perfect Score on a Quiz");
+      }
+
+      if (total >= 1000) {
+        newAchievements.push("Achieve 1,000 Points");
+      }
+
+      if (total >= 10000) {
+        newAchievements.push("Achieve 10,000 Points");
+      }
+
+      if (total >= 100000) {
+        newAchievements.push("Achieve 100,000 Points");
+      }
+
+      if (user.points.Spending >= 1000) {
+        newAchievements.push("Achieve 1000 points in the Spending Unit");
+      }
+
+      const sortedPointsArr = pointsArr.sort((a, b) => b.totalPoints - a.totalPoints);
+      const topTenUsers = sortedPointsArr.slice(0, 10);
+      if (topTenUsers.find(user => user.username == username)) {
+        newAchievements.push("Reach Top 10 on the Leaderboards");
+      }
+
+      const allAchievements = await Achievement.find();
+      const numberOfAchievements = allAchievements.length;
+
+      if (newAchievements.length >= numberOfAchievements - 1) {
+        newAchievements.push("Complete All Other Achievements");
+      }
+
+      newAchievements.forEach(async achievement => {
+        if (!earnedAchievements.includes(achievement)) {
+          await User.updateOne(
+            { username }, 
+            { $addToSet: { achieved: { name: achievement } } }
+          );
+        }
+      });
+      console.log(user.points.Spending);
+      const returnedAchievements = newAchievements.filter(achievement => !earnedAchievements.includes(achievement));
+      res.status(200).json({ returnedAchievements });
     } catch (err) {
       res.status(400).json({error: err});
     }
-  }
+}
 });
 
 router.post('/add-points', async (req, res) => {
@@ -250,6 +327,10 @@ router.post('/add-points', async (req, res) => {
       await User.updateOne(
         { username },
         { $inc: { [`points.${lesson}`]: points } } // OPEN TO CHANGE
+      );
+      await User.updateOne(
+        { username },
+        { $inc: { totalPoints: points } }
       );
       res.status(200).json({ message: 'Points Updated' });
     } catch (err) {

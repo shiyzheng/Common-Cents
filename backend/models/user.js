@@ -43,7 +43,8 @@ const userSchema = new Schema({
   progress: { type: progressSchema, default: () => ({}) },
   difficultyScores: { type: diffSchema, default: () => ({}) },
   achieved: [achievementsSchema],
-  admin: { type: Boolean, default: false}
+  admin: { type: Boolean, default: false},
+  totalPoints: { type: Number, default: 0 },
 });
 
 const User = model('User', userSchema);

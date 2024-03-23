@@ -145,13 +145,29 @@ export const updateUserProgress = async (lessonObject) => {
     }
 }
 
-export const addAchievementById = async (achievement) => {
+// export const addAchievementById = async (achievement) => {
+//     try {
+//         setAuthorizationHeaders();
+//         const username = sessionStorage.getItem('username');
+//         const response = await axios.post(`${baseURL}/add-achievement`, {
+//             username,
+//             achievement,
+//         });
+//         return response.data;
+//     } catch (err) {
+//         return err;
+//     }
+// }
+
+export const checkAchievements = async (scoreObject) => {
     try {
         setAuthorizationHeaders();
+        const { score, lesson } = scoreObject;
         const username = sessionStorage.getItem('username');
-        const response = await axios.post(`${baseURL}/add-achievement`, {
+        const response = await axios.post(`${baseURL}/update-achievements`, {
             username,
-            achievement,
+            score,
+            lesson,
         });
         return response.data;
     } catch (err) {
