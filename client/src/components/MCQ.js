@@ -37,6 +37,15 @@ function MultipleChoiceQuestion(props) {
   useEffect(() => {
     const fetchTotalLessons = async () => {
       try {
+        const getTotalLessons = async level => {
+          if (level === 1 || level === 2) {
+            return 3;
+          } else if (level === 3) {
+            return 4;
+          } else {
+            return 3;
+          }
+        }
         const total = await getTotalLessons(level);
         setTotalLessons(total);
       } catch (error) {
