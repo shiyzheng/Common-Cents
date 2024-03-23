@@ -21,6 +21,7 @@ const CAPS = {
   Intro: 7,
   Saving: 9,
   Spending: 7,
+  "Managing Credit": 10,
 }
 
 router.post('/signup', async (req, res) => {

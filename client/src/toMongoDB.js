@@ -10,11 +10,16 @@ const baseURL = 'http://localhost:3000';
 const PATH_PREFIX = '/category/';
 
 const results = Papa.parse(`
-1,The capabilities of an HSA were broadened recently under the...,CARES act,Economic relief programs associated with the 2008 financial crisis,Affordable Care Act (Obamacare),A
-2,"Is it still possible to cover a spouse or dependent's medical expenses with your HSA, even if your HSA-eligible plan does not cover them?","Yes, qualified distributions can count necessary medical expenses for your spouse or dependents","No, if no one else is listed as an HSA joint owner, the funds can only be used to cover your own medical expenses","No, but the funds may be still be used as long as a 20% tax penalty for regular early withdrawal is paid",A
-3,"Can HSA balances be transferred to other accounts, similar to how IRA balances can?","Yes, in a process called consolidation to other HSAs, which may or may not be subject to taxation","No, HSA balances cannot be transferred without incurring a 20% penalty for early withdrawal","Yes, as long as it is proven that the funds transferred will be used for medical expenses within three years",A
-4,Do pre-existing conditions affect eligibility for an HSA?,No,Yes,"No, but pre-existing conditions may affect your qualification for a high-deductible health plan",A
-5,An antiquiated form of tax-advantaged health savings accounts was:,Archer Medical Savings Accounts (MSAs),High-deductible Health Spending Accounts (HDHSA),Medical Individual Retirement Accounts (MIRA),A
+1,A secured credit card requires a __________ to be deposited as collateral.,Security Deposit,Initial Deposit,Collateral Deposit,A
+2,The practice of using multiple credit cards and balances to manage debt is called __________.,Debt Consolidation,Debt Snowball,Credit Card Churning,A
+3,"What does the term ""interchange rate"" refer to in credit card processing quotes?",The wholesale cost that banks charge processors for credit card transactions.,The percentage of customers who use credit cards for payments.,The fee charged by the credit card company for processing transactions.,A
+4,"What does ""PCI compliance"" signify in credit card processing quotes?",The encryption of credit card data to protect against fraud.,The processor's rating for customer satisfaction.,The processor's ability to handle international credit card transactions.,A
+5,True/False: PCI compliance ensures that the credit card processor has a high customer satisfaction rating.,TRUE,FALSE,,FALSE
+6,True/False: AVS (Address Verification System) is used to verify the accuracy of the billing address provided during a credit card transaction.,TRUE,FALSE,,TRUE
+7,"True/False: ""No monthly statement fee"" means that credit card processors never charge a fee for providing monthly transaction reports.",TRUE,FALSE,,FALSE
+8,"True/False: PCI compliance is a requirement set by the government that mandates credit card processors to charge a specific fee for security purposes.",TRUE,FALSE,,FALSE
+9,"True/False: ""Interchange differential fee"" is a surcharge imposed by credit card processors on specific types of transactions, such as international or high-risk sales.",TRUE,FALSE,,FALSE
+10,"True/False: ""Batch settlement fee"" is a charge imposed on merchants for combining multiple transactions into one batch for processing.",TRUE,FALSE,,FALSE
 `)
 
 const putCategory = async (category) => {
@@ -31,15 +36,15 @@ const toMongo = async (results) => {
             continue
         }
         const obj = {}
-        obj.unit = 'Credit Sources' // CHANGE
+        obj.unit = 'Credit Cards 2' // CHANGE
 
-        obj.difficulty = 'Beginner' // CHANGE
+        // obj.difficulty = 'Beginner' // CHANGE
         // obj.difficulty = 'Waystage' // CHANGE
-        // obj.difficulty = 'Advanced' // CHANGE
+        obj.difficulty = 'Advanced' // CHANGE
 
         obj.lesson = 'Managing Credit' // CHANGE
 
-        obj.id = 0
+        obj.id = 10
 
         obj.study_guide = 
 ``
