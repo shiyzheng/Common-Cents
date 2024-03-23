@@ -195,9 +195,6 @@ function MultipleChoiceQuestion(props) {
     let correct  = 0;
     selectedOptions.forEach((o, index) => {
       if (index < questions.length) {
-        console.log("answer");
-        console.log(o);
-        console.log(questions)
         if (o === questions[index].Correct) {
           correct++;
         }
@@ -214,6 +211,16 @@ function MultipleChoiceQuestion(props) {
     if (correct / questions.length >= 0.6) {
       const updateUser = async () => {
         try {
+          const newArray = [];
+          selectedOptions.forEach((o, index) => {
+            if (index < questions.length) {
+              if (o !== questions[index].Correct) {
+                newArray.push(questions[index]);
+              }
+            }
+            
+          });
+          console.log(newArray);
           const response = await updateUserProgress({lesson:topic});
           handleWindowSize();
           setShowPopup(true);
