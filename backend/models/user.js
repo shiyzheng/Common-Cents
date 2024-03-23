@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
 const progressSchema = new Schema({
-  Intro: { type: Array, default: [0, 0] },
+  Introduction: { type: Array, default: [0, 0] },
   Saving: { type: Array, default: [0, 0] },
   Spending: { type: Array, default: [0, 0] },
   "Earning Income": { type: Array, default: [0, 0] },
@@ -11,7 +11,7 @@ const progressSchema = new Schema({
 })
 
 const pointsSchema = new Schema({
-  Intro: { type: Number, default: 0 },
+  Introduction: { type: Number, default: 0 },
   Saving: { type: Number, default: 0 },
   Spending: { type: Number, default: 0 },
   "Earning Income": { type: Number, default: 0 },
@@ -25,7 +25,7 @@ const catSchema = new Schema({
 })
 
 const diffSchema = new Schema({
-  Intro: { type: catSchema, default: () => ({}) },
+  Introduction: { type: catSchema, default: () => ({}) },
   Saving: { type: catSchema, default: () => ({}) },
   Spending: { type: catSchema, default: () => ({}) },
   "Earning Income": { type: catSchema, default: () => ({}) },

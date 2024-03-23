@@ -18,7 +18,7 @@ const router = express.Router();
  */
 
 const CAPS = {
-  Intro: 7,
+  Introduction: 7,
   Saving: 9,
   Spending: 7,
   "Managing Credit": 10,
