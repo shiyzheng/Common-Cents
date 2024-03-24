@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import '../styles/MCQ.css'; 
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { getUserProgress, updateUserProgress } from '../api/users';
+import { getUserProgress, updateUserProgress, postDifficultyArray } from '../api/users';
 import { getQuestionsByLessonAndProgress } from '../api/category';
 import {theme} from "../App";
 import {ThemeProvider} from "@mui/material/styles";
@@ -106,6 +106,7 @@ function MultipleChoiceQuestion(props) {
           element.Answers = _.shuffle(element.Answers);
         });
         setQuestions(response.questions);
+        console.log(response.questions);
       } catch (error) {
         console.error('Error fetching questions:', error);
       }
@@ -221,13 +222,14 @@ function MultipleChoiceQuestion(props) {
             
           });
           console.log(newArray);
-          const response = await updateUserProgress({lesson:topic});
+          const response1 = await postDifficultyArray({lesson:topic, difficulty: level, wrong: newArray});
+          const response2 = await updateUserProgress({lesson:topic});
           handleWindowSize();
           setShowPopup(true);
           setTimeout(() => {
             setShowPopup(false);
           }, 5000);
-          console.log(response);
+          console.log(response2);
         } catch (err) {
           console.log(err);
         }  
@@ -360,8 +362,8 @@ function MultipleChoiceQuestion(props) {
                         variant="contained"
                         startIcon={<PublishIcon/>}
                         style={{backgroundColor: theme.palette.success.main, color: 'white'}}
-                        onClick={handleSubmit}>
-                      Submit
+                        onClick={navigate('/')}>
+                      Return
                     </Button>
                 )}
               </div>
