@@ -5,7 +5,7 @@ import PaidIcon from '@mui/icons-material/Paid';
 import {styled} from "@mui/system";
 import Typography from "@mui/material/Typography";
 
-function Lesson({ topics, subcat, levels }) {
+function Lesson({ topics, subcat, units }) {
   const navigate = useNavigate();
 
   const navigateToTopic = (topic, subcategory) => {
@@ -37,7 +37,7 @@ function Lesson({ topics, subcat, levels }) {
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', maxWidth: 'calc(3 * 60px + 3 * 20px)' }}>
               {subcat[index] && subcat[index].map((subcategory, index2) => (
                 <>
-                  {index2 > levels[index] ? (
+                  {index2 > units[index] ? (
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '5px' }}>
                       <Fab color="secondary" aria-label="add" style={{pointerEvents: 'none', opacity: 0.25, marginBottom: '10px'}}>
                         <PaidIcon />

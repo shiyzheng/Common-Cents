@@ -99,7 +99,7 @@ function Home(props) {
   // console.log('homepage');
   const { setLogin, setUsername, login, username, logout, categories, setCategories } = props;
   const navigate = useNavigate();
-  const [levels, setLevels] = useState([0, 0]);
+  const [units, setUnits] = useState([]);
   const topics = [
     "Introduction",
     // "Earning Income",
@@ -107,47 +107,16 @@ function Home(props) {
     "Spending",
     "Managing Credit",
   ];
-  // const subcategories = {
-  //   "Earning Income": ["A", "B", "C"],
-  //   "Saving": ["D", "E", "F"],
-  //   "Spending": ["G", "H", "I"],
-  //   "Investing": ["J", "K", "L"],
-  //   "Managing Credit": ["M", "N", "O"],
-  //   "Managing Risk": ["P", "Q", "R"],
-  // };
   useEffect(() => {
-    const getLevels = async (topics) => {
+    const getUnits = async (topics) => {
       const l = [];
       for (const topic of topics) {
         const output = await getUserProgress({ lesson: topic });
-        l.push(output.level);
+        l.push(output.unit);
       }
-      setLevels(l);
+      setUnits(l);
     }
-    getLevels(topics);
-    // const getLevels = async (topic) => {
-    //   try {
-    //     const output = await getUserProgress({lesson:topic});
-    //     // console.log(output);
-    //     // console.log(subIndex);
-    //     // console.log(typeof(output["unit"]));
-    //     // console.log(typeof(subIndex));
-    //     // console.log(subIndex <= output["unit"]);]
-    //     // console.log(output);
-    //     setLevels(prevLevels => {
-    //       const updatedLevels = [...prevLevels];
-    //       updatedLevels[prevLevels.length] = output["unit"];
-    //       return updatedLevels;
-    //     });
-    //   } catch (error) {
-    //     console.error('Error fetching questions:', error);
-    //   }
-    // }
-    // for (let i = 2; i < 3; i++) {
-    //   getLevels(topics[i]);
-    // }
-    // console.log(levels);
-    
+    getUnits(topics);
   }, [])
   const navigateToTopic = (topic, subcategory) => {
     const formattedTopic = topic.toLowerCase().replace(/\s+/g, '-');
@@ -182,7 +151,7 @@ function Home(props) {
         )}
         {login && (
             <div style={{ marginTop: '0px' }}>
-              <Lesson topics={topics} subcat={subcat} levels={levels} />
+              <Lesson topics={topics} subcat={subcat} units={units} />
             </div>
         )}
       </div>

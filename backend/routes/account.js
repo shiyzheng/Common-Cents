@@ -209,6 +209,10 @@ router.post('/update-user-progress', async (req, res) => {
         newProgress = [progress[lesson][0], newLevel];
       }
 
+      if (newLevel > 2 && ((lesson == 'Introduction' && progress[lesson][0] == 0) || (lesson == 'Introduction' && progress[lesson][0] == 7))) {
+        newProgress = [progress[lesson][0] + 1, 0];
+      }
+
       if (newProgress[0] > CAPS[lesson]) {
         // COMMUNICATE WITH FRONT END, MAY HAVE TO CHANGE DEPENDING ON IMPLEMENTATION, ENDLESS MODE?
         newProgress = [-1, -1];

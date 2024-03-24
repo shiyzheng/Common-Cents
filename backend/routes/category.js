@@ -170,10 +170,10 @@ router.post('/lesson-progress', async (req, res) => {
         res.json({questions: Beginner.slice(0, Math.floor(Beginner.length / 3))});
         break;
       case 1:
-        res.json({questions: Beginner.slice(Beginner.length / 3, -Beginner.length / 3)});
+        res.json({questions: Beginner.slice(Beginner.length / 3, (2 * Beginner.length / 3))});
         break;
       case 2:
-        res.json({questions: Beginner.slice(-Beginner.length / 3, Beginner.length)})
+        res.json({questions: Beginner.slice((2 * Beginner.length / 3), Beginner.length)})
         break;
       case 3:
         shuffleArray(Beginner);
