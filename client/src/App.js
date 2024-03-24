@@ -116,28 +116,36 @@ function Home(props) {
   //   "Managing Risk": ["P", "Q", "R"],
   // };
   useEffect(() => {
-    const getLevels = async (topic) => {
-      try {
-        console.log(typeof(topic));
-        const output = await getUserProgress({lesson:topic});
-        // console.log(output);
-        // console.log(subIndex);
-        // console.log(typeof(output["unit"]));
-        // console.log(typeof(subIndex));
-        // console.log(subIndex <= output["unit"]);]
-        // console.log(output);
-        setLevels(prevLevels => {
-          const updatedLevels = [...prevLevels];
-          updatedLevels[prevLevels.length] = output["unit"];
-          return updatedLevels;
-        });
-      } catch (error) {
-        console.error('Error fetching questions:', error);
+    const getLevels = async (topics) => {
+      const l = [];
+      for (const topic of topics) {
+        const output = await getUserProgress({ lesson: topic });
+        l.push(output.level);
       }
+      setLevels(l);
     }
-    for (let i = 2; i < 3; i++) {
-      getLevels(topics[i]);
-    }
+    getLevels(topics);
+    // const getLevels = async (topic) => {
+    //   try {
+    //     const output = await getUserProgress({lesson:topic});
+    //     // console.log(output);
+    //     // console.log(subIndex);
+    //     // console.log(typeof(output["unit"]));
+    //     // console.log(typeof(subIndex));
+    //     // console.log(subIndex <= output["unit"]);]
+    //     // console.log(output);
+    //     setLevels(prevLevels => {
+    //       const updatedLevels = [...prevLevels];
+    //       updatedLevels[prevLevels.length] = output["unit"];
+    //       return updatedLevels;
+    //     });
+    //   } catch (error) {
+    //     console.error('Error fetching questions:', error);
+    //   }
+    // }
+    // for (let i = 2; i < 3; i++) {
+    //   getLevels(topics[i]);
+    // }
     // console.log(levels);
     
   }, [])
