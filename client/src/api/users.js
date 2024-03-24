@@ -234,11 +234,27 @@ export const postDifficultyArray = async (lessonObject) => {
         setAuthorizationHeaders();
         const { lesson, difficulty, wrong } = lessonObject;
         const username = sessionStorage.getItem('username');
-        const response = await axios.post(`${baseURL}/`, {
+        const response = await axios.post(`${baseURL}/difficulty-array`, {
             username,
             lesson,
             difficulty,
             wrong
+        });
+        return response.data;
+    } catch (err) {
+        return err;
+    }
+}
+
+export const pullDifficultyArray = async (lessonObject) => {
+    try {
+        setAuthorizationHeaders();
+        const { lesson, correct } = lessonObject;
+        const username = sessionStorage.getItem('username');
+        const response = await axios.post(`${baseURL}/pull-difficulty-array`, {
+            username,
+            lesson,
+            correct
         });
         return response.data;
     } catch (err) {

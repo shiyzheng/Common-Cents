@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import '../styles/MCQ.css'; 
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { getUserProgress, updateUserProgress, checkAchievements, postDifficultyArray } from '../api/users';
+import { getUserProgress, updateUserProgress, checkAchievements, postDifficultyArray, pullDifficultyArray } from '../api/users';
 import { getQuestionsByLessonAndProgress } from '../api/category';
 import {theme} from "../App";
 import {ThemeProvider} from "@mui/material/styles";
@@ -212,23 +212,36 @@ function MultipleChoiceQuestion(props) {
     if (correct / questions.length >= 0.6) {
       const updateUser = async () => {
         try {
-          const newArray = [];
+          const correctArray = [];
+          const wrongArray = [];
           selectedOptions.forEach((o, index) => {
             if (index < questions.length) {
               if (o !== questions[index].Correct) {
-                newArray.push(questions[index]);
+                wrongArray.push(questions[index]);
+              } else {
+                correctArray.push(questions[index]);
               }
             }
             
           });
-          console.log(newArray);
-          const response1 = await postDifficultyArray({lesson:topic, difficulty: level, wrong: newArray});
+          let diff = ''
+          switch (lesson) {
+            case 1:
+              diff = 'Beginner';
+              break;
+            default:
+              diff = 'Waystage';
+          }
+          console.log(correctArray);
+          const response3 = await pullDifficultyArray({ lesson:topic, correct: correctArray })
+          const response1 = await postDifficultyArray({lesson:topic, difficulty: diff, wrong: wrongArray});
           const response2 = await updateUserProgress({lesson:topic});
           handleWindowSize();
           setShowPopup(true);
           setTimeout(() => {
             setShowPopup(false);
           }, 5000);
+          console.log(response3);
           console.log(response2);
         } catch (err) {
           console.log(err);

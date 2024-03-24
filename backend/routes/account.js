@@ -359,4 +359,26 @@ router.post('/difficulty-array', async (req, res) => {
   }
 })
 
+router.post('/pull-difficulty-array', async (req, res) => {
+  if (await verifyUser(req.headers.authorization)) {
+    try {
+      const { body } = req;
+      const { username, lesson, correct } = body;
+      for (const question of correct) {
+        await User.updateOne(
+          { username },
+          { $pull: { [`difficultyScores.${lesson}.Beginner`]: { Question: question.Question } }}
+        );
+        await User.updateOne(
+          { username },
+          { $pull: { [`difficultyScores.${lesson}.Waystage`]: { Question: question.Question } }}
+        );
+      }
+      res.status(200).json({ message: 'Questions removed' })
+    } catch (err) {
+      res.status(400).json({ error: err });
+    }
+  }
+})
+
 module.exports = router;
