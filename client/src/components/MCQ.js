@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import '../styles/MCQ.css'; 
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { getUserProgress, updateUserProgress, checkAchievements, postDifficultyArray, pullDifficultyArray } from '../api/users';
+import { getUserProgress, updateUserProgress, checkAchievements, postDifficultyArray, pullDifficultyArray, addPointsToUser } from '../api/users';
 import { getQuestionsByLessonAndProgress } from '../api/category';
 import {theme} from "../App";
 import {ThemeProvider} from "@mui/material/styles";
@@ -236,13 +236,12 @@ function MultipleChoiceQuestion(props) {
           const response3 = await pullDifficultyArray({ lesson:topic, correct: correctArray })
           const response1 = await postDifficultyArray({lesson:topic, difficulty: diff, wrong: wrongArray});
           const response2 = await updateUserProgress({lesson:topic});
+          await addPointsToUser({lesson:topic, points: correct * 100})
           handleWindowSize();
           setShowPopup(true);
           setTimeout(() => {
             setShowPopup(false);
           }, 5000);
-          console.log(response3);
-          console.log(response2);
         } catch (err) {
           console.log(err);
         }  
