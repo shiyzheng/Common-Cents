@@ -102,7 +102,7 @@ function Home(props) {
   const [levels, setLevels] = useState([0, 0]);
   const topics = [
     "Introduction",
-    "Earning Income",
+    // "Earning Income",
     "Saving",
     "Spending",
     "Managing Credit",

@@ -114,7 +114,12 @@ export default function Login(props) {
                 </Button>
                 <Grid container>
                   <Grid item>
-                    <Link href="#" variant="body2">
+                    <Link to="/signup" 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate("/signup", { replace: true });
+                      }} 
+                      variant="body2">
                       {"Don't have an account? Sign Up"}
                     </Link>
                   </Grid>

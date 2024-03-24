@@ -3,18 +3,18 @@ const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
 
 const progressSchema = new Schema({
-  Intro: { type: Array, default: [0, 0] },
+  Introduction: { type: Array, default: [0, 0] },
   Saving: { type: Array, default: [0, 0] },
   Spending: { type: Array, default: [0, 0] },
-  "Earning Income": { type: Array, default: [0, 0] },
+  //"Earning Income": { type: Array, default: [0, 0] },
   "Managing Credit": { type: Array, default: [0, 0] },
 })
 
 const pointsSchema = new Schema({
-  Intro: { type: Number, default: 0 },
+  Introduction: { type: Number, default: 0 },
   Saving: { type: Number, default: 0 },
   Spending: { type: Number, default: 0 },
-  "Earning Income": { type: Number, default: 0 },
+  //"Earning Income": { type: Number, default: 0 },
   "Managing Credit": { type: Number, default: 0 },
 })
 
@@ -25,10 +25,10 @@ const catSchema = new Schema({
 })
 
 const diffSchema = new Schema({
-  Intro: { type: catSchema, default: () => ({}) },
+  Introduction: { type: catSchema, default: () => ({}) },
   Saving: { type: catSchema, default: () => ({}) },
   Spending: { type: catSchema, default: () => ({}) },
-  "Earning Income": { type: catSchema, default: () => ({}) },
+  //"Earning Income": { type: catSchema, default: () => ({}) },
   "Managing Credit": { type: catSchema, default: () => ({}) },
 })
 
@@ -43,7 +43,8 @@ const userSchema = new Schema({
   progress: { type: progressSchema, default: () => ({}) },
   difficultyScores: { type: diffSchema, default: () => ({}) },
   achieved: [achievementsSchema],
-  admin: { type: Boolean, default: false}
+  admin: { type: Boolean, default: false},
+  totalPoints: { type: Number, default: 0 },
 });
 
 const User = model('User', userSchema);
