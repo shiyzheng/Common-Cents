@@ -6,7 +6,7 @@ const progressSchema = new Schema({
   Introduction: { type: Array, default: [0, 0] },
   Saving: { type: Array, default: [0, 0] },
   Spending: { type: Array, default: [0, 0] },
-  "Earning Income": { type: Array, default: [0, 0] },
+  //"Earning Income": { type: Array, default: [0, 0] },
   "Managing Credit": { type: Array, default: [0, 0] },
 })
 
@@ -14,7 +14,7 @@ const pointsSchema = new Schema({
   Introduction: { type: Number, default: 0 },
   Saving: { type: Number, default: 0 },
   Spending: { type: Number, default: 0 },
-  "Earning Income": { type: Number, default: 0 },
+  //"Earning Income": { type: Number, default: 0 },
   "Managing Credit": { type: Number, default: 0 },
 })
 
@@ -28,7 +28,7 @@ const diffSchema = new Schema({
   Introduction: { type: catSchema, default: () => ({}) },
   Saving: { type: catSchema, default: () => ({}) },
   Spending: { type: catSchema, default: () => ({}) },
-  "Earning Income": { type: catSchema, default: () => ({}) },
+  //"Earning Income": { type: catSchema, default: () => ({}) },
   "Managing Credit": { type: catSchema, default: () => ({}) },
 })
 

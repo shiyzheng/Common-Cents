@@ -9,10 +9,10 @@ import {theme} from "../App";
 import {ThemeProvider} from "@mui/material/styles";
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import {styled} from "@mui/system";
-import DeleteIcon from '@mui/icons-material/Delete';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PendingIcon from '@mui/icons-material/Pending';
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
+import Tooltip from "@mui/material/Tooltip";
 
 const Lessons = (props) => {
   const {
@@ -77,16 +77,18 @@ const Lessons = (props) => {
       {(currUnit == unit) ? 
       ((index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) == progress ?
       <li key={index}>
-        <Button
-            variant="contained"
-            className="button"
-            size="large"
-            startIcon={<PlayCircleFilledWhiteIcon />}
-            onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}
-            style={{ marginBottom: '10px' }}
-        >
-          {`${lesson}`}
-        </Button>
+        <Tooltip title="Start Here!" arrow placement="right">
+          <Button
+              variant="contained"
+              className="button"
+              size="large"
+              startIcon={<PlayCircleFilledWhiteIcon />}
+              onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}
+              style={{ marginBottom: '10px' }}
+          >
+            {`${lesson}`}
+          </Button>
+        </Tooltip>
       </li>
 
       : ((index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) < progress
@@ -103,14 +105,22 @@ const Lessons = (props) => {
       </li>
       :
       <li key={index}>
-        <Button variant="contained"
+        <Tooltip title="Unlock this lesson by completing all previous lessons first!" arrow placement="right">
+          <div>
+            <Button
+                variant="contained"
                 className="button"
                 size="large"
                 startIcon={<PendingIcon />}
                 onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}
-                style={{ pointerEvents: 'none', opacity: 0.25, marginBottom: '10px' }}>
-          {`${lesson}`}
-        </Button>
+                style={{ opacity: 0.25, marginBottom: '10px' }}
+                disabled
+            >
+              {`${lesson}`}
+            </Button>
+          </div>
+        </Tooltip>
+
       </li>))
       : (
         (currUnit < unit) ?
@@ -126,19 +136,23 @@ const Lessons = (props) => {
         </li>)
         :
         (<li key={index}>
-          <Button variant="contained"
+          <Tooltip title="Unlock this lesson by completing all previous lessons first!" arrow placement="right">
+            <div>
+              <Button
+                  variant="contained"
                   className="button"
                   size="large"
                   startIcon={<PendingIcon />}
                   onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}
-                  style={{ pointerEvents: 'none', opacity: 0.25, marginBottom: '10px' }}>
-            {`${lesson}`}
-          </Button>
+                  style={{ opacity: 0.25, marginBottom: '10px' }}
+                  disabled
+              >
+                {`${lesson}`}
+              </Button>
+            </div>
+          </Tooltip>
         </li>)
-
-
       )
-    
     }
     </ThemeProvider>
   ));
@@ -151,14 +165,16 @@ const Lessons = (props) => {
       { (currUnit == unit) ? 
       ((index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) == progress ?
       <li key={index}>
-        <Button variant="contained"
-                className="button"
-                size="large"
-                startIcon={<PlayCircleFilledWhiteIcon />}
-                onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}
-                style={{ marginBottom: '10px' }}>
-          {`${lesson}`}
-        </Button>
+        <Tooltip title="Start Here!" arrow placement="right">
+          <Button variant="contained"
+                  className="button"
+                  size="large"
+                  startIcon={<PlayCircleFilledWhiteIcon />}
+                  onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}
+                  style={{ marginBottom: '10px' }}>
+            {`${lesson}`}
+          </Button>
+        </Tooltip>
       </li>
 
       : ((index) + ((parseInt(formattedLevel[formattedLevel.length - 1]) - 1) * 3) < progress
@@ -175,14 +191,21 @@ const Lessons = (props) => {
       </li>
       :
       <li key={index}>
-        <Button variant="contained"
+        <Tooltip title="Unlock this lesson by completing all previous lessons first!" arrow placement="right">
+          <div>
+            <Button
+                variant="contained"
                 className="button"
                 size="large"
                 startIcon={<PendingIcon />}
                 onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}
-                style={{ pointerEvents: 'none', opacity: 0.25, marginBottom: '10px' }}>
-          {`${lesson}`}
-        </Button>
+                style={{ opacity: 0.25, marginBottom: '10px' }}
+                disabled
+            >
+              {`${lesson}`}
+            </Button>
+          </div>
+        </Tooltip>
       </li>))
       :
       (
@@ -198,14 +221,21 @@ const Lessons = (props) => {
           </Button>
         </li>) :
         (<li key={index}>
-          <Button variant="contained"
+          <Tooltip title="Unlock this lesson by completing all previous lessons first!" arrow placement="right">
+            <div>
+              <Button
+                  variant="contained"
                   className="button"
                   size="large"
                   startIcon={<PendingIcon />}
                   onClick={() => navigate(`/mcq/${formattedTopic}?lesson=${parseInt(lesson.match(/\d+/)[0])}&level=${parseInt(level.match(/\d+/)[0])}`)}
-                  style={{ pointerEvents: 'none', opacity: 0.25, marginBottom: '10px' }}>
-            {`${lesson}`}
-          </Button>
+                  style={{ opacity: 0.25, marginBottom: '10px' }}
+                  disabled
+              >
+                {`${lesson}`}
+              </Button>
+            </div>
+          </Tooltip>
         </li>)
       )
       }
