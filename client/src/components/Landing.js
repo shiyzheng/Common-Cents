@@ -10,12 +10,12 @@ import {Container} from "@mui/system";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import {Button, Chip} from "@mui/material";
-import {Link} from "react-router-dom";
 import Card from "@mui/material/Card";
 
 import SchoolIcon from '@mui/icons-material/School';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
+import Untitled from '../images/Untitled.png';
 
 const items = [
     {
@@ -24,16 +24,14 @@ const items = [
         description:
             'Content is aligned to the National Standards for Personal Finance Education and vetted by ' +
             'experts in academia and post-secondary education.',
-        imageLight: 'url("/static/images/templates/templates-images/dash-light.png")',
-        imageDark: 'url("/static/images/templates/templates-images/dash-dark.png")',
+        image: 'url("../../images/Untitled.png")',
     },
     {
         icon: <CelebrationIcon />,
         title: 'Fun and Engaging',
         description:
             'With colors, animations, achievements, and leaderboards, learning about taxes has never been more fun!',
-        imageLight: 'url("/static/images/templates/templates-images/mobile-light.png")',
-        imageDark: 'url("/static/images/templates/templates-images/mobile-dark.png")',
+        image: 'url("../../images/Untitled.png")',
     },
     {
         icon: <EmojiPeopleIcon />,
@@ -41,8 +39,7 @@ const items = [
         description:
             'Most financial literacy resources are designed for adults. Common Cents is designed for college students, ' +
             'meeting you where you are.',
-        imageLight: 'url("/static/images/templates/templates-images/devices-light.png")',
-        imageDark: 'url("/static/images/templates/templates-images/devices-dark.png")',
+        image: 'url("../../images/Untitled.png")',
     },
 ];
 
@@ -61,10 +58,7 @@ export default function Landing() {
                 id="hero"
                 sx={(theme) => ({
                     width: '100%',
-                    backgroundImage:
-                        theme.palette.mode === 'light'
-                            ? `linear-gradient(180deg, ${theme.palette.primary}, ${theme.palette.info})`
-                            : `linear-gradient(${theme.palette.success}, ${theme.palette.secondary})`,
+                    backgroundImage: `linear-gradient(180deg, ${theme.palette.primary}, ${theme.palette.info})`,
                     backgroundSize: '100% 20%',
                     backgroundRepeat: 'no-repeat',
                 })}
@@ -160,16 +154,10 @@ export default function Landing() {
                                     label={title}
                                     onClick={() => handleItemClick(index)}
                                     sx={{
-                                        borderColor: (theme) => {
-                                            if (theme.palette.mode === 'light') {
-                                                return selectedItemIndex === index ? 'primary.light' : '';
-                                            }
+                                        borderColor: () => {
                                             return selectedItemIndex === index ? 'primary.light' : '';
                                         },
-                                        background: (theme) => {
-                                            if (theme.palette.mode === 'light') {
-                                                return selectedItemIndex === index ? 'none' : '';
-                                            }
+                                        background: () => {
                                             return selectedItemIndex === index ? 'none' : '';
                                         },
                                         backgroundColor: selectedItemIndex === index ? 'primary.main' : '',
@@ -190,10 +178,7 @@ export default function Landing() {
                         >
                             <Box
                                 sx={{
-                                    backgroundImage: (theme) =>
-                                        theme.palette.mode === 'light'
-                                            ? items[selectedItemIndex].imageLight
-                                            : items[selectedItemIndex].imageDark,
+                                    backgroundImage: items[selectedItemIndex].image, // Use the image URL directly
                                     backgroundSize: 'cover',
                                     backgroundPosition: 'center',
                                     minHeight: 280,
@@ -252,15 +237,10 @@ export default function Landing() {
                                     >
                                         <Box
                                             sx={{
-                                                color: (theme) => {
-                                                    if (theme.palette.mode === 'light') {
-                                                        return selectedItemIndex === index
-                                                            ? 'primary.main'
-                                                            : 'grey.300';
-                                                    }
+                                                color: () => {
                                                     return selectedItemIndex === index
                                                         ? 'primary.main'
-                                                        : 'grey.700';
+                                                        : 'grey.300';
                                                 },
                                             }}
                                         >
@@ -309,10 +289,8 @@ export default function Landing() {
                                     width: 420,
                                     height: 500,
                                     backgroundSize: 'contain',
-                                    backgroundImage: (theme) =>
-                                        theme.palette.mode === 'light'
-                                            ? items[selectedItemIndex].imageLight
-                                            : items[selectedItemIndex].imageDark,
+                                    backgroundImage: () =>
+                                        items[selectedItemIndex].image,
                                 }}
                             />
                         </Card>
