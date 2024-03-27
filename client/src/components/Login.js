@@ -34,11 +34,11 @@ export default function Login(props) {
         sessionStorage.setItem('username', userObject.username);
         setLogin(true);
       } else {
-        alert('wrong username/password');
+        alert('Incorrect username or password');
       }
     } catch (err) {
       console.log(err);
-      alert('user authentication failed');
+      alert('User authentication failed');
     }
   };
 
@@ -75,7 +75,7 @@ export default function Login(props) {
                 <LockOutlinedIcon />
               </Avatar>
               <Typography component="h1" variant="h5">
-                Sign in
+                Sign In
               </Typography>
               <Box component="form" noValidate onSubmit={loginUserOnClick} sx={{ mt: 1 }}>
                 <TextField
@@ -108,22 +108,31 @@ export default function Login(props) {
                       //const form = document.getElementById('add');
                       //form.reset();
                     }}
-                    sx={{ mt: 3, mb: 2 }}
+                    sx={{ mt: 3, mb: 5 }}
                 >
                   Sign In
                 </Button>
-                <Grid container>
-                  <Grid item>
-                    <Link to="/signup" 
-                      onClick={(e) => {
-                        e.preventDefault();
-                        navigate("/signup", { replace: true });
-                      }} 
-                      variant="body2">
-                      {"Don't have an account? Sign Up"}
-                    </Link>
+                  <Grid container justifyContent="center">
+                      <Grid item>
+                          <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                              {"Don't have an account? "}
+                              <Button
+                                  to="/signup"
+                                  type="submit"
+                                  fullWidth
+                                  variant="contained"
+                                  color="info"
+                                  onClick={(e) => {
+                                      e.preventDefault();
+                                      navigate("/signup", { replace: true });
+                                  }}
+                                  sx={{ mt: 2, mb: 2 }}
+                              >
+                                  Sign Up
+                              </Button>
+                          </Typography>
+                      </Grid>
                   </Grid>
-                </Grid>
               </Box>
             </Box>
           </Grid>
