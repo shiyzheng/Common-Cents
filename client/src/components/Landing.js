@@ -67,8 +67,8 @@ export default function Landing() {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        pt: { xs: 14, sm: 10 },
-                        pb: { xs: 8, sm: 12 },
+                        pt: { xs: 14, sm: 8 },
+                        pb: { xs: 8, sm: 8 },
                     }}
                 >
                     <Stack spacing={2} useFlexGap sx={{ width: { xs: '100%', sm: '70%' } }}>

@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 
 function Lesson({ topics, subcat, units }) {
   const navigate = useNavigate();
+  const colors = ['secondary', 'red_custom', 'warning', 'info'];
 
   const navigateToTopic = (topic, subcategory) => {
     const formattedTopic = topic.toLowerCase().replace(/\s+/g, '-');
@@ -25,40 +26,44 @@ function Lesson({ topics, subcat, units }) {
     fontWeight: 600,
     fontSize: '1rem',
   });
-  
+
   return (
-    <div className="lessons-wrapper" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '10px' }}>
-      {topics.map((topic, index) => (
+  <div className="lessons-wrapper" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '10px' }}>
+    {topics.map((topic, index) => {
+      const topicColor = colors[index % colors.length]; // Assign a color to each topic
+
+      return (
         <div key={index} className="lessons-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div>
             <UnitText>{topic}</UnitText>
           </div>
-          
+
           <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', maxWidth: 'calc(3 * 60px + 3 * 20px)' }}>
-              {subcat[index] && subcat[index].map((subcategory, index2) => (
-                <>
-                  {index2 > units[index] ? (
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '5px' }}>
-                      <Fab color="secondary" aria-label="add" style={{pointerEvents: 'none', opacity: 0.25, marginBottom: '10px'}}>
-                        <PaidIcon />
-                      </Fab>
-                      <TopicTest>{subcategory}</TopicTest>
-                    </div>
-                  ) : (
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '5px' }}>
-                      <Fab color="secondary" aria-label="add" onClick={() => navigateToTopic(topic, subcategory)} style={{ marginBottom: '10px' }}>
-                        <PaidIcon />
-                      </Fab>
-                      <TopicTest>{subcategory}</TopicTest>
-                    </div>
-                  )}
-                </>
-              ))}
+            {subcat[index] && subcat[index].map((subcategory, index2) => (
+              <>
+                {index2 > units[index] ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '5px' }}>
+                    <Fab color={topicColor} aria-label="add" style={{pointerEvents: 'none', opacity: 0.45, marginBottom: '10px'}}>
+                      <PaidIcon />
+                    </Fab>
+                    <TopicTest>{subcategory}</TopicTest>
+                  </div>
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '5px' }}>
+                    <Fab color={topicColor} aria-label="add" onClick={() => navigateToTopic(topic, subcategory)} style={{ marginBottom: '10px' }}>
+                      <PaidIcon />
+                    </Fab>
+                    <TopicTest>{subcategory}</TopicTest>
+                  </div>
+                )}
+              </>
+            ))}
           </div>
         </div>
-      ))}
-    </div>
-  );
+      );
+    })}
+  </div>
+);
 }
 
 export default Lesson;

@@ -31,6 +31,9 @@ export const theme = createTheme({
     error: {
       main: '#751307',
     },
+    red_custom: {
+      main: '#c23827',
+    },
     warning: {
       main: '#d89514',
     },
