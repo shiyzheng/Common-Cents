@@ -8,6 +8,7 @@ import Achievements from './pages/achievements';
 import Leaderboards from './pages/Leaderboards';
 import CategoryPage from './components/CategoryPage';
 import Account from './components/Account/Account';
+import Landing from "./components/Landing";
 
 import MultipleChoiceQuestion from './components/MCQ';
 // import AdminConsole from './pages/AdminConsole';
@@ -145,8 +146,7 @@ function Home(props) {
         </div>
         {!login && (
             <div>
-              {' '}
-              <h2>Welcome to Common Cents!</h2>
+              <Landing />
             </div>
         )}
         {login && (
