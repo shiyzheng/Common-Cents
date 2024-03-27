@@ -52,21 +52,21 @@ function Study(props) {
         fetchStudyGuideFromAPI();
     }, [currUnit]);
     return (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <div>
-                <Navbar setLogin={setLogin} login={login} setUsername={setUsername} logout={logout} />
-            </div>
-            <div style={{ marginTop: '20px', padding: '20px', maxWidth: '800px', textAlign: 'center', border: '1px solid #ccc', alignItems: 'center', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
-                <h2 style={{ marginBottom: '20px' }}>Study Guide</h2>
-                <p style={{ lineHeight: '1.6', whiteSpace: 'pre-line', textAlign: 'left' }}>{guide1}</p>
-                {/* {parse(`<img src="https://res.cloudinary.com/dnwaszkmv/image/upload/v1711326565/negotiations_2.png" />  `)} */}
-                {parse(`${image}`)}
-                {guide2 && (
-                  <p style={{ lineHeight: '1.6', whiteSpace: 'pre-line', textAlign: 'left' }}>{guide2}</p>
-                )}
-            </div>
-        </div>
-    )
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div>
+              <Navbar setLogin={setLogin} login={login} setUsername={setUsername} logout={logout} />
+          </div>
+          <div style={{ margin: '0 auto', marginTop: '20px', padding: '20px', maxWidth: '800px', textAlign: 'center', border: '1px solid #ccc', alignItems: 'center', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
+              <h2 style={{ marginBottom: '20px' }}>Study Guide</h2>
+              <p style={{ lineHeight: '1.6', whiteSpace: 'pre-line', textAlign: 'left' }}>{guide1}</p>
+              {/* {parse(`<img src="https://res.cloudinary.com/dnwaszkmv/image/upload/v1711326565/negotiations_2.png" />  `)} */}
+              {parse(`${image}`)}
+              {guide2 && (
+                <p style={{ lineHeight: '1.6', whiteSpace: 'pre-line', textAlign: 'left' }}>{guide2}</p>
+              )}
+          </div>
+      </div>
+  )
 }
 
 export default Study;
