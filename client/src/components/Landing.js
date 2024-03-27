@@ -15,7 +15,6 @@ import Card from "@mui/material/Card";
 import SchoolIcon from '@mui/icons-material/School';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
-import Untitled from '../images/Untitled.png';
 
 const items = [
     {
@@ -24,14 +23,14 @@ const items = [
         description:
             'Content is aligned to the National Standards for Personal Finance Education and vetted by ' +
             'experts in academia and post-secondary education.',
-        image: 'url("../../images/Untitled.png")',
+        image: 'url("https://res.cloudinary.com/dnwaszkmv/image/upload/v1711570545/Photo1_fdgiy4.png")',
     },
     {
         icon: <CelebrationIcon />,
         title: 'Fun and Engaging',
         description:
             'With colors, animations, achievements, and leaderboards, learning about taxes has never been more fun!',
-        image: 'url("../../images/Untitled.png")',
+        image: 'url("https://res.cloudinary.com/dnwaszkmv/image/upload/v1711570548/Photo2_co6rqc.png")',
     },
     {
         icon: <EmojiPeopleIcon />,
@@ -39,7 +38,7 @@ const items = [
         description:
             'Most financial literacy resources are designed for adults. Common Cents is designed for college students, ' +
             'meeting you where you are.',
-        image: 'url("../../images/Untitled.png")',
+        image: 'url("https://res.cloudinary.com/dnwaszkmv/image/upload/v1711570544/Photo3_vss56g.png")',
     },
 ];
 
@@ -82,7 +81,7 @@ export default function Landing() {
                                 alignSelf: 'center',
                                 textAlign: 'center',
                                 fontWeight: 1000,
-                                fontSize: { xs: '1.75rem', sm: '2rem', md: '2.25rem' },
+                                fontSize: { xs: '1.85rem', sm: '2.1rem', md: '2.35rem' },
                             }}
                         >
                             Accessible personal finance education for&nbsp;
@@ -93,7 +92,7 @@ export default function Landing() {
                                     color: (theme) =>
                                         theme.palette.mode === 'light' ? 'primary.main' : 'primary.light',
                                     fontWeight: 1000,
-                                    fontSize: { xs: '1.75rem', sm: '2rem', md: '2.25rem' },
+                                    fontSize: { xs: '1.85rem', sm: '2.1rem', md: '2.35rem' },
                                 }}
                             >
                                 all
@@ -176,14 +175,6 @@ export default function Landing() {
                                 mt: 4,
                             }}
                         >
-                            <Box
-                                sx={{
-                                    backgroundImage: items[selectedItemIndex].image, // Use the image URL directly
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                    minHeight: 280,
-                                }}
-                            />
                             <Box sx={{ px: 2, pb: 2, textTransform: 'none' }}>
                                 <Typography color="text.primary" variant="h2" sx={{textTransform: 'none'}}>
                                     {selectedFeature.title}
@@ -199,7 +190,7 @@ export default function Landing() {
                             alignItems="flex-start"
                             spacing={2}
                             useFlexGap
-                            sx={{ width: '100%', display: { xs: 'none', sm: 'flex', textTransform: 'none' } }}
+                            sx={{ display: { xs: 'none', sm: 'flex' }, width: '100%' }}
                         >
                             {items.map(({ icon, title, description }, index) => (
                                 <Card
@@ -289,6 +280,8 @@ export default function Landing() {
                                     width: 420,
                                     height: 500,
                                     backgroundSize: 'contain',
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundPosition: 'center',
                                     backgroundImage: () =>
                                         items[selectedItemIndex].image,
                                 }}
