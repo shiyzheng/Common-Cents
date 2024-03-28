@@ -13,6 +13,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import PendingIcon from '@mui/icons-material/Pending';
 import PlayCircleFilledWhiteIcon from '@mui/icons-material/PlayCircleFilledWhite';
 import Tooltip from "@mui/material/Tooltip";
+import CssBaseline from '@mui/material/CssBaseline';
 
 const Lessons = (props) => {
   const {

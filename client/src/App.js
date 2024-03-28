@@ -19,9 +19,13 @@ import { getUserProgress } from './api/users';
 import { getAllUnitByLesson } from './api/category';
 import {Button, responsiveFontSizes} from "@mui/material";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 
 export const theme = createTheme({
   palette: {
+    background: {
+      default: '#e5f4ff',
+    },
     primary: {
       main: '#69b3dd',
     },
@@ -84,19 +88,19 @@ function App() {
     { path: '/Signup', element: <Signup setLogin={setLogin} login={login} setUsername={setUsername} setPassword={setPassword} username={username} password={password} logout={logout}  /> },
     { path: '/profile/:id', element: <Profile login={login} logout={logout}  /> },
     { path: '/account', element: <Account /> },
-
     // { path: '/admin-console', element: <AdminConsole login={login} username={username} logout={logout}  /> },
-
     { path: '/achievements', element: <Achievements setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}   /> },
     { path: '/leaderboards', element: <Leaderboards setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}  /> },
     { path: '/MCQ/:topic/*', element: <MultipleChoiceQuestion setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}   /> },
     { path: '/lessons/:topic/:subcategory', element: <Lessons setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}  /> },
     { path: '/Study/:topic/:subcategory', element: <StudyGuide setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout} /> },
-    // { path: '/Home', element: <Categories login={login} categories={categories} setCategories={setCategories} username={username} /> },
     { path: '/Category/:name', element: <CategoryPage login={login} username={username} logout={logout}  /> },
   ]);
 
-  return <ThemeProvider theme={responsiveTheme}>{element}</ThemeProvider>;
+  return <ThemeProvider theme={responsiveTheme}>
+    <CssBaseline />
+    {element}
+  </ThemeProvider>;
 }
 
 function Home(props) {
