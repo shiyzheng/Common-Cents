@@ -238,7 +238,16 @@ function MultipleChoiceQuestion(props) {
           const response3 = await pullDifficultyArray({ lesson:topic, correct: correctArray })
           const response1 = await postDifficultyArray({lesson:topic, difficulty: diff, wrong: wrongArray});
           const response2 = await updateUserProgress({lesson:topic});
-          await addPointsToUser({lesson:topic, points: correct * 100})
+          await addPointsToUser({lesson:topic, points: correct * 100});
+          const response = await checkAchievements({score: correct / questions.length, quizNum: lesson});
+          console.log(correct / questions.length, lesson);
+          if (response.returnedAchievements.length > 0) {
+          setNewAchievement(response.returnedAchievements);
+          setShowAchievement(true);
+          setTimeout(() => {
+            setShowAchievement(false);
+          }, 5000);
+        }
           handleWindowSize();
           setShowPopup(true);
           setTimeout(() => {
@@ -250,23 +259,15 @@ function MultipleChoiceQuestion(props) {
       }
       updateUser();
     }
-    const updateAchievements = async () => {
-      try {
-        const response = await checkAchievements({score: correct / questions.length, quizNum: lesson});
-        console.log(correct / questions.length, lesson);
-        if (response.returnedAchievements.length > 0) {
-          setNewAchievement(response.returnedAchievements);
-          setShowAchievement(true);
-          setTimeout(() => {
-            setShowAchievement(false);
-          }, 5000);
-        }
-        console.log(response, "updated asds");
-      } catch (err) {
-        console.log(err);
-      }  
-    }
-    updateAchievements();
+    // const updateAchievements = async () => {
+    //   try {
+        
+    //     console.log(response, "updated asds");
+    //   } catch (err) {
+    //     console.log(err);
+    //   }  
+    // }
+    // updateAchievements();
   };
 
   const levelNames = {

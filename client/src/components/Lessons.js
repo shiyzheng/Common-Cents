@@ -323,7 +323,7 @@ const getGradient = (progress) => {
             </div>
 
             <div style={{marginTop: '25px'}}>
-              <ProgressBarWithLabel value={progress * 10} />
+              <ProgressBarWithLabel value={(unit > currUnit) ? 100 : progress * 10} />
             </div>
 
             <div className="lessons-wrapper">
