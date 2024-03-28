@@ -37,7 +37,7 @@ const items = [
         title: 'Designed for College Students',
         description:
             'Most financial literacy resources are designed for adults. Common Cents is designed for college students, ' +
-            'meeting you where you are.',
+            'meeting you where you are in your personal finance journey.',
         image: 'url("https://res.cloudinary.com/dnwaszkmv/image/upload/v1711570544/Photo3_vss56g.png")',
     },
 ];

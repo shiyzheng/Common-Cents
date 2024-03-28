@@ -1,0 +1,3 @@
+.subcategories-container > div:only-child {
+  margin: auto;
+}

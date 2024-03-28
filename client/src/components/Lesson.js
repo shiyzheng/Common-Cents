@@ -4,6 +4,7 @@ import {Button, Fab} from "@mui/material";
 import PaidIcon from '@mui/icons-material/Paid';
 import {styled} from "@mui/system";
 import Typography from "@mui/material/Typography";
+import '../styles/Lesson.css';
 
 function Lesson({ topics, subcat, units }) {
   const navigate = useNavigate();
@@ -25,6 +26,8 @@ function Lesson({ topics, subcat, units }) {
     fontFamily: 'Nunito, sans-serif',
     fontWeight: 600,
     fontSize: '1rem',
+    maxWidth: '137px',
+    wordWrap: 'break-word',
   });
 
   return (
@@ -38,7 +41,7 @@ function Lesson({ topics, subcat, units }) {
             <UnitText>{topic}</UnitText>
           </div>
 
-          <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center', maxWidth: 'calc(3 * 60px + 3 * 20px)' }}>
+          <div className = "subcategories-container" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', maxWidth: '210px' }}>
             {subcat[index] && subcat[index].map((subcategory, index2) => (
               <>
                 {index2 > units[index] ? (
