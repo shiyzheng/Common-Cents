@@ -299,7 +299,7 @@ export default function Landing() {
                         align="center"
                         color="text.secondary"
                     >
-                        Trusted by the best companies
+                        Credits: Michael Sun, Xian Han Chen, Nohan Jariyath, Anson Yan, Shi-Yang Zheng
                     </Typography>
                     {/*<Grid container justifyContent="center" sx={{ mt: 0.5, opacity: 0.6 }}>
                         {logos.map((logo, index) => (
