@@ -13,8 +13,10 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import PublishIcon from '@mui/icons-material/Publish';
-import LensIcon from '@mui/icons-material/Lens';
+import LinearProgress from "@mui/material/LinearProgress";
 import { Box, Typography } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 function MultipleChoiceQuestion(props) {
   const {
@@ -278,6 +280,7 @@ function MultipleChoiceQuestion(props) {
       setCurrentQuestionIndex(prevIndex => prevIndex - 1);
     }
   };
+
   return (
       <ThemeProvider theme={theme}>
     <>
@@ -285,13 +288,14 @@ function MultipleChoiceQuestion(props) {
       <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout} />
     {showPopup && <Confetti width = {windowSize.width} height = {windowSize.height}/>}
     <div className={`popup-notification ${showAchievement ? 'show' : ''}`}>
-      <div className="star-icon">&#9733;</div>
-        <div className="popup-content">
-        <p>Congratulations, you earned an achievement(s)!</p>
-        <strong>{newAchievement.map((ach, index) => (
-          <p key={index}>{ach}</p>
-        ))}</strong>
-        </div>
+      {showAchievement && (
+          <Alert severity="success">
+            <AlertTitle>Congratulations, you earned an achievement(s)!</AlertTitle>
+            {newAchievement.map((ach, index) => (
+                <p key={index}>{ach}</p>
+            ))}
+          </Alert>
+      )}
       </div>
     </div>
       <div className="container">
@@ -303,7 +307,7 @@ function MultipleChoiceQuestion(props) {
           <span style={{fontWeight: 700}}>Level:</span> {levelNames[level]}
         </Typography>
         {currentQuestionIndex >= 0 && currentQuestionIndex < questions.length ? (
-        <div style={{ textAlign: "center", marginTop: "40px" }}>
+        <div style={{ textAlign: "center", marginTop: "20px" }}>
           {Array.from({ length: questions.length }, (_, index) => (
             <span key={index} className="step"></span>
           ))}
@@ -314,7 +318,42 @@ function MultipleChoiceQuestion(props) {
         
         {currentQuestionIndex < 0 ? (
           <>
-          <p>{correctCount} / {questions.length} correct</p>
+            <Typography
+                component="h2"
+                variant="h2"
+                sx={{
+                  display: 'flex',
+                  flexDirection: { xs: 'column', md: 'row' },
+                  justifyContent: 'center',
+                  alignSelf: 'center',
+                  textAlign: 'center',
+                  fontWeight: 1000,
+                  fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.4rem' },
+                  color: correctCount <= 5 ? theme.palette.warning.main : theme.palette.success.main,
+                  mt: 3,
+                  mb: 2,
+                }}
+            >
+              {correctCount} / {questions.length} correct
+            </Typography>
+            <Typography
+                component="h2"
+                variant="h2"
+                sx={{
+                  display: 'flex',
+                  flexDirection: { xs: 'column', md: 'row' },
+                  justifyContent: 'center',
+                  alignSelf: 'center',
+                  textAlign: 'center',
+                  fontWeight: 1000,
+                  fontSize: { xs: '1.1rem', sm: '1.2rem', md: '1.4rem' },
+                  color: correctCount <= 5 ? theme.palette.warning.main : theme.palette.success.main,
+                  mt: 0,
+                  mb: 2,
+                }}
+            >
+              {correctCount <= 5 ? "Better luck next time!" : "Congrats! You've advanced to the next lesson."}
+            </Typography>
           <Button
               variant="contained"
               startIcon={<PublishIcon />}
@@ -325,9 +364,14 @@ function MultipleChoiceQuestion(props) {
           </>
         ) : (
             <>
-              <div className="question">
-                <p>{question}</p>
-              </div>
+              <Box className="question" sx={{
+                padding: '16px',
+                backgroundColor: '#f5f5f5',
+                margin: '16px 0' }}>
+                <Typography variant="body1">
+                  {question}
+                </Typography>
+              </Box>
               <ul className="options-list">
                 {options.map((option) => (
                     <li
@@ -385,9 +429,14 @@ function MultipleChoiceQuestion(props) {
             </>)
 
             : (<>
-              <div className="question">
-                <p>{question}</p>
-              </div>
+              <Box className="question" sx={{
+                padding: '16px',
+                backgroundColor: '#f5f5f5',
+                margin: '16px 0' }}>
+                <Typography variant="body1">
+                  {question}
+                </Typography>
+              </Box>
               <ul className="options-list" style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 {options.map((option, index) => (
                     <Button variant="contained"
@@ -429,7 +478,7 @@ function MultipleChoiceQuestion(props) {
                     <Button
                         variant="contained"
                         startIcon={<KeyboardReturnIcon/>}
-                        style={{backgroundColor: theme.palette.success.main}}
+                        style={{backgroundColor: theme.palette.success.main, color: 'white'}}
                         onClick={handleSubmit}>
                       Submit
                     </Button>
