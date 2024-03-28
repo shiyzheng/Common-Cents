@@ -92,7 +92,7 @@ function Leaderboards(props) {
                 <ListItem
                     key={index}
                     className="leaderboards-box"
-                    sx={{ minWidth: '300px' }}  // Set the minimum width here
+                    sx={{ minWidth: '300px', mb: 3 }}  // Set the minimum width here
                 >
                   <Box display="flex" justifyContent="space-between" width="100%">
                     <Typography variant="subtitle1" component="span" fontWeight="bold">
