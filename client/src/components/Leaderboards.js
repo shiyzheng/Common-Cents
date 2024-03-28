@@ -1,8 +1,17 @@
 import Navbar from './Navbar';
 import '../styles/Leaderboards.css';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getUsersPointsTotal } from '../api/users';
 import { ThemeProvider } from '@mui/material/styles';
+import {theme} from "../App";
+import Typography from "@mui/material/Typography";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Pagination from '@mui/material/Pagination';
+import PaginationItem from '@mui/material/PaginationItem';
+import Box from '@mui/material/Box';
+
 function Leaderboards(props) {
   const {
     login, username, setUsername, setLogin, logout
@@ -58,33 +67,62 @@ function Leaderboards(props) {
 
       
     return (
+        <ThemeProvider theme={theme}>
       <>
         <Navbar setLogin={setLogin} login={login} setUsername={setUsername} username={sessionStorage.getItem('username')} logout = {logout}/>
         <div className="container">
-          <h2>Leaderboards</h2>
-          <ul className="leaderboards-list">
-          {usersOnCurrentPage.map((user, index) => (
-            <li key={index} className="leaderboards-box">
-              {user.username} - {user.points} points
-            </li>
-          ))}
-          </ul>
-  
-          <div className="pagination">
-            <button onClick={handlePrevPage} disabled={currentPage === 1}>&lt; Prev</button>
-            {pageRange.map((page) => (
-              <button
-                key={page}
-                onClick={() => handlePageChange(page)}
-                className={currentPage === page ? 'active' : ''}
-              >
-                {page}
-              </button>
+          <Typography
+              component="h1"
+              variant="h1"
+              sx={{
+                display: 'flex',
+                flexDirection: { xs: 'column', md: 'row' },
+                alignSelf: 'center',
+                textAlign: 'center',
+                fontWeight: 1000,
+                fontSize: { xs: '1.45rem', sm: '1.7rem', md: '2.05rem' },
+                color: theme.palette.info.main,
+                mt: 3,
+                mb: 2,
+              }}
+          >
+            See how you measure up!
+          </Typography>
+          <List>
+            {usersOnCurrentPage.map((user, index) => (
+                <ListItem
+                    key={index}
+                    className="leaderboards-box"
+                    sx={{ minWidth: '300px' }}  // Set the minimum width here
+                >
+                  <Box display="flex" justifyContent="space-between" width="100%">
+                    <Typography variant="subtitle1" component="span" fontWeight="bold">
+                      {user.username}
+                    </Typography>
+                    <Typography variant="subtitle1" component="span">
+                      {user.points} points
+                    </Typography>
+                  </Box>
+                </ListItem>
             ))}
-            <button onClick={handleNextPage} disabled={currentPage === totalPages}>Next &gt;</button>
-          </div>
+          </List>
+
+          <Box mt={2}>
+            <Pagination
+                count={totalPages}
+                page={currentPage}
+                onChange={(event, page) => handlePageChange(page)}
+                renderItem={(item) => (
+                    <PaginationItem
+                        {...item}
+                        className={currentPage === item.page ? 'active' : ''}
+                    />
+                )}
+            />
+          </Box>
         </div>
       </>
+        </ThemeProvider>
     );
 }
 
