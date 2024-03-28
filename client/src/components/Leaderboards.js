@@ -1,8 +1,8 @@
-import Navbar from '../components/Navbar';
+import Navbar from './Navbar';
 import '../styles/Leaderboards.css';
 import { useState, useEffect } from 'react';
 import { getUsersPointsTotal } from '../api/users';
-
+import { ThemeProvider } from '@mui/material/styles';
 function Leaderboards(props) {
   const {
     login, username, setUsername, setLogin, logout
