@@ -14,7 +14,7 @@ import MultipleChoiceQuestion from './components/MCQ';
 // import AdminConsole from './pages/AdminConsole';
 import Lesson from './components/Lesson';
 import Lessons from './components/Lessons';
-import Study from './components/Study';
+import StudyGuide from './components/StudyGuide';
 import { getUserProgress } from './api/users';
 import { getAllUnitByLesson } from './api/category';
 import {Button, responsiveFontSizes} from "@mui/material";
@@ -91,7 +91,7 @@ function App() {
     { path: '/leaderboards', element: <Leaderboards setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}  /> },
     { path: '/MCQ/:topic/*', element: <MultipleChoiceQuestion setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}   /> },
     { path: '/lessons/:topic/:subcategory', element: <Lessons setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout}  /> },
-    { path: '/Study/:topic/:subcategory', element: <Study setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout} /> },
+    { path: '/Study/:topic/:subcategory', element: <StudyGuide setLogin={setLogin} login={login} setUsername={setUsername} username={username} logout={logout} /> },
     // { path: '/Home', element: <Categories login={login} categories={categories} setCategories={setCategories} username={username} /> },
     { path: '/Category/:name', element: <CategoryPage login={login} username={username} logout={logout}  /> },
   ]);

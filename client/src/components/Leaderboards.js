@@ -7,7 +7,6 @@ import {theme} from "../App";
 import Typography from "@mui/material/Typography";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import Pagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import Box from '@mui/material/Box';
