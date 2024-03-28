@@ -158,7 +158,7 @@ const Lessons = (props) => {
   ));
 };
 
-  const renderLessonLinks2 = (level) => {
+const renderLessonLinks2 = (level) => {
   const formattedLevel = level.toLowerCase().replace(/\s+/g, '-');
   return lessonList2.map((lesson, index) => (
     <ThemeProvider theme={theme}>
@@ -209,7 +209,7 @@ const Lessons = (props) => {
       </li>))
       :
       (
-        (currUnit == unit) ? 
+        (currUnit < unit) ? 
         (<li key={index}>
           <Button variant="contained"
                   className="button"
