@@ -114,7 +114,7 @@ export default function Login(props) {
                   <Grid container justifyContent="center">
                       <Grid item>
                           <Typography variant="body1" sx={{ fontWeight: 700 }}>
-                              {"Don't have an account? "}
+                              {"Don't have an account?"}
                               <Button
                                   to="/signup"
                                   type="submit"

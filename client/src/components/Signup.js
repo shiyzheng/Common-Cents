@@ -119,7 +119,7 @@ function Signup(props) {
                 >
                   Create Account
                 </Button>
-                <Grid container>
+                <Grid container justifyContent="center">
                     <Grid item>
                         <Typography variant="body1" sx={{ fontWeight: 700 }}>
                             {"Already have an account?"}
